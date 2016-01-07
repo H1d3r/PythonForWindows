@@ -1,0 +1,562 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>4. windows.winproxy – Windows API &mdash; PythonForWindows 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PythonForWindows 0.1 documentation" href="index.html" />
+    <link rel="next" title="5. windows.utils – Windows Utilities" href="utils.html" />
+    <link rel="prev" title="3. windows.native_exec – Native Code Execution" href="native_exec.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="utils.html" title="5. windows.utils – Windows Utilities"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="native_exec.html" title="3. windows.native_exec – Native Code Execution"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">PythonForWindows 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-windows.winproxy">
+<span id="windows-winproxy-windows-api"></span><h1>4. <code class="docutils literal"><span class="pre">windows.winproxy</span></code> &#8211; Windows API<a class="headerlink" href="#module-windows.winproxy" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference internal" href="#module-windows.winproxy" title="windows.winproxy"><code class="xref py py-mod docutils literal"><span class="pre">windows.winproxy</span></code></a> tries to be a pythontic wrapper around windows API of various DLL.
+It also heavily relies on <a class="reference external" href="http://docs.python.org/library/ctypes.html#module-ctypes" title="(in Python v2.7)"><code class="xref py py-mod docutils literal"><span class="pre">ctypes</span></code></a> and <code class="xref py py-mod docutils literal"><span class="pre">windows.generated_def.winfuncs</span></code></p>
+<dl class="docutils">
+<dt>Here are the things to know about <a class="reference internal" href="#module-windows.winproxy" title="windows.winproxy"><code class="xref py py-mod docutils literal"><span class="pre">windows.winproxy</span></code></a></dt>
+<dd><ul class="first last simple">
+<li>All of this is based on <code class="xref py py-mod docutils literal"><span class="pre">windows.generated_def.winfuncs</span></code></li>
+<li>DLL is loaded the first time an API of it is called</li>
+<li>All parameters can be passed by ordinal or keyword</li>
+<li>The call will fail if an argument with default value <code class="docutils literal"><span class="pre">NeededParamater</span></code> have been called without another value.</li>
+<li>The call will raise a subclass of <code class="xref py py-class docutils literal"><span class="pre">WindowsError</span></code> if it fails.</li>
+<li>Some functions are &#8216;transparent proxy&#8217; it means that all parameters are mandatory</li>
+</ul>
+</dd>
+</dl>
+<div class="section" id="example-virtualalloc">
+<h2>4.1. Example: <code class="docutils literal"><span class="pre">VirtualAlloc</span></code><a class="headerlink" href="#example-virtualalloc" title="Permalink to this headline">¶</a></h2>
+<p>Exemple with the function <cite>VirtualAlloc</cite> in <a class="reference internal" href="#module-windows.winproxy" title="windows.winproxy"><code class="xref py py-mod docutils literal"><span class="pre">windows.winproxy</span></code></a></p>
+<p>Documentation:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">windows</span>
+<span class="n">windows</span><span class="o">.</span><span class="n">winproxy</span><span class="o">.</span><span class="n">VirtualAlloc</span>
+<span class="c"># &lt;function VirtualAlloc at 0x02ED63F0&gt;</span>
+
+<span class="n">help</span><span class="p">(</span><span class="n">windows</span><span class="o">.</span><span class="n">winproxy</span><span class="o">.</span><span class="n">VirtualAlloc</span><span class="p">)</span>
+<span class="c"># Help on function VirtualAlloc in module windows.winproxy:</span>
+<span class="c"># VirtualAlloc(lpAddress=0, dwSize=NeededParameter, flAllocationType=MEM_COMMIT(0x1000L), flProtect=PAGE_EXECUTE_READWRITE(0x40L))</span>
+<span class="c">#     Errcheck:</span>
+<span class="c">#     raise Kernel32Error if result is 0</span>
+</pre></div>
+</div>
+<p>Calling it</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">windows</span>
+
+<span class="c"># Ordinal arguments</span>
+<span class="n">windows</span><span class="o">.</span><span class="n">winproxy</span><span class="o">.</span><span class="n">VirtualAlloc</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mh">0x1000</span><span class="p">)</span>
+<span class="mi">34537472</span>
+
+<span class="c"># Keyword arguments</span>
+<span class="n">windows</span><span class="o">.</span><span class="n">winproxy</span><span class="o">.</span><span class="n">VirtualAlloc</span><span class="p">(</span><span class="n">dwSize</span><span class="o">=</span><span class="mh">0x1000</span><span class="p">)</span>
+<span class="mi">34603008</span>
+
+<span class="c"># NeededParameter must be provided</span>
+<span class="n">windows</span><span class="o">.</span><span class="n">winproxy</span><span class="o">.</span><span class="n">VirtualAlloc</span><span class="p">()</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Traceback (most recent call last):</span>
+<span class="sd">File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;</span>
+<span class="sd">File &quot;windows\winproxy.py&quot;, line 264, in VirtualAlloc</span>
+<span class="sd">    return VirtualAlloc.ctypes_function(lpAddress, dwSize, flAllocationType, flProtect)</span>
+<span class="sd">File &quot;windows\winproxy.py&quot;, line 130, in perform_call</span>
+<span class="sd">    raise TypeError(&quot;{0}: Missing Mandatory parameter &lt;{1}&gt;&quot;.format(self.func_name, param_name))</span>
+<span class="sd">TypeError: VirtualAlloc: Missing Mandatory parameter &lt;dwSize&gt;</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c"># Error raises exception</span>
+<span class="n">windows</span><span class="o">.</span><span class="n">winproxy</span><span class="o">.</span><span class="n">VirtualAlloc</span><span class="p">(</span><span class="n">dwSize</span><span class="o">=</span><span class="mh">0xffffffff</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Traceback (most recent call last):</span>
+<span class="sd">File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;</span>
+<span class="sd">File &quot;windows\winproxy.py&quot;, line 264, in VirtualAlloc</span>
+<span class="sd">    return VirtualAlloc.ctypes_function(lpAddress, dwSize, flAllocationType, flProtect)</span>
+<span class="sd">File &quot;windows\winproxy.py&quot;, line 133, in perform_call</span>
+<span class="sd">    return self._cprototyped(*args)</span>
+<span class="sd">File &quot;windows\winproxy.py&quot;, line 59, in kernel32_error_check</span>
+<span class="sd">    raise Kernel32Error(func_name)</span>
+<span class="sd">windows.winproxy.Kernel32Error: VirtualAlloc: [Error 8] Not enough storage is available to process this command.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="functions-in-windows-winproxy">
+<h2>4.2. Functions in <a class="reference internal" href="#module-windows.winproxy" title="windows.winproxy"><code class="xref py py-mod docutils literal"><span class="pre">windows.winproxy</span></code></a><a class="headerlink" href="#functions-in-windows-winproxy" title="Permalink to this headline">¶</a></h2>
+<p>Transparent proxies:</p>
+<ul class="simple">
+<li>AllocConsole</li>
+<li>CloseHandle</li>
+<li>ExitProcess</li>
+<li>ExitThread</li>
+<li>FreeConsole</li>
+<li>GetCurrentProcess</li>
+<li>GetCurrentProcessorNumber</li>
+<li>GetCurrentThread</li>
+<li>GetCurrentThreadId</li>
+<li>GetExitCodeProcess</li>
+<li>GetExitCodeThread</li>
+<li>GetLastError</li>
+<li>GetProcAddress</li>
+<li>GetStdHandle</li>
+<li>GetThreadId</li>
+<li>LoadLibraryA</li>
+<li>LoadLibraryW</li>
+<li>ResumeThread</li>
+<li>SetStdHandle</li>
+<li>SetTcpEntry</li>
+<li>SuspendThread</li>
+<li>TerminateProcess</li>
+<li>TerminateThread</li>
+<li>VirtualQueryEx</li>
+<li>Wow64DisableWow64FsRedirection</li>
+<li>Wow64EnableWow64FsRedirection</li>
+<li>Wow64GetThreadContext</li>
+<li>Wow64RevertWow64FsRedirection</li>
+</ul>
+<p>Functions:</p>
+<ul>
+<li><p class="first">AddVectoredContinueHandler:</p>
+<div class="highlight-python"><div class="highlight"><pre>AddVectoredContinueHandler(FirstHandler=1, VectoredHandler=NeededParameter)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">AddVectoredExceptionHandler:</p>
+<div class="highlight-python"><div class="highlight"><pre>AddVectoredExceptionHandler(FirstHandler=1, VectoredHandler=NeededParameter)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">AdjustTokenPrivileges:</p>
+<div class="highlight-python"><div class="highlight"><pre>AdjustTokenPrivileges(TokenHandle, DisableAllPrivileges=False, NewState=NeededParameter, BufferLength=None, PreviousState=None, ReturnLength=None)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">CreateFileA:</p>
+<div class="highlight-python"><div class="highlight"><pre>CreateFileA(lpFileName, dwDesiredAccess=GENERIC_READ(0x80000000L), dwShareMode=0, lpSecurityAttributes=None, dwCreationDisposition=OPEN_EXISTING(0x3L), dwFlagsAndAttributes=FILE_ATTRIBUTE_NORMAL(0x80L), hTemplateFile=None)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">CreateFileW:</p>
+<div class="highlight-python"><div class="highlight"><pre>CreateFileW(lpFileName, dwDesiredAccess=GENERIC_READ(0x80000000L), dwShareMode=0, lpSecurityAttributes=None, dwCreationDisposition=OPEN_EXISTING(0x3L), dwFlagsAndAttributes=FILE_ATTRIBUTE_NORMAL(0x80L), hTemplateFile=None)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">CreateProcessA:</p>
+<div class="highlight-python"><div class="highlight"><pre>CreateProcessA(lpApplicationName, lpCommandLine=None, lpProcessAttributes=None, lpThreadAttributes=None, bInheritHandles=False, dwCreationFlags=0, lpEnvironment=None, lpCurrentDirectory=None, lpStartupInfo=None, lpProcessInformation=None)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">CreateProcessW:</p>
+<div class="highlight-python"><div class="highlight"><pre>CreateProcessW(lpApplicationName, lpCommandLine=None, lpProcessAttributes=None, lpThreadAttributes=None, bInheritHandles=False, dwCreationFlags=0, lpEnvironment=None, lpCurrentDirectory=None, lpStartupInfo=None, lpProcessInformation=None)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">CreateRemoteThread:</p>
+<div class="highlight-python"><div class="highlight"><pre>CreateRemoteThread(hProcess=NeededParameter, lpThreadAttributes=None, dwStackSize=0, lpStartAddress=NeededParameter, lpParameter=NeededParameter, dwCreationFlags=0, lpThreadId=None)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">CreateThread:</p>
+<div class="highlight-python"><div class="highlight"><pre>CreateThread(lpThreadAttributes=None, dwStackSize=0, lpStartAddress=NeededParameter, lpParameter=NeededParameter, dwCreationFlags=0, lpThreadId=None)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">CreateToolhelp32Snapshot:</p>
+<div class="highlight-python"><div class="highlight"><pre>CreateToolhelp32Snapshot(dwFlags, th32ProcessID=0)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">DeviceIoControl:</p>
+<div class="highlight-python"><div class="highlight"><pre>DeviceIoControl(hDevice, dwIoControlCode, lpInBuffer, nInBufferSize=None, lpOutBuffer=NeededParameter, nOutBufferSize=None, lpBytesReturned=None, lpOverlapped=None)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">GetExtendedTcpTable:</p>
+<div class="highlight-python"><div class="highlight"><pre>GetExtendedTcpTable(pTcpTable, pdwSize=None, bOrder=True, ulAf=NeededParameter, TableClass=5, Reserved=0)
+Errcheck:
+   raise IphlpapiError if result is NOT 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">GetThreadContext:</p>
+<div class="highlight-python"><div class="highlight"><pre>GetThreadContext(hThread, lpContext=None)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">GetTokenInformation:</p>
+<div class="highlight-python"><div class="highlight"><pre>GetTokenInformation(TokenHandle=NeededParameter, TokenInformationClass=NeededParameter, TokenInformation=None, TokenInformationLength=0, ReturnLength=None)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">LookupPrivilegeValueA:</p>
+<div class="highlight-python"><div class="highlight"><pre>LookupPrivilegeValueA(lpSystemName=None, lpName=NeededParameter, lpLuid=NeededParameter)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">LookupPrivilegeValueW:</p>
+<div class="highlight-python"><div class="highlight"><pre>LookupPrivilegeValueW(lpSystemName=None, lpName=NeededParameter, lpLuid=NeededParameter)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">NtCreateThreadEx:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">NtCreateThreadEx</span><span class="p">(</span><span class="n">ThreadHandle</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">DesiredAccess</span><span class="o">=</span><span class="mi">2097151</span><span class="p">,</span> <span class="n">ObjectAttributes</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ProcessHandle</span><span class="o">=</span><span class="n">NeededParameter</span><span class="p">,</span> <span class="n">lpStartAddress</span><span class="o">=</span><span class="n">NeededParameter</span><span class="p">,</span> <span class="n">lpParameter</span><span class="o">=</span><span class="n">NeededParameter</span><span class="p">,</span> <span class="n">CreateSuspended</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">dwStackSize</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">Unknown1</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">Unknown2</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">Unknown</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">NtGetContextThread:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">NtGetContextThread</span><span class="p">(</span><span class="n">hThread</span><span class="p">,</span> <span class="n">lpContext</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">NtQueryInformationProcess:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">NtQueryInformationProcess</span><span class="p">(</span><span class="n">ProcessHandle</span><span class="p">,</span> <span class="n">ProcessInformationClass</span><span class="p">,</span> <span class="n">ProcessInformation</span><span class="p">,</span> <span class="n">ProcessInformationLength</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ReturnLength</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">NtQueryInformationThread:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">NtQueryInformationThread</span><span class="p">(</span><span class="n">ThreadHandle</span><span class="p">,</span> <span class="n">ThreadInformationClass</span><span class="p">,</span> <span class="n">ThreadInformation</span><span class="p">,</span> <span class="n">ThreadInformationLength</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ReturnLength</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">NtQuerySystemInformation:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">NtQuerySystemInformation</span><span class="p">(</span><span class="n">SystemInformationClass</span><span class="p">,</span> <span class="n">SystemInformation</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">SystemInformationLength</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ReturnLength</span><span class="o">=</span><span class="n">NeededParameter</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">NtQueryVirtualMemory:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">NtQueryVirtualMemory</span><span class="p">(</span><span class="n">ProcessHandle</span><span class="p">,</span> <span class="n">BaseAddress</span><span class="p">,</span> <span class="n">MemoryInformationClass</span><span class="p">,</span> <span class="n">MemoryInformation</span><span class="o">=</span><span class="n">NeededParameter</span><span class="p">,</span> <span class="n">MemoryInformationLength</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ReturnLength</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">NtWow64ReadVirtualMemory64:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">NtWow64ReadVirtualMemory64</span><span class="p">(</span><span class="n">hProcess</span><span class="p">,</span> <span class="n">lpBaseAddress</span><span class="p">,</span> <span class="n">lpBuffer</span><span class="p">,</span> <span class="n">nSize</span><span class="p">,</span> <span class="n">lpNumberOfBytesRead</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">OpenProcess:</p>
+<div class="highlight-python"><div class="highlight"><pre>OpenProcess(dwDesiredAccess=PROCESS_ALL_ACCESS(0x1f0fffL), bInheritHandle=0, dwProcessId=NeededParameter)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">OpenProcessToken:</p>
+<div class="highlight-python"><div class="highlight"><pre>OpenProcessToken(ProcessHandle=None, DesiredAccess=NeededParameter, TokenHandle=NeededParameter)
+If ProcessHandle is None: take the current process
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">OpenThread:</p>
+<div class="highlight-python"><div class="highlight"><pre>OpenThread(dwDesiredAccess=THREAD_ALL_ACCESS(0x1f03ffL), bInheritHandle=0, dwThreadId=NeededParameter)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">Process32First:</p>
+<div class="highlight-python"><div class="highlight"><pre>Process32First(hSnapshot, lpte)
+Set byref(lpte) if needed
+Errcheck:
+   Nothing special
+</pre></div>
+</div>
+</li>
+<li><p class="first">Process32Next:</p>
+<div class="highlight-python"><div class="highlight"><pre>Process32Next(hSnapshot, lpte)
+Set byref(lpte) if needed
+Errcheck:
+   Nothing special
+</pre></div>
+</div>
+</li>
+<li><p class="first">ReadProcessMemory:</p>
+<div class="highlight-python"><div class="highlight"><pre>ReadProcessMemory(hProcess, lpBaseAddress, lpBuffer, nSize, lpNumberOfBytesRead=None)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">RegCloseKey:</p>
+<div class="highlight-python"><div class="highlight"><pre>RegCloseKey(hKey)
+Errcheck:
+   raise Kernel32Error if result is NOT 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">RegGetValueA:</p>
+<div class="highlight-python"><div class="highlight"><pre>RegGetValueA(hkey, lpSubKey, lpValue, dwFlags, pdwType, pvData, pcbData)
+Errcheck:
+   raise Kernel32Error if result is NOT 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">RegGetValueW:</p>
+<div class="highlight-python"><div class="highlight"><pre>RegGetValueW(hkey, lpSubKey, lpValue, dwFlags, pdwType, pvData, pcbData)
+Errcheck:
+   raise Kernel32Error if result is NOT 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">RegOpenKeyExA:</p>
+<div class="highlight-python"><div class="highlight"><pre>RegOpenKeyExA(hKey, lpSubKey, ulOptions, samDesired, phkResult)
+Errcheck:
+   raise Kernel32Error if result is NOT 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">RegOpenKeyExW:</p>
+<div class="highlight-python"><div class="highlight"><pre>RegOpenKeyExW(hKey, lpSubKey, ulOptions, samDesired, phkResult)
+Errcheck:
+   raise Kernel32Error if result is NOT 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">RemoveVectoredExceptionHandler:</p>
+<div class="highlight-python"><div class="highlight"><pre>RemoveVectoredExceptionHandler(Handler)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">SetThreadAffinityMask:</p>
+<div class="highlight-python"><div class="highlight"><pre>SetThreadAffinityMask(hThread=None, dwThreadAffinityMask=NeededParameter)
+If hThread is not given, it will be the current thread
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">SetThreadContext:</p>
+<div class="highlight-python"><div class="highlight"><pre>SetThreadContext(hThread, lpContext)
+Allows to directly pass a CONTEXT and will call with byref(CONTEXT) by itself
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">Thread32First:</p>
+<div class="highlight-python"><div class="highlight"><pre>Thread32First(hSnapshot, lpte)
+Set byref(lpte) if needed
+Errcheck:
+   Nothing special
+</pre></div>
+</div>
+</li>
+<li><p class="first">Thread32Next:</p>
+<div class="highlight-python"><div class="highlight"><pre>Thread32Next(hSnapshot, lpte)
+Set byref(lpte) if needed
+Errcheck:
+   Nothing special
+</pre></div>
+</div>
+</li>
+<li><p class="first">VirtualAlloc:</p>
+<div class="highlight-python"><div class="highlight"><pre>VirtualAlloc(lpAddress=0, dwSize=NeededParameter, flAllocationType=MEM_COMMIT(0x1000L), flProtect=PAGE_EXECUTE_READWRITE(0x40L))
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">VirtualAllocEx:</p>
+<div class="highlight-python"><div class="highlight"><pre>VirtualAllocEx(hProcess, lpAddress=0, dwSize=NeededParameter, flAllocationType=MEM_COMMIT(0x1000L), flProtect=PAGE_EXECUTE_READWRITE(0x40L))
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">VirtualFree:</p>
+<div class="highlight-python"><div class="highlight"><pre>VirtualFree(lpAddress, dwSize=0, dwFreeType=MEM_RELEASE(0x8000L))
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">VirtualFreeEx:</p>
+<div class="highlight-python"><div class="highlight"><pre>VirtualFreeEx(hProcess, lpAddress, dwSize=0, dwFreeType=MEM_RELEASE(0x8000L))
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">VirtualProtect:</p>
+<div class="highlight-python"><div class="highlight"><pre>VirtualProtect(lpAddress, dwSize, flNewProtect, lpflOldProtect=0)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">WaitForSingleObject:</p>
+<div class="highlight-python"><div class="highlight"><pre>WaitForSingleObject(hHandle, dwMilliseconds=INFINITE(0xffffffffL))
+Errcheck:
+   raise Kernel32Error if result is NOT 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">WinVerifyTrust:</p>
+<div class="highlight-python"><div class="highlight"><pre>WinVerifyTrust(hwnd, pgActionID, pWVTData)
+Errcheck:
+   Nothing special
+</pre></div>
+</div>
+</li>
+<li><p class="first">WriteFile:</p>
+<div class="highlight-python"><div class="highlight"><pre>WriteFile(hFile, lpBuffer, nNumberOfBytesToWrite=None, lpNumberOfBytesWritten=None, lpOverlapped=None)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">WriteProcessMemory:</p>
+<div class="highlight-python"><div class="highlight"><pre>WriteProcessMemory(hProcess, lpBaseAddress, lpBuffer, nSize=None, lpNumberOfBytesWritten=None)
+Computer nSize with len(lpBuffer) if not given
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">4. <code class="docutils literal"><span class="pre">windows.winproxy</span></code> &#8211; Windows API</a><ul>
+<li><a class="reference internal" href="#example-virtualalloc">4.1. Example: <code class="docutils literal"><span class="pre">VirtualAlloc</span></code></a></li>
+<li><a class="reference internal" href="#functions-in-windows-winproxy">4.2. Functions in <code class="docutils literal"><span class="pre">windows.winproxy</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="native_exec.html"
+                        title="previous chapter">3. <code class="docutils literal"><span class="pre">windows.native_exec</span></code> &#8211; Native Code Execution</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="utils.html"
+                        title="next chapter">5. <code class="docutils literal"><span class="pre">windows.utils</span></code> &#8211; Windows Utilities</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/winproxy.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="utils.html" title="5. windows.utils – Windows Utilities"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="native_exec.html" title="3. windows.native_exec – Native Code Execution"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">PythonForWindows 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Clement Rouault.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

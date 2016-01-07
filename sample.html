@@ -1,0 +1,589 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>9. Samples of code &mdash; PythonForWindows 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PythonForWindows 0.1 documentation" href="index.html" />
+    <link rel="prev" title="8. Internals" href="internals.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="internals.html" title="8. Internals"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">PythonForWindows 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="samples-of-code">
+<h1>9. Samples of code<a class="headerlink" href="#samples-of-code" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="windows-current-process">
+<span id="sample-current-process"></span><h2>9.1. <code class="docutils literal"><span class="pre">windows.current_process</span></code><a class="headerlink" href="#windows-current-process" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os.path</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span> <span class="o">+</span> <span class="s">&quot;\..\..&quot;</span><span class="p">))</span>
+
+<span class="kn">import</span> <span class="nn">windows</span>
+<span class="kn">import</span> <span class="nn">windows.native_exec.simple_x86</span> <span class="kn">as</span> <span class="nn">x86</span>
+<span class="kn">import</span> <span class="nn">windows.native_exec.simple_x64</span> <span class="kn">as</span> <span class="nn">x64</span>
+<span class="c"># Here is our current process</span>
+<span class="n">cp</span> <span class="o">=</span> <span class="n">windows</span><span class="o">.</span><span class="n">current_process</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;current process is {cp}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cp</span><span class="o">=</span><span class="n">windows</span><span class="o">.</span><span class="n">current_process</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;current process is a &lt;{cp.bitness}&gt; bits process&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cp</span><span class="o">=</span><span class="n">cp</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;current process is a SysWow64 process ? &lt;{cp.is_wow_64}&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cp</span><span class="o">=</span><span class="n">cp</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;current process pid &lt;{cp.pid}&gt;  and ppid &lt;{cp.ppid}&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cp</span><span class="o">=</span><span class="n">cp</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Here are the current process threads: &lt;{cp.threads}&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cp</span><span class="o">=</span><span class="n">cp</span><span class="p">))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Let&#39;s execute some native code ! (0x41 + 1)&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">windows</span><span class="o">.</span><span class="n">current_process</span><span class="o">.</span><span class="n">bitness</span> <span class="o">==</span> <span class="mi">32</span><span class="p">:</span>
+    <span class="c"># Let&#39;s generate some native code</span>
+    <span class="n">code</span> <span class="o">=</span>  <span class="n">x86</span><span class="o">.</span><span class="n">MultipleInstr</span><span class="p">()</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="s">&quot;Eax&quot;</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Inc</span><span class="p">(</span><span class="s">&quot;EAX&quot;</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Ret</span><span class="p">()</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">code</span> <span class="o">=</span>  <span class="n">x64</span><span class="o">.</span><span class="n">MultipleInstr</span><span class="p">()</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x64</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="s">&quot;RAX&quot;</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x64</span><span class="o">.</span><span class="n">Inc</span><span class="p">(</span><span class="s">&quot;RAX&quot;</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x64</span><span class="o">.</span><span class="n">Ret</span><span class="p">()</span>
+    
+<span class="n">native_code</span> <span class="o">=</span> <span class="n">code</span><span class="o">.</span><span class="n">get_code</span><span class="p">()</span>
+
+<span class="n">v</span> <span class="o">=</span> <span class="n">windows</span><span class="o">.</span><span class="n">current_process</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">native_code</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Waiting for execution to finish !&quot;</span><span class="p">)</span>
+<span class="n">v</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Native code returned &lt;{0}&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">hex</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">exit_code</span><span class="p">)))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Allocating memory in current process&quot;</span><span class="p">)</span>
+<span class="n">addr</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">virtual_alloc</span><span class="p">(</span><span class="mh">0x1000</span><span class="p">)</span> <span class="c"># Default alloc is RWX (so secure !)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Allocated memory is at &lt;{0}&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">hex</span><span class="p">(</span><span class="n">addr</span><span class="p">)))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Writing &#39;SOME STUFF&#39; in allocation memory&quot;</span><span class="p">)</span>
+<span class="n">cp</span><span class="o">.</span><span class="n">write_memory</span><span class="p">(</span><span class="n">addr</span><span class="p">,</span> <span class="s">&quot;SOME STUFF&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Reading memory : &lt;{0}&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">read_memory</span><span class="p">(</span><span class="n">addr</span><span class="p">,</span> <span class="mi">20</span><span class="p">))))</span>
+</pre></div>
+</div>
+<p>Output:</p>
+<div class="highlight-python"><div class="highlight"><pre>(cmd λ) python32.exe current_process.py
+current process is &lt;windows.winobject.CurrentProcess object at 0x026CD190&gt;
+current process is a &lt;32&gt; bits process
+current process is a SysWow64 process ? &lt;True&gt;
+current process pid &lt;7432&gt;  and ppid &lt;5412&gt;
+Here are the current process threads: &lt;[&lt;WinThread 5264 owner &quot;python.exe&quot; at 0x28563f0&gt;]&gt;
+Let&#39;s execute some native code ! (0x41 + 1)
+Waiting for execution to finish !
+Native code returned &lt;0x42L&gt;
+Allocating memory in current process
+Allocated memory is at &lt;0x3f0000&gt;
+Writing &#39;SOME STUFF&#39; in allocation memory
+Reading memory : &lt;&#39;SOME STUFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00&#39;&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="remote-process-winprocess">
+<span id="sample-remote-process"></span><h2>9.2. Remote process : <code class="xref py py-class docutils literal"><span class="pre">WinProcess</span></code><a class="headerlink" href="#remote-process-winprocess" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os.path</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span> <span class="o">+</span> <span class="s">&quot;\..\..&quot;</span><span class="p">))</span>
+
+<span class="kn">import</span> <span class="nn">windows</span>
+<span class="kn">import</span> <span class="nn">windows.native_exec.simple_x86</span> <span class="kn">as</span> <span class="nn">x86</span>
+<span class="kn">import</span> <span class="nn">windows.native_exec.simple_x64</span> <span class="kn">as</span> <span class="nn">x64</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Creating a calc&quot;</span><span class="p">)</span>
+<span class="n">calc</span> <span class="o">=</span> <span class="n">windows</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">create_process</span><span class="p">(</span><span class="s">r&quot;C:\windows\system32\calc.exe&quot;</span><span class="p">)</span>
+<span class="c"># You don&#39;t need to do that in our case, but it&#39;s useful to now</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Looking for calcs in the processes&quot;</span><span class="p">)</span>
+<span class="n">all_calcs</span> <span class="o">=</span> <span class="p">[</span><span class="n">proc</span> <span class="k">for</span> <span class="n">proc</span> <span class="ow">in</span> <span class="n">windows</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">processes</span> <span class="k">if</span> <span class="n">proc</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s">&quot;calc.exe&quot;</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;They are currently &lt;{0}&gt; calcs running on the system&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">all_calcs</span><span class="p">)))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Let&#39;s play with our calc: &lt;{calc}&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">calc</span><span class="o">=</span><span class="n">calc</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Our calc pid is {calc.pid}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">calc</span><span class="o">=</span><span class="n">calc</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Our calc is a &lt;{calc.bitness}&gt; bits process&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">calc</span><span class="o">=</span><span class="n">calc</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Our calc is a SysWow64 process ? &lt;{calc.is_wow_64}&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">calc</span><span class="o">=</span><span class="n">calc</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Our calc have threads ! &lt;{calc.threads}&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">calc</span><span class="o">=</span><span class="n">calc</span><span class="p">))</span>
+
+<span class="c"># PEB STUFF</span>
+<span class="n">peb</span> <span class="o">=</span> <span class="n">calc</span><span class="o">.</span><span class="n">peb</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Exploring our calc PEB ! {peb}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">peb</span><span class="o">=</span><span class="n">peb</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Command line is {peb.commandline}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">peb</span><span class="o">=</span><span class="n">peb</span><span class="p">))</span>
+<span class="n">modules</span> <span class="o">=</span> <span class="n">peb</span><span class="o">.</span><span class="n">modules</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Here are 3 loaded modules: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">modules</span><span class="p">[:</span><span class="mi">3</span><span class="p">]))</span>
+<span class="c"># See iat_hook.py for module exploration</span>
+
+
+<span class="c"># Remote alloc / read / write</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Allocating memory in our calc&quot;</span><span class="p">)</span>
+<span class="n">addr</span> <span class="o">=</span> <span class="n">calc</span><span class="o">.</span><span class="n">virtual_alloc</span><span class="p">(</span><span class="mh">0x1000</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Allocated memory is at &lt;{0}&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">hex</span><span class="p">(</span><span class="n">addr</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Writing &#39;SOME STUFF&#39; in allocated memory&quot;</span><span class="p">)</span>
+<span class="n">calc</span><span class="o">.</span><span class="n">write_memory</span><span class="p">(</span><span class="n">addr</span><span class="p">,</span> <span class="s">&quot;SOME STUFF&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Reading allocated memory : &lt;{0}&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">calc</span><span class="o">.</span><span class="n">read_memory</span><span class="p">(</span><span class="n">addr</span><span class="p">,</span> <span class="mi">20</span><span class="p">))))</span>
+
+
+<span class="c"># Remote Execution</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Execution some native code in our calc (write 0x424242 at allocated address + return 0x1337)&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">calc</span><span class="o">.</span><span class="n">bitness</span> <span class="o">==</span> <span class="mi">32</span><span class="p">:</span>
+    <span class="c"># Let&#39;s generate some native code</span>
+    <span class="n">code</span> <span class="o">=</span>  <span class="n">x86</span><span class="o">.</span><span class="n">MultipleInstr</span><span class="p">()</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="n">x86</span><span class="o">.</span><span class="n">deref</span><span class="p">(</span><span class="n">addr</span><span class="p">),</span> <span class="mh">0x42424242</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="s">&quot;EAX&quot;</span><span class="p">,</span> <span class="mh">0x1337</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Ret</span><span class="p">()</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">code</span> <span class="o">=</span>  <span class="n">x64</span><span class="o">.</span><span class="n">MultipleInstr</span><span class="p">()</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x64</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="s">&#39;RAX&#39;</span><span class="p">,</span> <span class="n">addr</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x64</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="n">x64</span><span class="o">.</span><span class="n">mem</span><span class="p">(</span><span class="s">&quot;[RAX]&quot;</span><span class="p">),</span> <span class="mh">0x42424242</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x64</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="s">&quot;RAX&quot;</span><span class="p">,</span> <span class="mh">0x1337</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x64</span><span class="o">.</span><span class="n">Ret</span><span class="p">()</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Executing native code !&quot;</span><span class="p">)</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">calc</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">code</span><span class="o">.</span><span class="n">get_code</span><span class="p">())</span>
+<span class="n">t</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Return code = {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">hex</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">exit_code</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Reading allocated memory : &lt;{0}&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">calc</span><span class="o">.</span><span class="n">read_memory</span><span class="p">(</span><span class="n">addr</span><span class="p">,</span> <span class="mi">20</span><span class="p">))))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Executing python code !&quot;</span><span class="p">)</span>
+<span class="c"># Make &#39;windows&#39; importable in remote python</span>
+<span class="n">calc</span><span class="o">.</span><span class="n">execute_python</span><span class="p">(</span><span class="s">&quot;import sys; sys.path.append(r&#39;{0}&#39;)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+
+<span class="n">calc</span><span class="o">.</span><span class="n">execute_python</span><span class="p">(</span><span class="s">&quot;import windows&quot;</span><span class="p">)</span>
+<span class="c"># Let&#39;s write in the calc &#39;current_process&#39; memory :)</span>
+<span class="n">calc</span><span class="o">.</span><span class="n">execute_python</span><span class="p">(</span><span class="s">&quot;addr = {addr}; windows.current_process.write_memory(addr, &#39;HELLO FROM CALC&#39;)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">addr</span><span class="o">=</span><span class="n">addr</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Reading allocated memory : &lt;{0}&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">calc</span><span class="o">.</span><span class="n">read_memory</span><span class="p">(</span><span class="n">addr</span><span class="p">,</span> <span class="mi">20</span><span class="p">))))</span>
+
+<span class="c"># python_execute is &#39;safe&#39;:</span>
+<span class="c"># - it waits for the thread completion</span>
+<span class="c"># - it raise an error if remote code raised some</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Trying to import in remote module &#39;FAKE_MODULE&#39;&quot;</span><span class="p">)</span>
+    <span class="n">calc</span><span class="o">.</span><span class="n">execute_python</span><span class="p">(</span><span class="s">&quot;def func():</span><span class="se">\n</span><span class="s">   import FAKE_MODULE</span><span class="se">\n</span><span class="s">func()&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">windows</span><span class="o">.</span><span class="n">injection</span><span class="o">.</span><span class="n">RemotePythonError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Remote ERROR !&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;That&#39;s all ! killing the calc&quot;</span><span class="p">)</span>
+<span class="n">calc</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Output:</p>
+<div class="highlight-python"><div class="highlight"><pre>(cmd λ) python.exe remote_calc.py
+Creating a calc
+Looking for calcs in the processes
+They are currently &lt;1&gt; calcs running on the system
+Let&#39;s play with our calc: &lt;&lt;WinProcess &quot;calc.exe&quot; pid 8052 at 0x27bd5d0&gt;&gt;
+Our calc pid is 8052
+Our calc is a &lt;32&gt; bits process
+Our calc is a SysWow64 process ? &lt;True&gt;
+Our calc have threads ! &lt;[&lt;WinThread 8552 owner &quot;calc.exe&quot; at 0x27f7f30&gt;, &lt;WinThread 3464 owner &quot;calc.exe&quot; at 0x27f7f80&gt;, &lt;WinThread 3840 owner &quot;calc.exe&quot; at 0x27fa030&gt;]&gt;
+Exploring our calc PEB ! &lt;windows.winobject.RemotePEB object at 0x026DDD00&gt;
+Command line is &lt;RemoteWinUnicodeString &quot;&quot;C:\windows\system32\calc.exe&quot;&quot; at 0x26ddee0&gt;
+Here are 3 loaded modules: [&lt;RemoteLoadedModule &quot;calc.exe&quot; at 0x26dde40&gt;, &lt;RemoteLoadedModule &quot;ntdll.dll&quot; at 0x26ddf30&gt;, &lt;RemoteLoadedModule &quot;kernel32.dll&quot; at 0x26ddc60&gt;]
+Allocating memory in our calc
+Allocated memory is at &lt;0x5c90000&gt;
+Writing &#39;SOME STUFF&#39; in allocated memory
+Reading allocated memory : &lt;&#39;SOME STUFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00&#39;&gt;
+Execution some native code in our calc (write 0x424242 at allocated address + return 0x1337
+Executing native code !
+Return code = 0x1337L
+Reading allocated memory : &lt;&#39;BBBB STUFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00&#39;&gt;
+Executing python code !
+Reading allocated memory : &lt;&#39;HELLO FROM CALC\x00\x00\x00\x00\x00&#39;&gt;
+Trying to import in remote module &#39;FAKE_MODULE&#39;
+Remote ERROR !
+Traceback (most recent call last):
+File &quot;&lt;string&gt;&quot;, line 3, in &lt;module&gt;
+File &quot;&lt;string&gt;&quot;, line 2, in func
+ImportError: No module named FAKE_MODULE
+
+That&#39;s all ! killing the calc
+</pre></div>
+</div>
+</div>
+<div class="section" id="peb-exploration">
+<span id="sample-peb-exploration"></span><h2>9.3. <code class="xref py py-class docutils literal"><span class="pre">PEB</span></code> exploration<a class="headerlink" href="#peb-exploration" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os.path</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span> <span class="o">+</span> <span class="s">&quot;\..\..&quot;</span><span class="p">))</span>
+
+<span class="kn">import</span> <span class="nn">windows</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Exploring the current process PEB&quot;</span><span class="p">)</span>
+<span class="n">peb</span> <span class="o">=</span> <span class="n">windows</span><span class="o">.</span><span class="n">current_process</span><span class="o">.</span><span class="n">peb</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;PEB is &lt;{0}&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">peb</span><span class="p">))</span>
+<span class="n">commandline</span> <span class="o">=</span> <span class="n">peb</span><span class="o">.</span><span class="n">commandline</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Commandline object is {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">commandline</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Commandline string is {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">commandline</span><span class="o">.</span><span class="n">Buffer</span><span class="p">)))</span>
+
+<span class="n">imagepath</span> <span class="o">=</span> <span class="n">peb</span><span class="o">.</span><span class="n">imagepath</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Imagepath  {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">imagepath</span><span class="p">))</span>
+
+<span class="n">modules</span> <span class="o">=</span> <span class="n">peb</span><span class="o">.</span><span class="n">modules</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Printing some modules: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">modules</span><span class="p">[:</span><span class="mi">6</span><span class="p">])))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;=== K32  ===&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Looking for kernel32.dll&quot;</span><span class="p">)</span>
+<span class="n">k32</span> <span class="o">=</span> <span class="p">[</span><span class="n">m</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">modules</span> <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s">&quot;kernel32.dll&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Kernel32 module: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k32</span><span class="p">))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Module name = &lt;{0}&gt; | Fullname = &lt;{1}&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k32</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">k32</span><span class="o">.</span><span class="n">fullname</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Kernel32 is loaded at address {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">hex</span><span class="p">(</span><span class="n">k32</span><span class="o">.</span><span class="n">baseaddr</span><span class="p">)))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;=== K32 PE ===&quot;</span><span class="p">)</span>
+<span class="n">k32pe</span> <span class="o">=</span> <span class="n">k32</span><span class="o">.</span><span class="n">pe</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;PE Representation of k32: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k32pe</span><span class="p">))</span>
+<span class="n">exports</span> <span class="o">=</span> <span class="n">k32pe</span><span class="o">.</span><span class="n">exports</span>
+<span class="n">some_exports</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">exports</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="s">&quot;VirtualAlloc&quot;</span><span class="p">,</span> <span class="s">&quot;CreateFileA&quot;</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Here are some exports {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">some_exports</span><span class="p">))</span>
+
+<span class="n">imports</span> <span class="o">=</span> <span class="n">k32pe</span><span class="o">.</span><span class="n">imports</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Import DLL dependancies are (without api-*): {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">imports</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">x</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;api-&quot;</span><span class="p">)]))</span>
+
+<span class="n">NtCreateFile_iat</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">imports</span><span class="p">[</span><span class="s">&quot;ntdll.dll&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s">&quot;NtCreateFile&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;IAT Entry for ntdll!NtCreateFile = {0} | addr = {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">NtCreateFile_iat</span><span class="p">,</span> <span class="nb">hex</span><span class="p">(</span><span class="n">NtCreateFile_iat</span><span class="o">.</span><span class="n">addr</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Sections: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k32pe</span><span class="o">.</span><span class="n">sections</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Output:</p>
+<div class="highlight-python"><div class="highlight"><pre>(cmd λ) python.exe  peb.py
+Exploring the current process PEB
+PEB is &lt;&lt;windows.winobject.PEB object at 0x02649B70&gt;&gt;
+Commandline object is &lt;WinUnicodeString &quot;python.exe   peb.py &quot; at 0x2649c60&gt;
+Commandline string is u&#39;python.exe   peb.py &#39;
+Imagepath  &lt;WinUnicodeString &quot;C:\Python27\python.exe&quot; at 0x2649d50&gt;
+Printing some modules: &lt;LoadedModule &quot;python.exe&quot; at 0x272a030&gt;
+&lt;LoadedModule &quot;ntdll.dll&quot; at 0x272a080&gt;
+&lt;LoadedModule &quot;kernel32.dll&quot; at 0x272acb0&gt;
+&lt;LoadedModule &quot;kernelbase.dll&quot; at 0x272ad00&gt;
+&lt;LoadedModule &quot;python27.dll&quot; at 0x272ad50&gt;
+&lt;LoadedModule &quot;msvcr90.dll&quot; at 0x272ada0&gt;
+=== K32  ===
+Looking for kernel32.dll
+Kernel32 module: &lt;LoadedModule &quot;kernel32.dll&quot; at 0x272acb0&gt;
+Module name = &lt;kernel32.dll&gt; | Fullname = &lt;C:\Windows\SYSTEM32\KERNEL32.DLL&gt;
+Kernel32 is loaded at address 0x774c0000
+=== K32 PE ===
+PE Representation of k32: &lt;windows.pe_parse.PEFile object at 0x0272D350&gt;
+Here are some exports {0: 2001566688L, u&#39;CreateFileA&#39;: 2001635616L, 42: 2001647872L, u&#39;VirtualAlloc&#39;: 2001570704L}
+Import DLL dependancies are (without api-*): [u&#39;ntdll.dll&#39;, u&#39;kernelbase.dll&#39;]
+IAT Entry for ntdll!NtCreateFile = &lt;IATEntry &quot;NtCreateFile&quot; ordinal 253&gt; | addr = 0x77541128L
+Sections: [&lt;PESection &quot;.text&quot;&gt;, &lt;PESection &quot;.rdata&quot;&gt;, &lt;PESection &quot;.data&quot;&gt;, &lt;PESection &quot;.rsrc&quot;&gt;, &lt;PESection &quot;.reloc&quot;&gt;]
+</pre></div>
+</div>
+</div>
+<div class="section" id="iat-hooking">
+<span id="sample-iat-hook"></span><h2>9.4. IAT hooking<a class="headerlink" href="#iat-hooking" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os.path</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span> <span class="o">+</span> <span class="s">&quot;\..\..&quot;</span><span class="p">))</span>
+
+<span class="kn">import</span> <span class="nn">_winreg</span>
+<span class="kn">import</span> <span class="nn">windows</span>
+
+<span class="c"># Here is a demo of IAT hooking in python</span>
+<span class="c"># We will hook the &#39;RegOpenKeyExA&#39; entry of Python27.dll because it is easy to trigger !</span>
+
+<span class="c"># First: let&#39;s create our hook</span>
+<span class="c"># windows.hooks.RegOpenKeyExACallback is generated based on windows.generated_def.winfuncs</span>
+<span class="nd">@windows.hooks.RegOpenKeyExACallback</span>
+<span class="k">def</span> <span class="nf">open_reg_hook</span><span class="p">(</span><span class="n">hKey</span><span class="p">,</span> <span class="n">lpSubKey</span><span class="p">,</span> <span class="n">ulOptions</span><span class="p">,</span> <span class="n">samDesired</span><span class="p">,</span> <span class="n">phkResult</span><span class="p">,</span> <span class="n">real_function</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;&lt;in hook&gt; Hook called | hKey = {0} | lpSubKey = &lt;{1}&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">hex</span><span class="p">(</span><span class="n">hKey</span><span class="p">),</span> <span class="n">lpSubKey</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
+    <span class="c"># Our hook can choose to call the real_function or not</span>
+    <span class="k">if</span> <span class="s">&quot;SECRET&quot;</span> <span class="ow">in</span> <span class="n">lpSubKey</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;&lt;in hook&gt; Secret key asked, returning magic handle 0x12345678&quot;</span><span class="p">)</span>
+        <span class="c"># We must respect the hooked method return-value interface</span>
+        <span class="n">phkResult</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mh">0x12345678</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="s">&quot;FAIL&quot;</span> <span class="ow">in</span> <span class="n">lpSubKey</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;&lt;in hook&gt; Asked for a failing key: returning 0x2a&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">42</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;&lt;in hook&gt; Non-secret key : calling normal function&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">real_function</span><span class="p">()</span>
+
+
+<span class="c"># Get the peb of our process</span>
+<span class="n">peb</span> <span class="o">=</span> <span class="n">windows</span><span class="o">.</span><span class="n">current_process</span><span class="o">.</span><span class="n">peb</span>
+
+<span class="c"># Get the pythonxx.dll module</span>
+<span class="n">pythondll_module</span> <span class="o">=</span> <span class="p">[</span><span class="n">m</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">peb</span><span class="o">.</span><span class="n">modules</span> <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;python&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">m</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">&quot;.dll&quot;</span><span class="p">)][</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c"># Get the iat entries for DLL advapi32.dll</span>
+<span class="n">adv_imports</span> <span class="o">=</span> <span class="n">pythondll_module</span><span class="o">.</span><span class="n">pe</span><span class="o">.</span><span class="n">imports</span><span class="p">[</span><span class="s">&#39;advapi32.dll&#39;</span><span class="p">]</span>
+
+<span class="c"># Get RegOpenKeyExA iat entry</span>
+<span class="n">RegOpenKeyExA_iat</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">adv_imports</span> <span class="k">if</span> <span class="n">n</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s">&quot;RegOpenKeyExA&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c"># Setup our hook</span>
+<span class="n">RegOpenKeyExA_iat</span><span class="o">.</span><span class="n">set_hook</span><span class="p">(</span><span class="n">open_reg_hook</span><span class="p">)</span>
+
+<span class="c"># Use python native module _winreg that call &#39;RegOpenKeyExA&#39;</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Asking for &lt;MY_SECRET_KEY&gt;&quot;</span><span class="p">)</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">_winreg</span><span class="o">.</span><span class="n">OpenKey</span><span class="p">(</span><span class="mi">1234567</span><span class="p">,</span> <span class="s">&quot;MY_SECRET_KEY&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Result = &quot;</span> <span class="o">+</span> <span class="nb">hex</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">handle</span><span class="p">))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Asking for &lt;MY_FAIL_KEY&gt;&quot;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">_winreg</span><span class="o">.</span><span class="n">OpenKey</span><span class="p">(</span><span class="mi">1234567</span><span class="p">,</span> <span class="s">&quot;MY_FAIL_KEY&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Result = &quot;</span> <span class="o">+</span> <span class="nb">hex</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">handle</span><span class="p">))</span>
+<span class="k">except</span> <span class="ne">WindowsError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Asking for &lt;HKEY_CURRENT_USER/Software&gt;&quot;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">_winreg</span><span class="o">.</span><span class="n">OpenKey</span><span class="p">(</span><span class="n">_winreg</span><span class="o">.</span><span class="n">HKEY_CURRENT_USER</span><span class="p">,</span> <span class="s">&quot;Software&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Result = &quot;</span> <span class="o">+</span> <span class="nb">hex</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">handle</span><span class="p">))</span>
+<span class="k">except</span> <span class="ne">WindowsError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Output:</p>
+<div class="highlight-python"><div class="highlight"><pre>(cmd λ) python iat_hook.py
+Asking for &lt;MY_SECRET_KEY&gt;
+&lt;in hook&gt; Hook called | hKey = 0x12d687 | lpSubKey = &lt;MY_SECRET_KEY&gt;
+&lt;in hook&gt; Secret key asked, returning magic handle 0x12345678
+Result = 0x12345678
+
+Asking for &lt;MY_FAIL_KEY&gt;
+&lt;in hook&gt; Hook called | hKey = 0x12d687 | lpSubKey = &lt;MY_FAIL_KEY&gt;
+&lt;in hook&gt; Asked for a failing key: returning 0x2a
+WindowsError(42, &#39;Windows Error 0x2A&#39;)
+
+Asking for &lt;HKEY_CURRENT_USER/Software&gt;
+&lt;in hook&gt; Hook called | hKey = 0x80000001L | lpSubKey = &lt;Software&gt;
+&lt;in hook&gt; Non-secret key : calling normal function
+Result = 0x108
+</pre></div>
+</div>
+</div>
+<div class="section" id="network-socket-exploration">
+<span id="sample-network-exploration"></span><h2>9.5. <code class="xref py py-class docutils literal"><span class="pre">Network</span></code> - socket exploration<a class="headerlink" href="#network-socket-exploration" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os.path</span>
+<span class="kn">import</span> <span class="nn">socket</span>
+
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span> <span class="o">+</span> <span class="s">&quot;\..\..&quot;</span><span class="p">))</span>
+
+<span class="kn">import</span> <span class="nn">windows</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">windows</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">check_is_elevated</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;!!! Demo will fail because closing a connection require elevated process !!!&quot;</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Working on ipv4&quot;</span><span class="p">)</span>
+<span class="n">conns</span> <span class="o">=</span> <span class="n">windows</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">ipv4</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;== Listening ==&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Some listening connections: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">([</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">conns</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">c</span><span class="o">.</span><span class="n">established</span><span class="p">][:</span><span class="mi">3</span><span class="p">]))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Listening ports are : {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">([</span><span class="n">c</span><span class="o">.</span><span class="n">local_port</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">conns</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">c</span><span class="o">.</span><span class="n">established</span><span class="p">]))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;== Established ==&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Some established connections: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">([</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">conns</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">established</span><span class="p">][:</span><span class="mi">3</span><span class="p">]))</span>
+
+<span class="n">TARGET_HOST</span> <span class="o">=</span> <span class="s">&quot;localhost&quot;</span>
+<span class="n">TARGET_PORT</span> <span class="o">=</span> <span class="mi">80</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;== connection to {0}:{1} ==&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">TARGET_HOST</span><span class="p">,</span> <span class="n">TARGET_PORT</span><span class="p">))</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">create_connection</span><span class="p">((</span><span class="n">TARGET_HOST</span><span class="p">,</span> <span class="n">TARGET_PORT</span><span class="p">))</span>
+
+<span class="n">our_connection</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">windows</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">ipv4</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">established</span> <span class="ow">and</span> <span class="n">c</span><span class="o">.</span><span class="n">remote_port</span> <span class="o">==</span> <span class="n">TARGET_PORT</span> <span class="ow">and</span> <span class="n">c</span><span class="o">.</span><span class="n">remote_addr</span> <span class="o">==</span> <span class="n">s</span><span class="o">.</span><span class="n">getpeername</span><span class="p">()[</span><span class="mi">0</span><span class="p">]]</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Our connection is {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">our_connection</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Sending YOP&quot;</span><span class="p">)</span>
+<span class="n">s</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">&quot;YOP&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Closing socket&quot;</span><span class="p">)</span>
+<span class="n">our_connection</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Sending LAIT&quot;</span><span class="p">)</span>
+<span class="n">s</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">&quot;LAIT&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Output:</p>
+<div class="highlight-python"><div class="highlight"><pre>(cmd λ) python.exe  network.py
+Working on ipv4
+== Listening ==
+Some listening connections: [&lt;TCP IPV4 Listening socket on 0.0.0.0:80&gt;, &lt;TCP IPV4 Listening socket on 0.0.0.0:135&gt;, &lt;TCP IPV4 Listening socket on 0.0.0.0:443&gt;]
+Listening ports are : [80, 135, 443, 445, 902, 912, 5357, 49152, 49153, 49154, 49155, 49157, 49159, 8307, 25340, 139, 139]
+== Established ==
+Some established connections: [&lt;TCP IPV4 Connection 127.0.0.1:25340 -&gt; 127.0.0.1:49472&gt;, &lt;TCP IPV4 Connection 127.0.0.1:49173 -&gt; 127.0.0.1:49174&gt;, &lt;TCP IPV4 Connection 127.0.0.1:49174 -&gt; 127.0.0.1:49173&gt;]
+== connection to localhost:80 ==
+Our connection is [&lt;TCP IPV4 Connection 127.0.0.1:49616 -&gt; 127.0.0.1:80&gt;]
+Sending YOP
+Closing socket
+Sending LAIT
+Traceback (most recent call last):
+File &quot;.\network.py&quot;, line 45, in &lt;module&gt;
+    s.send(&quot;LAIT&quot;)
+socket.error: [Errno 10054] An existing connection was forcibly closed by the remote host
+</pre></div>
+</div>
+</div>
+<div class="section" id="registry">
+<span id="sample-registry"></span><h2>9.6. <code class="xref py py-class docutils literal"><span class="pre">Registry</span></code><a class="headerlink" href="#registry" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os.path</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span> <span class="o">+</span> <span class="s">&quot;\..\..&quot;</span><span class="p">))</span>
+
+<span class="kn">import</span> <span class="nn">windows</span>
+
+<span class="n">registry</span> <span class="o">=</span> <span class="n">windows</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">registry</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Registry is &lt;{0}&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">registry</span><span class="p">))</span>
+
+<span class="n">current_user</span> <span class="o">=</span> <span class="n">registry</span><span class="p">[</span><span class="s">&quot;HKEY_CURRENT_USER&quot;</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;HKEY_CURRENT_USER is &lt;{0}&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">current_user</span><span class="p">))</span>
+<span class="n">subkeys_name</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">current_user</span><span class="o">.</span><span class="n">subkeys</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;HKEY_CURRENT_USER subkeys names are:&quot;</span><span class="p">)</span>
+<span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">subkeys_name</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Opening &#39;Software&#39; in HKEY_CURRENT_USER: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">current_user</span><span class="p">[</span><span class="s">&quot;Software&quot;</span><span class="p">]))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;We can also open it in one access: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">registry</span><span class="p">[</span><span class="s">r&quot;HKEY_CURRENT_USER\Sofware&quot;</span><span class="p">]))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Looking at CurrentVersion&quot;</span><span class="p">)</span>
+
+<span class="n">windows_info</span> <span class="o">=</span> <span class="n">registry</span><span class="p">[</span><span class="s">&quot;HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion&quot;</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Key is {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">windows_info</span><span class="p">))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;values are:&quot;</span><span class="p">)</span>
+<span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">windows_info</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+
+<span class="n">registered_owner</span> <span class="o">=</span> <span class="n">windows_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;RegisteredOwner&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;registered owner = &lt;{0}&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">registered_owner</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Output:</p>
+<div class="highlight-python"><div class="highlight"><pre>(cmd λ) python.exe registry.py
+Registry is &lt;&lt;windows.registry.Registry object at 0x02941290&gt;&gt;
+HKEY_CURRENT_USER is &lt;&lt;PyHKey &quot;HKEY_CURRENT_USER&quot;&gt;&gt;
+HKEY_CURRENT_USER subkeys names are:
+[&#39;AppEvents&#39;,
+&#39;AppXBackupContentType&#39;,
+&#39;Console&#39;,
+&#39;Control Panel&#39;,
+&#39;Environment&#39;,
+&#39;EUDC&#39;,
+&#39;Identities&#39;,
+&#39;Keyboard Layout&#39;,
+&#39;Network&#39;,
+&#39;Printers&#39;,
+&#39;Software&#39;,
+&#39;System&#39;,
+&#39;Volatile Environment&#39;]
+Opening &#39;Software&#39; in HKEY_CURRENT_USER: &lt;PyHKey &quot;HKEY_CURRENT_USER\Software&quot;&gt;
+We can also open it in one access: &lt;PyHKey &quot;HKEY_CURRENT_USER\Sofware&quot;&gt;
+Looking at CurrentVersion
+Key is &lt;PyHKey &quot;HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion&quot;&gt;
+values are:
+[KeyValue(name=&#39;SoftwareType&#39;, value=u&#39;System&#39;, type=1),
+KeyValue(name=&#39;RegisteredOwner&#39;, value=u&#39;hakril&#39;, type=1),
+KeyValue(name=&#39;InstallDate&#39;, value=0, type=4),
+...
+KeyValue(name=&#39;PathName&#39;, value=u&#39;C:\\Windows&#39;, type=1)]
+registered owner = &lt;KeyValue(name=&#39;RegisteredOwner&#39;, value=u&#39;hakril&#39;, type=1)&gt;
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">9. Samples of code</a><ul>
+<li><a class="reference internal" href="#windows-current-process">9.1. <code class="docutils literal"><span class="pre">windows.current_process</span></code></a></li>
+<li><a class="reference internal" href="#remote-process-winprocess">9.2. Remote process : <code class="docutils literal"><span class="pre">WinProcess</span></code></a></li>
+<li><a class="reference internal" href="#peb-exploration">9.3. <code class="docutils literal"><span class="pre">PEB</span></code> exploration</a></li>
+<li><a class="reference internal" href="#iat-hooking">9.4. IAT hooking</a></li>
+<li><a class="reference internal" href="#network-socket-exploration">9.5. <code class="docutils literal"><span class="pre">Network</span></code> - socket exploration</a></li>
+<li><a class="reference internal" href="#registry">9.6. <code class="docutils literal"><span class="pre">Registry</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="internals.html"
+                        title="previous chapter">8. Internals</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/sample.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="internals.html" title="8. Internals"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">PythonForWindows 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Clement Rouault.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

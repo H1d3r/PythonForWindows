@@ -1,0 +1,401 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>windows.native_exec.native_function &mdash; PythonForWindows 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="PythonForWindows 0.1 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">PythonForWindows 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for windows.native_exec.native_function</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">ctypes</span>
+<span class="kn">import</span> <span class="nn">mmap</span>
+<span class="kn">import</span> <span class="nn">platform</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">import</span> <span class="nn">windows</span>
+<span class="kn">import</span> <span class="nn">windows.winproxy</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">simple_x86</span> <span class="k">as</span> <span class="n">x86</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">simple_x64</span> <span class="k">as</span> <span class="n">x64</span>
+
+
+<span class="k">class</span> <span class="nc">PyObj</span><span class="p">(</span><span class="n">ctypes</span><span class="o">.</span><span class="n">Structure</span><span class="p">):</span>
+    <span class="n">_fields_</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&quot;ob_refcnt&quot;</span><span class="p">,</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_size_t</span><span class="p">),</span>
+                <span class="p">(</span><span class="s">&quot;ob_type&quot;</span><span class="p">,</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">)]</span>  <span class="c"># must be cast</span>
+
+
+<span class="k">class</span> <span class="nc">PyMmap</span><span class="p">(</span><span class="n">PyObj</span><span class="p">):</span>
+    <span class="n">_fields_</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&quot;ob_addr&quot;</span><span class="p">,</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_size_t</span><span class="p">),</span> <span class="p">(</span><span class="s">&quot;ob_size&quot;</span><span class="p">,</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_size_t</span><span class="p">)]</span>
+
+
+<span class="c"># Specific mmap class for code injection</span>
+<span class="k">class</span> <span class="nc">MyMap</span><span class="p">(</span><span class="n">mmap</span><span class="o">.</span><span class="n">mmap</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; A mmap that is never unmapped and that contains the page address &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwarg</span><span class="p">):</span>
+        <span class="c"># Get the page address by &#39;introspection&#39; of the C struct</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">PyMmap</span><span class="o">.</span><span class="n">from_address</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addr</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">ob_addr</span>
+        <span class="c"># Prevent garbage collection (so unmaping) of the page</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">ob_refcnt</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">get_map</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Dispatch to the good mmap implem depending on the current system &quot;&quot;&quot;</span>
+        <span class="n">systems</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;windows&#39;</span><span class="p">:</span> <span class="n">Win32MyMap</span><span class="p">,</span>
+                   <span class="s">&#39;linux&#39;</span><span class="p">:</span> <span class="n">UnixMyMap</span><span class="p">}</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">systems</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Unknow system {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">systems</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="o">.</span><span class="n">get_map</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Win32MyMap</span><span class="p">(</span><span class="n">MyMap</span><span class="p">):</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">get_map</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+        <span class="n">addr</span> <span class="o">=</span> <span class="n">windows</span><span class="o">.</span><span class="n">winproxy</span><span class="o">.</span><span class="n">VirtualAlloc</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="mh">0x1000</span><span class="p">,</span> <span class="mh">0x40</span><span class="p">)</span>
+        <span class="n">new_map</span> <span class="o">=</span> <span class="p">(</span><span class="n">ctypes</span><span class="o">.</span><span class="n">c_char</span> <span class="o">*</span> <span class="n">size</span><span class="p">)</span><span class="o">.</span><span class="n">from_address</span><span class="p">(</span><span class="n">addr</span><span class="p">)</span>
+        <span class="n">new_map</span><span class="o">.</span><span class="n">addr</span> <span class="o">=</span> <span class="n">addr</span>
+        <span class="k">if</span> <span class="n">new_map</span><span class="o">.</span><span class="n">addr</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">WinError</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">new_map</span>
+
+
+<span class="k">class</span> <span class="nc">UnixMyMap</span><span class="p">(</span><span class="n">MyMap</span><span class="p">):</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">get_map</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+        <span class="n">prot</span> <span class="o">=</span> <span class="n">mmap</span><span class="o">.</span><span class="n">PROT_EXEC</span> <span class="o">|</span> <span class="n">mmap</span><span class="o">.</span><span class="n">PROT_WRITE</span> <span class="o">|</span> <span class="n">mmap</span><span class="o">.</span><span class="n">PROT_READ</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">prot</span><span class="o">=</span><span class="n">prot</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">CustomAllocator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">int_size</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;32bit&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s">&#39;64bit&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maps</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_new_page</span><span class="p">(</span><span class="mh">0x1000</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">names</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">get_int_size</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+        <span class="n">bits</span> <span class="o">=</span> <span class="n">platform</span><span class="o">.</span><span class="n">architecture</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">bits</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cls</span><span class="o">.</span><span class="n">int_size</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Unknow platform bits &lt;{0}&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">bits</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">int_size</span><span class="p">[</span><span class="n">bits</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">get_new_page</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">MyMap</span><span class="o">.</span><span class="n">get_map</span><span class="p">(</span><span class="n">size</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cur_offset</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cur_page_size</span> <span class="o">=</span> <span class="n">size</span>
+
+    <span class="k">def</span> <span class="nf">reserve_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">size</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur_offset</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur_page_size</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_new_page</span><span class="p">((</span><span class="n">size</span> <span class="o">+</span> <span class="mh">0x1000</span><span class="p">)</span> <span class="o">&amp;</span> <span class="o">~</span><span class="mh">0xfff</span><span class="p">)</span>
+        <span class="n">addr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maps</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">addr</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur_offset</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cur_offset</span> <span class="o">+=</span> <span class="n">size</span>
+        <span class="k">return</span> <span class="n">addr</span>
+
+    <span class="k">def</span> <span class="nf">reserve_int</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nb_int</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">int_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_int_size</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">reserve_size</span><span class="p">(</span><span class="n">int_size</span> <span class="o">*</span> <span class="n">nb_int</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">write_code</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">code</span><span class="p">):</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">size</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur_offset</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur_page_size</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_new_page</span><span class="p">((</span><span class="n">size</span> <span class="o">+</span> <span class="mh">0x1000</span><span class="p">)</span> <span class="o">&amp;</span> <span class="o">~</span><span class="mh">0xfff</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maps</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">cur_offset</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur_offset</span> <span class="o">+</span> <span class="n">size</span><span class="p">]</span> <span class="o">=</span> <span class="n">code</span>
+        <span class="n">addr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maps</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">addr</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur_offset</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cur_offset</span> <span class="o">+=</span> <span class="n">size</span>
+        <span class="k">return</span> <span class="n">addr</span>
+
+<span class="n">allocator</span> <span class="o">=</span> <span class="n">CustomAllocator</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">get_functions</span><span class="p">():</span>
+    <span class="n">version</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span>
+    <span class="n">python_dll</span> <span class="o">=</span> <span class="s">&quot;python&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">version</span><span class="o">.</span><span class="n">major</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">version</span><span class="o">.</span><span class="n">minor</span><span class="p">)</span>
+
+    <span class="n">PyGILState_Ensure</span> <span class="o">=</span> <span class="n">windows</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">get_func_addr</span><span class="p">(</span><span class="n">python_dll</span><span class="p">,</span> <span class="s">&#39;PyGILState_Ensure&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+    <span class="n">PyObject_CallObject</span> <span class="o">=</span> <span class="n">windows</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">get_func_addr</span><span class="p">(</span><span class="n">python_dll</span><span class="p">,</span> <span class="s">&#39;PyObject_CallObject&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+    <span class="n">PyGILState_Release</span> <span class="o">=</span> <span class="n">windows</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">get_func_addr</span><span class="p">(</span><span class="n">python_dll</span><span class="p">,</span> <span class="s">&#39;PyGILState_Release&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">PyGILState_Ensure</span><span class="p">,</span> <span class="n">PyObject_CallObject</span><span class="p">,</span> <span class="n">PyGILState_Release</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">analyse_callback</span><span class="p">(</span><span class="n">callback</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">callable</span><span class="p">(</span><span class="n">callback</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Need a callable object :)&quot;</span><span class="p">)</span>
+    <span class="n">obj_id</span> <span class="o">=</span> <span class="nb">id</span><span class="p">(</span><span class="n">callback</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">callback</span><span class="p">,</span> <span class="s">&#39;_objects&#39;</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Need a ctypes PyCFuncPtr&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">obj_id</span>
+
+
+<span class="c"># For windows 32 bits with stdcall</span>
+<span class="k">def</span> <span class="nf">generate_stub_32</span><span class="p">(</span><span class="n">callback</span><span class="p">):</span>
+    <span class="n">c_callback</span> <span class="o">=</span> <span class="n">get_callback_address_32</span><span class="p">(</span><span class="n">callback</span><span class="p">)</span>
+
+    <span class="n">gstate_save_addr</span> <span class="o">=</span> <span class="n">x86</span><span class="o">.</span><span class="n">create_displacement</span><span class="p">(</span><span class="n">disp</span><span class="o">=</span><span class="n">allocator</span><span class="o">.</span><span class="n">reserve_int</span><span class="p">())</span>
+    <span class="n">return_addr_save_addr</span> <span class="o">=</span> <span class="n">x86</span><span class="o">.</span><span class="n">create_displacement</span><span class="p">(</span><span class="n">disp</span><span class="o">=</span><span class="n">allocator</span><span class="o">.</span><span class="n">reserve_int</span><span class="p">())</span>
+    <span class="n">save_ebx</span> <span class="o">=</span> <span class="n">x86</span><span class="o">.</span><span class="n">create_displacement</span><span class="p">(</span><span class="n">disp</span><span class="o">=</span><span class="n">allocator</span><span class="o">.</span><span class="n">reserve_int</span><span class="p">())</span>
+    <span class="n">save_ecx</span> <span class="o">=</span> <span class="n">x86</span><span class="o">.</span><span class="n">create_displacement</span><span class="p">(</span><span class="n">disp</span><span class="o">=</span><span class="n">allocator</span><span class="o">.</span><span class="n">reserve_int</span><span class="p">())</span>
+    <span class="n">save_edx</span> <span class="o">=</span> <span class="n">x86</span><span class="o">.</span><span class="n">create_displacement</span><span class="p">(</span><span class="n">disp</span><span class="o">=</span><span class="n">allocator</span><span class="o">.</span><span class="n">reserve_int</span><span class="p">())</span>
+    <span class="n">save_esi</span> <span class="o">=</span> <span class="n">x86</span><span class="o">.</span><span class="n">create_displacement</span><span class="p">(</span><span class="n">disp</span><span class="o">=</span><span class="n">allocator</span><span class="o">.</span><span class="n">reserve_int</span><span class="p">())</span>
+    <span class="n">save_edi</span> <span class="o">=</span> <span class="n">x86</span><span class="o">.</span><span class="n">create_displacement</span><span class="p">(</span><span class="n">disp</span><span class="o">=</span><span class="n">allocator</span><span class="o">.</span><span class="n">reserve_int</span><span class="p">())</span>
+
+    <span class="n">ensure</span><span class="p">,</span> <span class="n">objcall</span><span class="p">,</span> <span class="n">release</span> <span class="o">=</span> <span class="n">get_functions</span><span class="p">()</span>
+
+    <span class="n">code</span> <span class="o">=</span> <span class="n">x86</span><span class="o">.</span><span class="n">MultipleInstr</span><span class="p">()</span>
+    <span class="c"># ## Shellcode ## #</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="n">save_ebx</span><span class="p">,</span> <span class="s">&#39;EBX&#39;</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="n">save_ecx</span><span class="p">,</span> <span class="s">&#39;ECX&#39;</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="n">save_edx</span><span class="p">,</span> <span class="s">&#39;EDX&#39;</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="n">save_esi</span><span class="p">,</span> <span class="s">&#39;ESI&#39;</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="n">save_edi</span><span class="p">,</span> <span class="s">&#39;EDI&#39;</span><span class="p">)</span>
+
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="s">&#39;EAX&#39;</span><span class="p">,</span> <span class="n">ensure</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Call</span><span class="p">(</span><span class="s">&#39;EAX&#39;</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="n">gstate_save_addr</span><span class="p">,</span> <span class="s">&#39;EAX&#39;</span><span class="p">)</span>
+
+    <span class="c"># Save real return addr (for good argument parsing by the callback)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Pop</span><span class="p">(</span><span class="s">&#39;EAX&#39;</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="n">return_addr_save_addr</span><span class="p">,</span> <span class="s">&#39;EAX&#39;</span><span class="p">)</span>
+
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="s">&#39;EAX&#39;</span><span class="p">,</span> <span class="n">c_callback</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Call</span><span class="p">(</span><span class="s">&#39;EAX&#39;</span><span class="p">)</span>
+
+    <span class="c"># Restore real return value</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="s">&#39;EBX&#39;</span><span class="p">,</span> <span class="n">return_addr_save_addr</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Push</span><span class="p">(</span><span class="s">&#39;EBX&#39;</span><span class="p">)</span>
+
+    <span class="c"># Save return value</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Push</span><span class="p">(</span><span class="s">&#39;EAX&#39;</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="s">&#39;EBX&#39;</span><span class="p">,</span> <span class="n">gstate_save_addr</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Push</span><span class="p">(</span><span class="s">&#39;EBX&#39;</span><span class="p">)</span>
+
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="s">&#39;EAX&#39;</span><span class="p">,</span> <span class="n">release</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Call</span><span class="p">(</span><span class="s">&#39;EAX&#39;</span><span class="p">)</span>
+
+    <span class="c"># Discard `release` argument</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Pop</span><span class="p">(</span><span class="s">&#39;EAX&#39;</span><span class="p">)</span>
+    <span class="c"># Restore return value</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Pop</span><span class="p">(</span><span class="s">&#39;EAX&#39;</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="s">&#39;EBX&#39;</span><span class="p">,</span> <span class="n">save_ebx</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="s">&#39;ECX&#39;</span><span class="p">,</span> <span class="n">save_ecx</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="s">&#39;EDX&#39;</span><span class="p">,</span> <span class="n">save_edx</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="s">&#39;ESI&#39;</span><span class="p">,</span> <span class="n">save_esi</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="s">&#39;EDI&#39;</span><span class="p">,</span> <span class="n">save_edi</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Ret</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">code</span>
+
+
+<span class="k">def</span> <span class="nf">generate_stub_64</span><span class="p">(</span><span class="n">callback</span><span class="p">):</span>
+    <span class="n">c_callback</span> <span class="o">=</span> <span class="n">get_callback_address_64</span><span class="p">(</span><span class="n">callback</span><span class="p">)</span>
+    <span class="n">REG_LEN</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">ctypes</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">)</span>
+    <span class="n">register_to_save</span> <span class="o">=</span> <span class="p">(</span><span class="s">&quot;RBX&quot;</span><span class="p">,</span> <span class="s">&quot;RCX&quot;</span><span class="p">,</span> <span class="s">&quot;RDX&quot;</span><span class="p">,</span> <span class="s">&quot;RSI&quot;</span><span class="p">,</span> <span class="s">&quot;RDI&quot;</span><span class="p">,</span> <span class="s">&quot;R8&quot;</span><span class="p">,</span> <span class="s">&quot;R9&quot;</span><span class="p">,</span> <span class="s">&quot;R10&quot;</span><span class="p">,</span> <span class="s">&quot;R11&quot;</span><span class="p">,</span> <span class="s">&quot;R12&quot;</span><span class="p">,</span> <span class="s">&quot;R13&quot;</span><span class="p">,</span> <span class="s">&quot;R14&quot;</span><span class="p">,</span> <span class="s">&quot;R15&quot;</span><span class="p">)</span>
+
+    <span class="n">push_all_save_register</span> <span class="o">=</span> <span class="n">x64</span><span class="o">.</span><span class="n">MultipleInstr</span><span class="p">([</span><span class="n">x64</span><span class="o">.</span><span class="n">Push</span><span class="p">(</span><span class="n">reg</span><span class="p">)</span> <span class="k">for</span> <span class="n">reg</span> <span class="ow">in</span> <span class="n">register_to_save</span><span class="p">])</span>
+    <span class="n">pop_all_save_register</span> <span class="o">=</span> <span class="n">x64</span><span class="o">.</span><span class="n">MultipleInstr</span><span class="p">([</span><span class="n">x64</span><span class="o">.</span><span class="n">Pop</span><span class="p">(</span><span class="n">reg</span><span class="p">)</span> <span class="k">for</span> <span class="n">reg</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">register_to_save</span><span class="p">)])</span>
+    <span class="c"># Reserve parallel `stack`</span>
+    <span class="n">save_register_space</span> <span class="o">=</span> <span class="n">allocator</span><span class="o">.</span><span class="n">reserve_int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">register_to_save</span><span class="p">))</span>
+    <span class="n">save_register_space_end</span> <span class="o">=</span> <span class="n">save_register_space</span> <span class="o">+</span> <span class="p">(</span><span class="n">ctypes</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">ctypes</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">register_to_save</span><span class="p">)))</span>
+
+    <span class="n">save_rbx</span> <span class="o">=</span> <span class="n">save_register_space_end</span> <span class="o">-</span> <span class="n">REG_LEN</span>
+    <span class="n">save_rbx</span>  <span class="c"># Fuck the linter :D</span>
+    <span class="n">save_rcx</span> <span class="o">=</span> <span class="n">save_register_space_end</span> <span class="o">-</span> <span class="n">REG_LEN</span> <span class="o">-</span> <span class="n">REG_LEN</span>
+    <span class="n">save_rdx</span> <span class="o">=</span> <span class="n">save_register_space_end</span> <span class="o">-</span> <span class="n">REG_LEN</span> <span class="o">-</span> <span class="p">(</span><span class="n">REG_LEN</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">save_rsi</span> <span class="o">=</span> <span class="n">save_register_space_end</span> <span class="o">-</span> <span class="n">REG_LEN</span> <span class="o">-</span> <span class="p">(</span><span class="n">REG_LEN</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">save_rsi</span>  <span class="c"># Fuck the linter :D</span>
+    <span class="n">save_rdi</span> <span class="o">=</span> <span class="n">save_register_space_end</span> <span class="o">-</span> <span class="n">REG_LEN</span> <span class="o">-</span> <span class="p">(</span><span class="n">REG_LEN</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="n">save_rdi</span>  <span class="c"># Fuck the linter :D</span>
+    <span class="n">save_r8</span> <span class="o">=</span> <span class="n">save_register_space_end</span> <span class="o">-</span> <span class="n">REG_LEN</span> <span class="o">-</span> <span class="p">(</span><span class="n">REG_LEN</span> <span class="o">*</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="n">save_r9</span> <span class="o">=</span> <span class="n">save_register_space_end</span> <span class="o">-</span> <span class="n">REG_LEN</span> <span class="o">-</span> <span class="p">(</span><span class="n">REG_LEN</span> <span class="o">*</span> <span class="mi">6</span><span class="p">)</span>
+
+    <span class="n">gstate_save_addr</span> <span class="o">=</span> <span class="n">x64</span><span class="o">.</span><span class="n">create_displacement</span><span class="p">(</span><span class="n">disp</span><span class="o">=</span><span class="n">allocator</span><span class="o">.</span><span class="n">reserve_int</span><span class="p">())</span>
+    <span class="n">return_addr_save_addr</span> <span class="o">=</span> <span class="n">x64</span><span class="o">.</span><span class="n">create_displacement</span><span class="p">(</span><span class="n">disp</span><span class="o">=</span><span class="n">allocator</span><span class="o">.</span><span class="n">reserve_int</span><span class="p">())</span>
+    <span class="n">return_value_save_addr</span> <span class="o">=</span> <span class="n">x64</span><span class="o">.</span><span class="n">create_displacement</span><span class="p">(</span><span class="n">disp</span><span class="o">=</span><span class="n">allocator</span><span class="o">.</span><span class="n">reserve_int</span><span class="p">())</span>
+
+    <span class="n">Reserve_space_for_call</span> <span class="o">=</span> <span class="n">x64</span><span class="o">.</span><span class="n">MultipleInstr</span><span class="p">([</span><span class="n">x64</span><span class="o">.</span><span class="n">Push</span><span class="p">(</span><span class="s">&#39;RDI&#39;</span><span class="p">)]</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="n">Clean_space_for_call</span> <span class="o">=</span> <span class="n">x64</span><span class="o">.</span><span class="n">MultipleInstr</span><span class="p">([</span><span class="n">x64</span><span class="o">.</span><span class="n">Pop</span><span class="p">(</span><span class="s">&#39;RDI&#39;</span><span class="p">)]</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="n">Do_stack_alignement</span> <span class="o">=</span> <span class="n">x64</span><span class="o">.</span><span class="n">MultipleInstr</span><span class="p">([</span><span class="n">x64</span><span class="o">.</span><span class="n">Push</span><span class="p">(</span><span class="s">&#39;RDI&#39;</span><span class="p">)]</span> <span class="o">*</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">Remove_stack_alignement</span> <span class="o">=</span> <span class="n">x64</span><span class="o">.</span><span class="n">MultipleInstr</span><span class="p">([</span><span class="n">x64</span><span class="o">.</span><span class="n">Pop</span><span class="p">(</span><span class="s">&#39;RDI&#39;</span><span class="p">)]</span> <span class="o">*</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">ensure</span><span class="p">,</span> <span class="n">objcall</span><span class="p">,</span> <span class="n">release</span> <span class="o">=</span> <span class="n">get_functions</span><span class="p">()</span>
+
+    <span class="c"># ## Shellcode ## #</span>
+    <span class="n">code</span> <span class="o">=</span> <span class="n">x64</span><span class="o">.</span><span class="n">MultipleInstr</span><span class="p">()</span>
+    <span class="c"># Save all registers</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x64</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="s">&#39;RAX&#39;</span><span class="p">,</span> <span class="n">save_register_space_end</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x64</span><span class="o">.</span><span class="n">Xchg</span><span class="p">(</span><span class="s">&#39;RAX&#39;</span><span class="p">,</span> <span class="s">&#39;RSP&#39;</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">push_all_save_register</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x64</span><span class="o">.</span><span class="n">Xchg</span><span class="p">(</span><span class="s">&#39;RAX&#39;</span><span class="p">,</span> <span class="s">&#39;RSP&#39;</span><span class="p">)</span>
+    <span class="c"># GOOO</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x64</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="s">&#39;RAX&#39;</span><span class="p">,</span> <span class="n">ensure</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">Reserve_space_for_call</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">Do_stack_alignement</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x64</span><span class="o">.</span><span class="n">Call</span><span class="p">(</span><span class="s">&#39;RAX&#39;</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">Remove_stack_alignement</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">Clean_space_for_call</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x64</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="n">gstate_save_addr</span><span class="p">,</span> <span class="s">&#39;RAX&#39;</span><span class="p">)</span>
+    <span class="c"># Save real return addr (for good argument parsing by the callback)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x64</span><span class="o">.</span><span class="n">Pop</span><span class="p">(</span><span class="s">&#39;RAX&#39;</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x64</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="n">return_addr_save_addr</span><span class="p">,</span> <span class="s">&#39;RAX&#39;</span><span class="p">)</span>
+    <span class="c"># Restore parameters for real function call</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x64</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="s">&#39;RAX&#39;</span><span class="p">,</span> <span class="n">save_rcx</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x64</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="s">&#39;RCX&#39;</span><span class="p">,</span> <span class="n">x64</span><span class="o">.</span><span class="n">mem</span><span class="p">(</span><span class="s">&#39;[RAX]&#39;</span><span class="p">))</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x64</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="s">&#39;RAX&#39;</span><span class="p">,</span> <span class="n">save_rdx</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x64</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="s">&#39;RDX&#39;</span><span class="p">,</span> <span class="n">x64</span><span class="o">.</span><span class="n">mem</span><span class="p">(</span><span class="s">&#39;[RAX]&#39;</span><span class="p">))</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x64</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="s">&#39;RAX&#39;</span><span class="p">,</span> <span class="n">save_r9</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x64</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="s">&#39;R9&#39;</span><span class="p">,</span> <span class="n">x64</span><span class="o">.</span><span class="n">mem</span><span class="p">(</span><span class="s">&#39;[RAX]&#39;</span><span class="p">))</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x64</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="s">&#39;RAX&#39;</span><span class="p">,</span> <span class="n">save_r8</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x64</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="s">&#39;R8&#39;</span><span class="p">,</span> <span class="n">x64</span><span class="o">.</span><span class="n">mem</span><span class="p">(</span><span class="s">&#39;[RAX]&#39;</span><span class="p">))</span>
+    <span class="c"># Call python code</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x64</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="s">&#39;RAX&#39;</span><span class="p">,</span> <span class="n">c_callback</span><span class="p">)</span>
+    <span class="c"># no need for stack alignement here as we poped the return addr</span>
+    <span class="c"># no need for Reserve_space_for_call as we must use the previous one for correct argument parsing</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x64</span><span class="o">.</span><span class="n">Call</span><span class="p">(</span><span class="s">&#39;RAX&#39;</span><span class="p">)</span>
+    <span class="c"># Save return value</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x64</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="n">return_value_save_addr</span><span class="p">,</span> <span class="s">&#39;RAX&#39;</span><span class="p">)</span>
+    <span class="c"># Repush real return value</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x64</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="s">&#39;RAX&#39;</span><span class="p">,</span> <span class="n">return_addr_save_addr</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x64</span><span class="o">.</span><span class="n">Push</span><span class="p">(</span><span class="s">&#39;RAX&#39;</span><span class="p">)</span>
+    <span class="c"># Call release(gstate_save)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x64</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="s">&#39;RAX&#39;</span><span class="p">,</span> <span class="n">gstate_save_addr</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x64</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="s">&#39;RCX&#39;</span><span class="p">,</span> <span class="s">&#39;RAX&#39;</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x64</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="s">&#39;RAX&#39;</span><span class="p">,</span> <span class="n">release</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">Reserve_space_for_call</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">Do_stack_alignement</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x64</span><span class="o">.</span><span class="n">Call</span><span class="p">(</span><span class="s">&#39;RAX&#39;</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">Remove_stack_alignement</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">Clean_space_for_call</span>
+    <span class="c"># Restore registers</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x64</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="s">&#39;RAX&#39;</span><span class="p">,</span> <span class="n">save_register_space</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x64</span><span class="o">.</span><span class="n">Xchg</span><span class="p">(</span><span class="s">&#39;RAX&#39;</span><span class="p">,</span> <span class="s">&#39;RSP&#39;</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">pop_all_save_register</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x64</span><span class="o">.</span><span class="n">Xchg</span><span class="p">(</span><span class="s">&#39;RAX&#39;</span><span class="p">,</span> <span class="s">&#39;RSP&#39;</span><span class="p">)</span>
+    <span class="c"># Restore return value</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x64</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="s">&#39;RAX&#39;</span><span class="p">,</span> <span class="n">return_value_save_addr</span><span class="p">)</span>
+    <span class="n">code</span> <span class="o">+=</span> <span class="n">x64</span><span class="o">.</span><span class="n">Ret</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">code</span>
+
+
+<span class="k">def</span> <span class="nf">generate_callback_stub</span><span class="p">(</span><span class="n">callback</span><span class="p">,</span> <span class="n">types</span><span class="p">):</span>
+    <span class="n">func_type</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">WINFUNCTYPE</span><span class="p">(</span><span class="o">*</span><span class="n">types</span><span class="p">)</span>
+    <span class="n">c_callable</span> <span class="o">=</span> <span class="n">func_type</span><span class="p">(</span><span class="n">callback</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">windows</span><span class="o">.</span><span class="n">current_process</span><span class="o">.</span><span class="n">bitness</span> <span class="o">==</span> <span class="mi">32</span><span class="p">:</span>
+        <span class="n">stub</span> <span class="o">=</span> <span class="n">generate_stub_32</span><span class="p">(</span><span class="n">c_callable</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">stub</span> <span class="o">=</span> <span class="n">generate_stub_64</span><span class="p">(</span><span class="n">c_callable</span><span class="p">)</span>
+    <span class="n">stub_addr</span> <span class="o">=</span> <span class="n">allocator</span><span class="o">.</span><span class="n">write_code</span><span class="p">(</span><span class="n">stub</span><span class="o">.</span><span class="n">get_code</span><span class="p">())</span>
+    <span class="n">generate_callback_stub</span><span class="o">.</span><span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">stub</span><span class="p">,</span> <span class="n">c_callable</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">stub_addr</span>
+
+<span class="n">generate_callback_stub</span><span class="o">.</span><span class="n">l</span> <span class="o">=</span> <span class="p">[]</span>
+
+
+<div class="viewcode-block" id="create_function"><a class="viewcode-back" href="../../../native_exec.html#windows.native_exec.create_function">[docs]</a><span class="k">def</span> <span class="nf">create_function</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">types</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create a python function that call raw machine code</span>
+
+<span class="sd">   :param str code: Raw machine code that will be called</span>
+<span class="sd">   :param list types: Return type and parameters type (see :mod:`ctypes`)</span>
+<span class="sd">   :return: the created function</span>
+<span class="sd">   :rtype: function</span>
+<span class="sd">     &quot;&quot;&quot;</span>
+    <span class="n">func_type</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">CFUNCTYPE</span><span class="p">(</span><span class="o">*</span><span class="n">types</span><span class="p">)</span>
+    <span class="n">addr</span> <span class="o">=</span> <span class="n">allocator</span><span class="o">.</span><span class="n">write_code</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">func_type</span><span class="p">(</span><span class="n">addr</span><span class="p">)</span>
+
+
+<span class="c"># Return First argument for 32 bits code</span></div>
+<span class="n">raw_code</span> <span class="o">=</span> <span class="n">x86</span><span class="o">.</span><span class="n">MultipleInstr</span><span class="p">()</span>
+<span class="n">raw_code</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="s">&#39;EAX&#39;</span><span class="p">,</span> <span class="n">x86</span><span class="o">.</span><span class="n">mem</span><span class="p">(</span><span class="s">&#39;[ESP + 4]&#39;</span><span class="p">))</span>
+<span class="n">raw_code</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Ret</span><span class="p">()</span>
+<span class="n">get_callback_address_32</span> <span class="o">=</span> <span class="n">create_function</span><span class="p">(</span><span class="n">raw_code</span><span class="o">.</span><span class="n">get_code</span><span class="p">(),</span> <span class="p">[</span><span class="n">ctypes</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">])</span>
+
+
+<span class="c"># Return First argument for 64 bits code</span>
+<span class="n">raw_code</span> <span class="o">=</span> <span class="n">x64</span><span class="o">.</span><span class="n">MultipleInstr</span><span class="p">()</span>
+<span class="n">raw_code</span> <span class="o">+=</span> <span class="n">x64</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="s">&#39;RAX&#39;</span><span class="p">,</span> <span class="s">&#39;RCX&#39;</span><span class="p">)</span>
+<span class="n">raw_code</span> <span class="o">+=</span> <span class="n">x64</span><span class="o">.</span><span class="n">Ret</span><span class="p">()</span>
+<span class="n">get_callback_address_64</span> <span class="o">=</span> <span class="n">create_function</span><span class="p">(</span><span class="n">raw_code</span><span class="o">.</span><span class="n">get_code</span><span class="p">(),</span> <span class="p">[</span><span class="n">ctypes</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">])</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">PythonForWindows 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Clement Rouault.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>
