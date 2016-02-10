@@ -25,7 +25,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="PythonForWindows 0.1 documentation" href="index.html" />
     <link rel="next" title="4. windows.winproxy – Windows API" href="winproxy.html" />
-    <link rel="prev" title="2.6. COM - Component Object Model" href="com.html" /> 
+    <link rel="prev" title="2.7. COM - Component Object Model" href="com.html" /> 
   </head>
   <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
@@ -41,7 +41,7 @@
           <a href="winproxy.html" title="4. windows.winproxy – Windows API"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="com.html" title="2.6. COM - Component Object Model"
+          <a href="com.html" title="2.7. COM - Component Object Model"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">PythonForWindows 0.1 documentation</a> &raquo;</li> 
       </ul>
@@ -393,6 +393,80 @@ including jump and label via the <code class="xref py py-class docutils literal"
 </pre></div>
 </div>
 </div>
+<div class="section" id="module-windows.native_exec.nativeutils">
+<span id="windows-native-exec-nativeutils-native-utility-functions"></span><h2>3.4. <a class="reference internal" href="#module-windows.native_exec.nativeutils" title="windows.native_exec.nativeutils"><code class="xref py py-mod docutils literal"><span class="pre">windows.native_exec.nativeutils</span></code></a> &#8211; Native utility functions<a class="headerlink" href="#module-windows.native_exec.nativeutils" title="Permalink to this headline">¶</a></h2>
+<p>This module contains some native-code functions that can be used for various purposes.
+Each function export a label that allow another <code class="xref py py-class docutils literal"><span class="pre">MultipleInstr</span></code> to call the code of the function.</p>
+<p>The current functions are:</p>
+<blockquote>
+<div><ul>
+<li><p class="first"><code class="docutils literal"><span class="pre">StrlenW64</span></code> A 64bits wide-string STRLEN (<code class="docutils literal"><span class="pre">Label(&quot;:FUNC_STRLENW64&quot;)</span></code>)</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">StrlenA64</span></code> A 64bits ASCII STRLEN (<code class="docutils literal"><span class="pre">Label(&quot;:FUNC_STRLENA64&quot;)</span></code>)</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">GetProcAddress64</span></code> A 64bits export resolver (<code class="docutils literal"><span class="pre">Label(&quot;:FUNC_GETPROCADDRESS64&quot;)</span></code>)</p>
+<blockquote>
+<div><ul>
+<li><p class="first">Arg1: The DLL (wstring)</p>
+</li>
+<li><p class="first">Arg2: The API (string)</p>
+</li>
+<li><p class="first">Return value:</p>
+<blockquote>
+<div><ul class="simple">
+<li>0xfffffffffffffffe if the DLL is not found</li>
+<li>0xffffffffffffffff if the API is not found</li>
+<li>The address of the function</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">StrlenW32</span></code> A 32bits wide-string STRLEN (<code class="docutils literal"><span class="pre">Label(&quot;:FUNC_STRLENW32&quot;)</span></code>)</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">StrlenA32</span></code> A 32bits ASCII STRLEN (<code class="docutils literal"><span class="pre">Label(&quot;:FUNC_STRLENA32&quot;)</span></code>)</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">GetProcAddress32</span></code> A 32bits export resolver (<code class="docutils literal"><span class="pre">Label(&quot;:FUNC_GETPROCADDRESS32&quot;)</span></code>)</p>
+<blockquote>
+<div><ul>
+<li><p class="first">Arg1: The DLL (wstring)</p>
+</li>
+<li><p class="first">Arg2: The API (string)</p>
+</li>
+<li><p class="first">Return value:</p>
+<blockquote>
+<div><ul class="simple">
+<li>0xfffffffe if the DLL is not found</li>
+<li>0xffffffff if the API is not found</li>
+<li>The address of the function</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+<p>To use those functions in a <code class="xref py py-class docutils literal"><span class="pre">MultipleInstr</span></code> just call the label in your code and append the function at
+the end of your <code class="xref py py-class docutils literal"><span class="pre">MultipleInstr</span></code></p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">RemoteManualLoadLibray</span> <span class="o">=</span> <span class="n">x86</span><span class="o">.</span><span class="n">MultipleInstr</span><span class="p">()</span>
+
+<span class="n">RemoteManualLoadLibray</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Mov</span><span class="p">(</span><span class="s">&quot;ECX&quot;</span><span class="p">,</span> <span class="n">x86</span><span class="o">.</span><span class="n">mem</span><span class="p">(</span><span class="s">&quot;[ESP + 4]&quot;</span><span class="p">))</span>
+<span class="n">RemoteManualLoadLibray</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Push</span><span class="p">(</span><span class="n">x86</span><span class="o">.</span><span class="n">mem</span><span class="p">(</span><span class="s">&quot;[ECX + 4]&quot;</span><span class="p">))</span>
+<span class="n">RemoteManualLoadLibray</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Push</span><span class="p">(</span><span class="n">x86</span><span class="o">.</span><span class="n">mem</span><span class="p">(</span><span class="s">&quot;[ECX]&quot;</span><span class="p">))</span>
+<span class="n">RemoteManualLoadLibray</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Call</span><span class="p">(</span><span class="s">&quot;:FUNC_GETPROCADDRESS32&quot;</span><span class="p">)</span>
+<span class="n">RemoteManualLoadLibray</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Push</span><span class="p">(</span><span class="n">x86</span><span class="o">.</span><span class="n">mem</span><span class="p">(</span><span class="s">&quot;[ECX + 8]&quot;</span><span class="p">))</span>
+<span class="n">RemoteManualLoadLibray</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Call</span><span class="p">(</span><span class="s">&quot;EAX&quot;</span><span class="p">)</span> <span class="c"># LoadLibrary</span>
+<span class="n">RemoteManualLoadLibray</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Pop</span><span class="p">(</span><span class="s">&quot;ECX&quot;</span><span class="p">)</span>
+<span class="n">RemoteManualLoadLibray</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Pop</span><span class="p">(</span><span class="s">&quot;ECX&quot;</span><span class="p">)</span>
+<span class="n">RemoteManualLoadLibray</span> <span class="o">+=</span> <span class="n">x86</span><span class="o">.</span><span class="n">Ret</span><span class="p">()</span>
+
+<span class="n">RemoteManualLoadLibray</span> <span class="o">+=</span> <span class="n">GetProcAddress32</span>
+</pre></div>
+</div>
+</div>
 </div>
 
 
@@ -407,13 +481,14 @@ including jump and label via the <code class="xref py py-class docutils literal"
 <li><a class="reference internal" href="#module-windows.native_exec.cpuid">3.1. <code class="docutils literal"><span class="pre">windows.native_exec.cpuid</span></code> &#8211; Interface to native CPUID</a></li>
 <li><a class="reference internal" href="#module-windows.native_exec.simple_x86">3.2. <code class="docutils literal"><span class="pre">windows.native_exec.simple_x86</span></code> &#8211; X86 Assembler</a></li>
 <li><a class="reference internal" href="#module-windows.native_exec.simple_x64">3.3. <code class="docutils literal"><span class="pre">windows.native_exec.simple_x64</span></code> &#8211; X64 Assembler</a></li>
+<li><a class="reference internal" href="#module-windows.native_exec.nativeutils">3.4. <code class="docutils literal"><span class="pre">windows.native_exec.nativeutils</span></code> &#8211; Native utility functions</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="com.html"
-                        title="previous chapter">2.6. COM - Component Object Model</a></p>
+                        title="previous chapter">2.7. COM - Component Object Model</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="winproxy.html"
                         title="next chapter">4. <code class="docutils literal"><span class="pre">windows.winproxy</span></code> &#8211; Windows API</a></p>
@@ -454,7 +529,7 @@ including jump and label via the <code class="xref py py-class docutils literal"
           <a href="winproxy.html" title="4. windows.winproxy – Windows API"
              >next</a> |</li>
         <li class="right" >
-          <a href="com.html" title="2.6. COM - Component Object Model"
+          <a href="com.html" title="2.7. COM - Component Object Model"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">PythonForWindows 0.1 documentation</a> &raquo;</li> 
       </ul>

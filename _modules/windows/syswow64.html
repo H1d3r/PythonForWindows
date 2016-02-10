@@ -226,14 +226,25 @@
 <span class="k">def</span> <span class="nf">get_current_process_syswow_peb</span><span class="p">():</span>
     <span class="n">current_process</span> <span class="o">=</span> <span class="n">windows</span><span class="o">.</span><span class="n">current_process</span>
 
-    <span class="k">class</span> <span class="nc">CurrentProcessReadSyswow</span><span class="p">():</span>
+    <span class="k">class</span> <span class="nc">CurrentProcessReadSyswow</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="n">bitness</span> <span class="o">=</span> <span class="mi">64</span>
         <span class="k">def</span> <span class="nf">read_memory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">addr</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
             <span class="n">buffer_addr</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
             <span class="n">windows</span><span class="o">.</span><span class="n">winproxy</span><span class="o">.</span><span class="n">NtWow64ReadVirtualMemory64</span><span class="p">(</span><span class="n">current_process</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">addr</span><span class="p">,</span> <span class="n">buffer_addr</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">buffer_addr</span><span class="p">[:]</span>
-        <span class="n">bitness</span> <span class="o">=</span> <span class="mi">64</span>
     <span class="n">peb_addr</span> <span class="o">=</span> <span class="n">get_current_process_syswow_peb_addr</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">windows</span><span class="o">.</span><span class="n">winobject</span><span class="o">.</span><span class="n">RemotePEB64</span><span class="p">(</span><span class="n">peb_addr</span><span class="p">,</span> <span class="n">CurrentProcessReadSyswow</span><span class="p">())</span>
+
+
+<span class="k">class</span> <span class="nc">ReadSyswow64Process</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">target</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bitness</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">bitness</span>
+
+        <span class="k">def</span> <span class="nf">read_memory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">addr</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+            <span class="n">buffer_addr</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">create_string_buffer</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+            <span class="n">windows</span><span class="o">.</span><span class="n">winproxy</span><span class="o">.</span><span class="n">NtWow64ReadVirtualMemory64</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">addr</span><span class="p">,</span> <span class="n">buffer_addr</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">buffer_addr</span><span class="p">[:]</span>
 
 
 <span class="k">def</span> <span class="nf">get_syswow_ntdll_exports</span><span class="p">():</span>
@@ -317,10 +328,18 @@
 </div>
 <span class="nd">@Syswow64ApiProxy</span><span class="p">(</span><span class="n">windows</span><span class="o">.</span><span class="n">winproxy</span><span class="o">.</span><span class="n">NtGetContextThread</span><span class="p">)</span>
 <div class="viewcode-block" id="NtGetContextThread_32_to_64"><a class="viewcode-back" href="../../internals.html#windows.syswow64.NtGetContextThread_32_to_64">[docs]</a><span class="k">def</span> <span class="nf">NtGetContextThread_32_to_64</span><span class="p">(</span><span class="n">hThread</span><span class="p">,</span> <span class="n">lpContext</span><span class="p">):</span>
-    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">lpContext</span><span class="p">)</span> <span class="o">==</span> <span class="n">windows</span><span class="o">.</span><span class="n">vectored_exception</span><span class="o">.</span><span class="n">EnhancedCONTEXT64</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">lpContext</span><span class="p">)</span> <span class="o">==</span> <span class="n">windows</span><span class="o">.</span><span class="n">exception</span><span class="o">.</span><span class="n">ECONTEXT64</span><span class="p">:</span>
         <span class="n">lpContext</span> <span class="o">=</span> <span class="n">byref</span><span class="p">(</span><span class="n">lpContext</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">NtGetContextThread_32_to_64</span><span class="o">.</span><span class="n">ctypes_function</span><span class="p">(</span><span class="n">hThread</span><span class="p">,</span> <span class="n">lpContext</span><span class="p">)</span>
-</pre></div></div>
+</div>
+<span class="nd">@Syswow64ApiProxy</span><span class="p">(</span><span class="n">windows</span><span class="o">.</span><span class="n">winproxy</span><span class="o">.</span><span class="n">LdrLoadDll</span><span class="p">)</span>
+<div class="viewcode-block" id="LdrLoadDll_32_to_64"><a class="viewcode-back" href="../../internals.html#windows.syswow64.LdrLoadDll_32_to_64">[docs]</a><span class="k">def</span> <span class="nf">LdrLoadDll_32_to_64</span><span class="p">(</span><span class="n">PathToFile</span><span class="p">,</span> <span class="n">Flags</span><span class="p">,</span> <span class="n">ModuleFileName</span><span class="p">,</span> <span class="n">ModuleHandle</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">LdrLoadDll_32_to_64</span><span class="o">.</span><span class="n">ctypes_function</span><span class="p">(</span><span class="n">PathToFile</span><span class="p">,</span> <span class="n">Flags</span><span class="p">,</span> <span class="n">ModuleFileName</span><span class="p">,</span> <span class="n">ModuleHandle</span><span class="p">)</span>
+</div>
+<span class="nd">@Syswow64ApiProxy</span><span class="p">(</span><span class="n">windows</span><span class="o">.</span><span class="n">winproxy</span><span class="o">.</span><span class="n">NtSetContextThread</span><span class="p">)</span>
+<div class="viewcode-block" id="NtSetContextThread_32_to_64"><a class="viewcode-back" href="../../internals.html#windows.syswow64.NtSetContextThread_32_to_64">[docs]</a><span class="k">def</span> <span class="nf">NtSetContextThread_32_to_64</span><span class="p">(</span><span class="n">hThread</span><span class="p">,</span> <span class="n">lpContext</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">NtSetContextThread_32_to_64</span><span class="o">.</span><span class="n">ctypes_function</span><span class="p">(</span><span class="n">hThread</span><span class="p">,</span> <span class="n">lpContext</span><span class="p">)</span></div>
+</pre></div>
 
           </div>
         </div>

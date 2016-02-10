@@ -126,34 +126,43 @@ It also heavily relies on <a class="reference external" href="http://docs.python
 <h2>4.2. Functions in <a class="reference internal" href="#module-windows.winproxy" title="windows.winproxy"><code class="xref py py-mod docutils literal"><span class="pre">windows.winproxy</span></code></a><a class="headerlink" href="#functions-in-windows-winproxy" title="Permalink to this headline">¶</a></h2>
 <p>Transparent proxies:</p>
 <ul class="simple">
-<li>AllocConsole</li>
-<li>CloseHandle</li>
-<li>ExitProcess</li>
-<li>ExitThread</li>
-<li>FreeConsole</li>
-<li>GetCurrentProcess</li>
-<li>GetCurrentProcessorNumber</li>
-<li>GetCurrentThread</li>
-<li>GetCurrentThreadId</li>
-<li>GetExitCodeProcess</li>
-<li>GetExitCodeThread</li>
-<li>GetLastError</li>
-<li>GetProcAddress</li>
-<li>GetStdHandle</li>
-<li>GetThreadId</li>
-<li>LoadLibraryA</li>
-<li>LoadLibraryW</li>
-<li>ResumeThread</li>
-<li>SetStdHandle</li>
-<li>SetTcpEntry</li>
-<li>SuspendThread</li>
-<li>TerminateProcess</li>
-<li>TerminateThread</li>
-<li>VirtualQueryEx</li>
-<li>Wow64DisableWow64FsRedirection</li>
-<li>Wow64EnableWow64FsRedirection</li>
-<li>Wow64GetThreadContext</li>
-<li>Wow64RevertWow64FsRedirection</li>
+<li>AllocConsole()</li>
+<li>CloseHandle(hObject)</li>
+<li>ContinueDebugEvent(dwProcessId, dwThreadId, dwContinueStatus)</li>
+<li>DebugActiveProcess(dwProcessId)</li>
+<li>DebugActiveProcessStop(dwProcessId)</li>
+<li>DebugBreak()</li>
+<li>DebugBreakProcess(Process)</li>
+<li>DebugSetProcessKillOnExit(KillOnExit)</li>
+<li>ExitProcess(uExitCode)</li>
+<li>ExitThread(dwExitCode)</li>
+<li>FreeConsole()</li>
+<li>GetCurrentProcess()</li>
+<li>GetCurrentProcessorNumber()</li>
+<li>GetCurrentThread()</li>
+<li>GetCurrentThreadId()</li>
+<li>GetExitCodeProcess(hProcess, lpExitCode)</li>
+<li>GetExitCodeThread(hThread, lpExitCode)</li>
+<li>GetLastError()</li>
+<li>GetProcAddress(hModule, lpProcName)</li>
+<li>GetProcessId(Process)</li>
+<li>GetSidSubAuthority(pSid, nSubAuthority)</li>
+<li>GetSidSubAuthorityCount(pSid)</li>
+<li>GetStdHandle(nStdHandle)</li>
+<li>GetThreadId(Thread)</li>
+<li>LoadLibraryA(lpFileName)</li>
+<li>LoadLibraryW(lpFileName)</li>
+<li>ResumeThread(hThread)</li>
+<li>SetStdHandle(nStdHandle, hHandle)</li>
+<li>SetTcpEntry(pTcpRow)</li>
+<li>SuspendThread(hThread)</li>
+<li>TerminateProcess(hProcess, uExitCode)</li>
+<li>TerminateThread(hThread, dwExitCode)</li>
+<li>VirtualQueryEx(hProcess, lpAddress, lpBuffer, dwLength)</li>
+<li>Wow64DisableWow64FsRedirection(OldValue)</li>
+<li>Wow64EnableWow64FsRedirection(Wow64FsEnableRedirection)</li>
+<li>Wow64GetThreadContext(hThread, lpContext)</li>
+<li>Wow64RevertWow64FsRedirection(OldValue)</li>
 </ul>
 <p>Functions:</p>
 <ul>
@@ -181,14 +190,14 @@ Errcheck:
 <li><p class="first">CreateFileA:</p>
 <div class="highlight-python"><div class="highlight"><pre>CreateFileA(lpFileName, dwDesiredAccess=GENERIC_READ(0x80000000L), dwShareMode=0, lpSecurityAttributes=None, dwCreationDisposition=OPEN_EXISTING(0x3L), dwFlagsAndAttributes=FILE_ATTRIBUTE_NORMAL(0x80L), hTemplateFile=None)
 Errcheck:
-   raise Kernel32Error if result is 0
+   raise Kernel32Error if result is NOT 0
 </pre></div>
 </div>
 </li>
 <li><p class="first">CreateFileW:</p>
 <div class="highlight-python"><div class="highlight"><pre>CreateFileW(lpFileName, dwDesiredAccess=GENERIC_READ(0x80000000L), dwShareMode=0, lpSecurityAttributes=None, dwCreationDisposition=OPEN_EXISTING(0x3L), dwFlagsAndAttributes=FILE_ATTRIBUTE_NORMAL(0x80L), hTemplateFile=None)
 Errcheck:
-   raise Kernel32Error if result is 0
+   raise Kernel32Error if result is NOT 0
 </pre></div>
 </div>
 </li>
@@ -241,6 +250,20 @@ Errcheck:
 </pre></div>
 </div>
 </li>
+<li><p class="first">GetMappedFileNameA:</p>
+<div class="highlight-python"><div class="highlight"><pre>GetMappedFileNameA(hProcess, lpv, lpFilename, nSize=None)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">GetMappedFileNameW:</p>
+<div class="highlight-python"><div class="highlight"><pre>GetMappedFileNameW(hProcess, lpv, lpFilename, nSize=None)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
 <li><p class="first">GetThreadContext:</p>
 <div class="highlight-python"><div class="highlight"><pre>GetThreadContext(hThread, lpContext=None)
 Errcheck:
@@ -252,6 +275,11 @@ Errcheck:
 <div class="highlight-python"><div class="highlight"><pre>GetTokenInformation(TokenHandle=NeededParameter, TokenInformationClass=NeededParameter, TokenInformation=None, TokenInformationLength=0, ReturnLength=None)
 Errcheck:
    raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">LdrLoadDll:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">LdrLoadDll</span><span class="p">(</span><span class="n">PathToFile</span><span class="p">,</span> <span class="n">Flags</span><span class="p">,</span> <span class="n">ModuleFileName</span><span class="p">,</span> <span class="n">ModuleHandle</span><span class="p">)</span>
 </pre></div>
 </div>
 </li>
@@ -296,6 +324,11 @@ Errcheck:
 </li>
 <li><p class="first">NtQueryVirtualMemory:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">NtQueryVirtualMemory</span><span class="p">(</span><span class="n">ProcessHandle</span><span class="p">,</span> <span class="n">BaseAddress</span><span class="p">,</span> <span class="n">MemoryInformationClass</span><span class="p">,</span> <span class="n">MemoryInformation</span><span class="o">=</span><span class="n">NeededParameter</span><span class="p">,</span> <span class="n">MemoryInformationLength</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ReturnLength</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">NtSetContextThread:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">NtSetContextThread</span><span class="p">(</span><span class="n">hThread</span><span class="p">,</span> <span class="n">lpContext</span><span class="p">)</span>
 </pre></div>
 </div>
 </li>
@@ -364,7 +397,7 @@ Errcheck:
 </div>
 </li>
 <li><p class="first">RegGetValueW:</p>
-<div class="highlight-python"><div class="highlight"><pre>RegGetValueW(hkey, lpSubKey, lpValue, dwFlags, pdwType, pvData, pcbData)
+<div class="highlight-python"><div class="highlight"><pre>RegGetValueW(hkey, lpSubKey=None, lpValue=NeededParameter, dwFlags=0, pdwType=None, pvData=None, pcbData=None)
 Errcheck:
    raise Kernel32Error if result is NOT 0
 </pre></div>
@@ -401,7 +434,6 @@ Errcheck:
 </li>
 <li><p class="first">SetThreadContext:</p>
 <div class="highlight-python"><div class="highlight"><pre>SetThreadContext(hThread, lpContext)
-Allows to directly pass a CONTEXT and will call with byref(CONTEXT) by itself
 Errcheck:
    raise Kernel32Error if result is 0
 </pre></div>
@@ -452,7 +484,14 @@ Errcheck:
 </div>
 </li>
 <li><p class="first">VirtualProtect:</p>
-<div class="highlight-python"><div class="highlight"><pre>VirtualProtect(lpAddress, dwSize, flNewProtect, lpflOldProtect=0)
+<div class="highlight-python"><div class="highlight"><pre>VirtualProtect(lpAddress, dwSize, flNewProtect, lpflOldProtect=None)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">WaitForDebugEvent:</p>
+<div class="highlight-python"><div class="highlight"><pre>WaitForDebugEvent(lpDebugEvent, dwMilliseconds=INFINITE(0xffffffffL))
 Errcheck:
    raise Kernel32Error if result is 0
 </pre></div>
@@ -469,6 +508,13 @@ Errcheck:
 <div class="highlight-python"><div class="highlight"><pre>WinVerifyTrust(hwnd, pgActionID, pWVTData)
 Errcheck:
    Nothing special
+</pre></div>
+</div>
+</li>
+<li><p class="first">Wow64SetThreadContext:</p>
+<div class="highlight-python"><div class="highlight"><pre>Wow64SetThreadContext(hThread, lpContext)
+Errcheck:
+   raise Kernel32Error if result is 0
 </pre></div>
 </div>
 </li>

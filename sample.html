@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>9. Samples of code &mdash; PythonForWindows 0.1 documentation</title>
+    <title>10. Samples of code &mdash; PythonForWindows 0.1 documentation</title>
     
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="PythonForWindows 0.1 documentation" href="index.html" />
-    <link rel="prev" title="8. Internals" href="internals.html" /> 
+    <link rel="prev" title="9. Internals" href="internals.html" /> 
   </head>
   <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
@@ -37,7 +37,7 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="internals.html" title="8. Internals"
+          <a href="internals.html" title="9. Internals"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">PythonForWindows 0.1 documentation</a> &raquo;</li> 
       </ul>
@@ -49,9 +49,9 @@
           <div class="body" role="main">
             
   <div class="section" id="samples-of-code">
-<h1>9. Samples of code<a class="headerlink" href="#samples-of-code" title="Permalink to this headline">¶</a></h1>
+<h1>10. Samples of code<a class="headerlink" href="#samples-of-code" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="windows-current-process">
-<span id="sample-current-process"></span><h2>9.1. <code class="docutils literal"><span class="pre">windows.current_process</span></code><a class="headerlink" href="#windows-current-process" title="Permalink to this headline">¶</a></h2>
+<span id="sample-current-process"></span><h2>10.1. <code class="docutils literal"><span class="pre">windows.current_process</span></code><a class="headerlink" href="#windows-current-process" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">os.path</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span> <span class="o">+</span> <span class="s">&quot;\..\..&quot;</span><span class="p">))</span>
@@ -116,7 +116,7 @@ Reading memory : &lt;&#39;SOME STUFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00&#39
 </div>
 </div>
 <div class="section" id="remote-process-winprocess">
-<span id="sample-remote-process"></span><h2>9.2. Remote process : <code class="xref py py-class docutils literal"><span class="pre">WinProcess</span></code><a class="headerlink" href="#remote-process-winprocess" title="Permalink to this headline">¶</a></h2>
+<span id="sample-remote-process"></span><h2>10.2. Remote process : <code class="xref py py-class docutils literal"><span class="pre">WinProcess</span></code><a class="headerlink" href="#remote-process-winprocess" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">os.path</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span> <span class="o">+</span> <span class="s">&quot;\..\..&quot;</span><span class="p">))</span>
@@ -239,7 +239,7 @@ That&#39;s all ! killing the calc
 </div>
 </div>
 <div class="section" id="peb-exploration">
-<span id="sample-peb-exploration"></span><h2>9.3. <code class="xref py py-class docutils literal"><span class="pre">PEB</span></code> exploration<a class="headerlink" href="#peb-exploration" title="Permalink to this headline">¶</a></h2>
+<span id="sample-peb-exploration"></span><h2>10.3. <code class="xref py py-class docutils literal"><span class="pre">PEB</span></code> exploration<a class="headerlink" href="#peb-exploration" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">os.path</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span> <span class="o">+</span> <span class="s">&quot;\..\..&quot;</span><span class="p">))</span>
@@ -310,7 +310,7 @@ Sections: [&lt;PESection &quot;.text&quot;&gt;, &lt;PESection &quot;.rdata&quot;
 </div>
 </div>
 <div class="section" id="iat-hooking">
-<span id="sample-iat-hook"></span><h2>9.4. IAT hooking<a class="headerlink" href="#iat-hooking" title="Permalink to this headline">¶</a></h2>
+<span id="sample-iat-hook"></span><h2>10.4. IAT hooking<a class="headerlink" href="#iat-hooking" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">os.path</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span> <span class="o">+</span> <span class="s">&quot;\..\..&quot;</span><span class="p">))</span>
@@ -396,7 +396,7 @@ Result = 0x108
 </div>
 </div>
 <div class="section" id="network-socket-exploration">
-<span id="sample-network-exploration"></span><h2>9.5. <code class="xref py py-class docutils literal"><span class="pre">Network</span></code> - socket exploration<a class="headerlink" href="#network-socket-exploration" title="Permalink to this headline">¶</a></h2>
+<span id="sample-network-exploration"></span><h2>10.5. <code class="xref py py-class docutils literal"><span class="pre">Network</span></code> - socket exploration<a class="headerlink" href="#network-socket-exploration" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">os.path</span>
 <span class="kn">import</span> <span class="nn">socket</span>
@@ -455,7 +455,7 @@ socket.error: [Errno 10054] An existing connection was forcibly closed by the re
 </div>
 </div>
 <div class="section" id="registry">
-<span id="sample-registry"></span><h2>9.6. <code class="xref py py-class docutils literal"><span class="pre">Registry</span></code><a class="headerlink" href="#registry" title="Permalink to this headline">¶</a></h2>
+<span id="sample-registry"></span><h2>10.6. <code class="xref py py-class docutils literal"><span class="pre">Registry</span></code><a class="headerlink" href="#registry" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">os.path</span>
 <span class="kn">import</span> <span class="nn">pprint</span>
@@ -518,6 +518,234 @@ registered owner = &lt;KeyValue(name=&#39;RegisteredOwner&#39;, value=u&#39;hakr
 </pre></div>
 </div>
 </div>
+<div class="section" id="vectoredexception">
+<span id="sample-vectoredexception"></span><h2>10.7. <code class="xref py py-func docutils literal"><span class="pre">VectoredException()</span></code><a class="headerlink" href="#vectoredexception" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="in-local-process">
+<h3>10.7.1. In local process<a class="headerlink" href="#in-local-process" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">ctypes</span>
+<span class="kn">import</span> <span class="nn">windows</span>
+<span class="kn">from</span> <span class="nn">windows.exception</span> <span class="kn">import</span> <span class="n">VectoredException</span>
+<span class="kn">import</span> <span class="nn">windows.generated_def.windef</span> <span class="kn">as</span> <span class="nn">windef</span>
+<span class="kn">from</span> <span class="nn">windows.generated_def.winstructs</span> <span class="kn">import</span> <span class="o">*</span>
+
+
+<span class="nd">@VectoredException</span>
+<span class="k">def</span> <span class="nf">handler</span><span class="p">(</span><span class="n">exc</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;==Entry of VEH handler==&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">exc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">ExceptionRecord</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">ExceptionCode</span> <span class="o">==</span> <span class="n">EXCEPTION_ACCESS_VIOLATION</span><span class="p">:</span>
+        <span class="n">target_addr</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">exc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">ExceptionRecord</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">ExceptionInformation</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_void_p</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Instr at {0} accessed to addr {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">hex</span><span class="p">(</span><span class="n">exc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">ExceptionRecord</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">ExceptionAddress</span><span class="p">),</span> <span class="nb">hex</span><span class="p">(</span><span class="n">target_addr</span><span class="p">)))</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Resetting page protection to &lt;PAGE_READWRITE&gt;&quot;</span><span class="p">)</span>
+        <span class="n">windows</span><span class="o">.</span><span class="n">winproxy</span><span class="o">.</span><span class="n">VirtualProtect</span><span class="p">(</span><span class="n">target_page</span><span class="p">,</span> <span class="mh">0x1000</span><span class="p">,</span> <span class="n">windef</span><span class="o">.</span><span class="n">PAGE_READWRITE</span><span class="p">)</span>
+        <span class="n">exc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">ContextRecord</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">EEFlags</span><span class="o">.</span><span class="n">TF</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">windef</span><span class="o">.</span><span class="n">EXCEPTION_CONTINUE_EXECUTION</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Exception of type {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">exc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">ExceptionRecord</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">ExceptionCode</span><span class="p">))</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Resetting page protection to &lt;PAGE_NOACCESS&gt;&quot;</span><span class="p">)</span>
+        <span class="n">windows</span><span class="o">.</span><span class="n">winproxy</span><span class="o">.</span><span class="n">VirtualProtect</span><span class="p">(</span><span class="n">target_page</span><span class="p">,</span> <span class="mh">0x1000</span><span class="p">,</span> <span class="n">windef</span><span class="o">.</span><span class="n">PAGE_NOACCESS</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">windef</span><span class="o">.</span><span class="n">EXCEPTION_CONTINUE_EXECUTION</span>
+
+
+<span class="n">windows</span><span class="o">.</span><span class="n">winproxy</span><span class="o">.</span><span class="n">AddVectoredExceptionHandler</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">handler</span><span class="p">)</span>
+
+<span class="n">target_page</span> <span class="o">=</span> <span class="n">windows</span><span class="o">.</span><span class="n">current_process</span><span class="o">.</span><span class="n">virtual_alloc</span><span class="p">(</span><span class="mh">0x1000</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Protected page is at &lt;{0}&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">hex</span><span class="p">(</span><span class="n">target_page</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Setting page protection to &lt;PAGE_NOACCESS&gt;&quot;</span><span class="p">)</span>
+<span class="n">windows</span><span class="o">.</span><span class="n">winproxy</span><span class="o">.</span><span class="n">VirtualProtect</span><span class="p">(</span><span class="n">target_page</span><span class="p">,</span> <span class="mh">0x1000</span><span class="p">,</span> <span class="n">windef</span><span class="o">.</span><span class="n">PAGE_NOACCESS</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_uint</span><span class="o">.</span><span class="n">from_address</span><span class="p">(</span><span class="n">target_page</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Value 1 read&quot;</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_uint</span><span class="o">.</span><span class="n">from_address</span><span class="p">(</span><span class="n">target_page</span> <span class="o">+</span> <span class="mh">0x10</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Value 2 read&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Output:</p>
+<div class="highlight-python"><div class="highlight"><pre>(cmd λ) python.exe veh_segv.py
+Protected page is at &lt;0x1db0000&gt;
+Setting page protection to &lt;PAGE_NOACCESS&gt;
+
+==Entry of VEH handler==
+Instr at 0x1d1ab574 accessed to addr 0x1db0000
+Resetting page protection to &lt;PAGE_READWRITE&gt;
+==Entry of VEH handler==
+Exception of type EXCEPTION_SINGLE_STEP(0x80000004L)
+Resetting page protection to &lt;PAGE_NOACCESS&gt;
+Value 1 read
+
+==Entry of VEH handler==
+Instr at 0x1d1ab574 accessed to addr 0x1db0010
+Resetting page protection to &lt;PAGE_READWRITE&gt;
+==Entry of VEH handler==
+Exception of type EXCEPTION_SINGLE_STEP(0x80000004L)
+Resetting page protection to &lt;PAGE_NOACCESS&gt;
+Value 2 read
+</pre></div>
+</div>
+</div>
+<div class="section" id="in-remote-process">
+<h3>10.7.2. In remote process<a class="headerlink" href="#in-remote-process" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">windows</span>
+<span class="kn">import</span> <span class="nn">windows.test</span>
+
+<span class="kn">from</span> <span class="nn">windows.generated_def.winstructs</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">python_code</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">import windows</span>
+<span class="s">import ctypes</span>
+<span class="s">import windows</span>
+<span class="s">from windows.exception import VectoredException</span>
+<span class="s">import windows.generated_def.windef as windef</span>
+<span class="s">from windows.generated_def.winstructs import *</span>
+
+<span class="s">windows.utils.create_console()</span>
+
+<span class="s">module_to_trace = &quot;gdi32.dll&quot;</span>
+<span class="s">nb_repeat = [5]</span>
+
+<span class="s">@VectoredException</span>
+<span class="s">def handler(exc):</span>
+<span class="s">    if exc[0].ExceptionRecord[0].ExceptionCode == EXCEPTION_ACCESS_VIOLATION:</span>
+<span class="s">        print(&quot;&quot;)</span>
+<span class="s">        target_addr = ctypes.cast(exc[0].ExceptionRecord[0].ExceptionInformation[1], ctypes.c_void_p).value</span>
+<span class="s">        print(&quot;Instr at {0} accessed to addr {1} ({2})&quot;.format(hex(exc[0].ExceptionRecord[0].ExceptionAddress), hex(target_addr), module_to_trace))</span>
+<span class="s">        windows.winproxy.VirtualProtect(target_page, code_size, windef.PAGE_EXECUTE_READWRITE)</span>
+<span class="s">        nb_repeat[0] -= 1</span>
+<span class="s">        if nb_repeat[0]:</span>
+<span class="s">            exc[0].ContextRecord[0].EEFlags.TF = 1</span>
+<span class="s">        else:</span>
+<span class="s">            print(&quot;No more tracing !&quot;)</span>
+<span class="s">        return windef.EXCEPTION_CONTINUE_EXECUTION</span>
+<span class="s">    else:</span>
+<span class="s">        print(&quot;Exception of type {0}&quot;.format(exc[0].ExceptionRecord[0].ExceptionCode))</span>
+<span class="s">        print(&quot;Resetting page protection to &lt;PAGE_READWRITE&gt;&quot;)</span>
+<span class="s">        windows.winproxy.VirtualProtect(target_page, code_size, windef.PAGE_READWRITE)</span>
+<span class="s">        return windef.EXCEPTION_CONTINUE_EXECUTION</span>
+
+
+<span class="s">windows.winproxy.AddVectoredExceptionHandler(0, handler)</span>
+
+<span class="s">print(&quot;Tracing execution in module: &lt;{0}&gt;&quot;.format(module_to_trace))</span>
+
+<span class="s">module = [x for x in windows.current_process.peb.modules if x.name == module_to_trace][0]</span>
+<span class="s">target_page = module.baseaddr</span>
+<span class="s">code_size = module.pe.get_OptionalHeader().SizeOfCode</span>
+
+<span class="s">print(&quot;Protected page is at {0}&quot;.format(hex(target_page)))</span>
+<span class="s">windows.winproxy.VirtualProtect(target_page, code_size, windef.PAGE_READWRITE)</span>
+<span class="s">&quot;&quot;&quot;</span>
+
+<span class="n">c</span> <span class="o">=</span> <span class="n">windows</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">pop_calc_64</span><span class="p">(</span><span class="n">dwCreationFlags</span><span class="o">=</span><span class="n">CREATE_SUSPENDED</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">execute_python</span><span class="p">(</span><span class="n">python_code</span><span class="p">)</span>
+
+<span class="n">c</span><span class="o">.</span><span class="n">threads</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">resume</span><span class="p">()</span>
+
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">c</span><span class="o">.</span><span class="n">threads</span><span class="p">:</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">suspend</span><span class="p">()</span>
+
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">c</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Output:</p>
+<div class="highlight-python"><div class="highlight"><pre>(cmd λ) python .exe.\samples\remote_veh_segv.py
+(In another console)
+
+Tracing execution in module: &lt;gdi32.dll&gt;
+Protected page is at 0x7ffa3c700000L
+
+Instr at 0x7ffa3c70f0f0L accessed to addr 0x7ffa3c70f0f0L (gdi32.dll)
+Exception of type EXCEPTION_SINGLE_STEP(0x80000004L)
+Resetting page protection to &lt;PAGE_READWRITE&gt;
+
+Instr at 0x7ffa3c70f0f5L accessed to addr 0x7ffa3c70f0f5L (gdi32.dll)
+Exception of type EXCEPTION_SINGLE_STEP(0x80000004L)
+Resetting page protection to &lt;PAGE_READWRITE&gt;
+
+Instr at 0x7ffa3c70f0faL accessed to addr 0x7ffa3c70f0faL (gdi32.dll)
+Exception of type EXCEPTION_SINGLE_STEP(0x80000004L)
+Resetting page protection to &lt;PAGE_READWRITE&gt;
+
+Instr at 0x7ffa3c70f0ffL accessed to addr 0x7ffa3c70f0ffL (gdi32.dll)
+Exception of type EXCEPTION_SINGLE_STEP(0x80000004L)
+Resetting page protection to &lt;PAGE_READWRITE&gt;
+
+Instr at 0x7ffa3c70f100L accessed to addr 0x7ffa3c70f100L (gdi32.dll)
+No more tracing !
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="debugging">
+<span id="sample-debugger"></span><h2>10.8. Debugging<a class="headerlink" href="#debugging" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">windows</span>
+<span class="kn">import</span> <span class="nn">windows.test</span>
+<span class="kn">import</span> <span class="nn">windows.debug</span>
+
+<span class="kn">from</span> <span class="nn">windows.generated_def.winstructs</span> <span class="kn">import</span> <span class="o">*</span>
+
+
+
+<span class="k">class</span> <span class="nc">MyDebugger</span><span class="p">(</span><span class="n">windows</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">Debugger</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">on_exception</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exception</span><span class="p">):</span>
+        <span class="n">code</span> <span class="o">=</span> <span class="n">exception</span><span class="o">.</span><span class="n">ExceptionRecord</span><span class="o">.</span><span class="n">ExceptionCode</span>
+        <span class="n">addr</span> <span class="o">=</span> <span class="n">exception</span><span class="o">.</span><span class="n">ExceptionRecord</span><span class="o">.</span><span class="n">ExceptionAddress</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Got exception {0} at 0x{1:x}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">addr</span><span class="p">))</span>
+
+
+<span class="k">class</span> <span class="nc">PrintUnicodeString</span><span class="p">(</span><span class="n">windows</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">Breakpoint</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">addr</span><span class="p">,</span> <span class="n">argument_position</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">PrintUnicodeString</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">addr</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">arg_pos</span> <span class="o">=</span> <span class="n">argument_position</span>
+
+
+    <span class="k">def</span> <span class="nf">trigger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dbg</span><span class="p">,</span> <span class="n">exc</span><span class="p">):</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">dbg</span><span class="o">.</span><span class="n">current_process</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">dbg</span><span class="o">.</span><span class="n">current_thread</span>
+        <span class="n">esp</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">Esp</span>
+
+        <span class="n">unicode_string_addr</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">read_ptr</span><span class="p">(</span><span class="n">esp</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arg_pos</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="n">wstring_addr</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">read_ptr</span><span class="p">(</span><span class="n">unicode_string_addr</span> <span class="o">+</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="n">dll_loaded</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">read_wstring</span><span class="p">(</span><span class="n">wstring_addr</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Loading &lt;{0}&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dll_loaded</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">dll_loaded</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">&quot;ole32.dll&quot;</span><span class="p">):</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&quot;Ask to load &lt;ole32.dll&gt;: exiting process&quot;</span><span class="p">)</span>
+            <span class="n">dbg</span><span class="o">.</span><span class="n">current_process</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+
+
+<span class="n">calc</span> <span class="o">=</span> <span class="n">windows</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">pop_calc_32</span><span class="p">(</span><span class="n">dwCreationFlags</span><span class="o">=</span><span class="n">DEBUG_PROCESS</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">MyDebugger</span><span class="p">(</span><span class="n">calc</span><span class="p">,</span> <span class="n">already_debuggable</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">d</span><span class="o">.</span><span class="n">add_bp</span><span class="p">(</span><span class="n">PrintUnicodeString</span><span class="p">(</span><span class="s">&quot;ntdll.dll!LdrLoadDll&quot;</span><span class="p">,</span> <span class="n">argument_position</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">d</span><span class="o">.</span><span class="n">loop</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Ouput:</p>
+<div class="highlight-python"><div class="highlight"><pre>(cmd λ) python.exe .\samples\debugger.py
+Loading &lt;KERNEL32.DLL&gt;
+Got exception EXCEPTION_BREAKPOINT(0x80000003L) at 0x77a73bad
+Loading &lt;C:\Windows\system32\IMM32.DLL&gt;
+Loading &lt;C:\Windows\system32\uxtheme.dll&gt;
+Loading &lt;C:\Windows\system32\uxtheme.dll&gt;
+Loading &lt;C:\Windows\system32\uxtheme.dll&gt;
+Loading &lt;C:\Windows\system32\uxtheme.dll&gt;
+Loading &lt;kernel32.dll&gt;
+Loading &lt;C:\Windows\WinSxS\x86_microsoft.windows.gdiplus_6595b64144ccf1df_1.1.9600.17415_none_dad8722c5bcc2d8f\gdiplus.dll&gt;
+Loading &lt;comctl32.dll&gt;
+Loading &lt;comctl32.dll&gt;
+Loading &lt;comctl32.dll&gt;
+Loading &lt;C:\Windows\system32\shell32.dll&gt;
+Loading &lt;C:\Windows\SYSTEM32\WINMM.dll&gt;
+Loading &lt;C:\Windows\system32\ole32.dll&gt;
+Ask to load &lt;ole32.dll&gt;: exiting process
+</pre></div>
+</div>
+</div>
 </div>
 
 
@@ -528,20 +756,26 @@ registered owner = &lt;KeyValue(name=&#39;RegisteredOwner&#39;, value=u&#39;hakr
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">9. Samples of code</a><ul>
-<li><a class="reference internal" href="#windows-current-process">9.1. <code class="docutils literal"><span class="pre">windows.current_process</span></code></a></li>
-<li><a class="reference internal" href="#remote-process-winprocess">9.2. Remote process : <code class="docutils literal"><span class="pre">WinProcess</span></code></a></li>
-<li><a class="reference internal" href="#peb-exploration">9.3. <code class="docutils literal"><span class="pre">PEB</span></code> exploration</a></li>
-<li><a class="reference internal" href="#iat-hooking">9.4. IAT hooking</a></li>
-<li><a class="reference internal" href="#network-socket-exploration">9.5. <code class="docutils literal"><span class="pre">Network</span></code> - socket exploration</a></li>
-<li><a class="reference internal" href="#registry">9.6. <code class="docutils literal"><span class="pre">Registry</span></code></a></li>
+<li><a class="reference internal" href="#">10. Samples of code</a><ul>
+<li><a class="reference internal" href="#windows-current-process">10.1. <code class="docutils literal"><span class="pre">windows.current_process</span></code></a></li>
+<li><a class="reference internal" href="#remote-process-winprocess">10.2. Remote process : <code class="docutils literal"><span class="pre">WinProcess</span></code></a></li>
+<li><a class="reference internal" href="#peb-exploration">10.3. <code class="docutils literal"><span class="pre">PEB</span></code> exploration</a></li>
+<li><a class="reference internal" href="#iat-hooking">10.4. IAT hooking</a></li>
+<li><a class="reference internal" href="#network-socket-exploration">10.5. <code class="docutils literal"><span class="pre">Network</span></code> - socket exploration</a></li>
+<li><a class="reference internal" href="#registry">10.6. <code class="docutils literal"><span class="pre">Registry</span></code></a></li>
+<li><a class="reference internal" href="#vectoredexception">10.7. <code class="docutils literal"><span class="pre">VectoredException()</span></code></a><ul>
+<li><a class="reference internal" href="#in-local-process">10.7.1. In local process</a></li>
+<li><a class="reference internal" href="#in-remote-process">10.7.2. In remote process</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#debugging">10.8. Debugging</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="internals.html"
-                        title="previous chapter">8. Internals</a></p>
+                        title="previous chapter">9. Internals</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -576,7 +810,7 @@ registered owner = &lt;KeyValue(name=&#39;RegisteredOwner&#39;, value=u&#39;hakr
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="internals.html" title="8. Internals"
+          <a href="internals.html" title="9. Internals"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">PythonForWindows 0.1 documentation</a> &raquo;</li> 
       </ul>

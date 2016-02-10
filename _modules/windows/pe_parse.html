@@ -75,18 +75,21 @@
     <span class="k">return</span> <span class="p">[(</span><span class="n">name</span><span class="p">,</span> <span class="n">replacement</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">type</span><span class="p">))</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="nb">type</span> <span class="ow">in</span> <span class="n">struct</span><span class="o">.</span><span class="n">_fields_</span><span class="p">]</span>
 
 
-<span class="k">def</span> <span class="nf">get_structure_transformer_for_target</span><span class="p">(</span><span class="n">target</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">get_structure_transformer_for_target</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">targetbitness</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="n">current_bitness</span> <span class="o">=</span> <span class="n">windows</span><span class="o">.</span><span class="n">current_process</span><span class="o">.</span><span class="n">bitness</span>
     <span class="k">if</span> <span class="n">target</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
         <span class="n">ctypes_structure_transformer</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span>
         <span class="n">create_structure_at</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">structcls</span><span class="p">,</span> <span class="n">addr</span><span class="p">:</span> <span class="n">structcls</span><span class="o">.</span><span class="n">from_address</span><span class="p">(</span><span class="n">addr</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ctypes_structure_transformer</span><span class="p">,</span> <span class="n">create_structure_at</span>
 
-    <span class="k">if</span> <span class="n">target</span><span class="o">.</span><span class="n">bitness</span> <span class="o">==</span> <span class="mi">32</span> <span class="ow">and</span> <span class="n">current_bitness</span> <span class="o">==</span> <span class="mi">64</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">targetbitness</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">targetbitness</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">bitness</span>
+
+    <span class="k">if</span> <span class="n">targetbitness</span> <span class="o">==</span> <span class="mi">32</span> <span class="ow">and</span> <span class="n">current_bitness</span> <span class="o">==</span> <span class="mi">64</span><span class="p">:</span>
         <span class="n">ctypes_structure_transformer</span> <span class="o">=</span> <span class="n">rctypes</span><span class="o">.</span><span class="n">transform_type_to_remote32bits</span>
-    <span class="k">elif</span> <span class="n">target</span><span class="o">.</span><span class="n">bitness</span> <span class="o">==</span> <span class="mi">64</span> <span class="ow">and</span> <span class="n">current_bitness</span> <span class="o">==</span> <span class="mi">32</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">targetbitness</span> <span class="o">==</span> <span class="mi">64</span> <span class="ow">and</span> <span class="n">current_bitness</span> <span class="o">==</span> <span class="mi">32</span><span class="p">:</span>
         <span class="n">ctypes_structure_transformer</span> <span class="o">=</span> <span class="n">rctypes</span><span class="o">.</span><span class="n">transform_type_to_remote64bits</span>
-    <span class="k">elif</span> <span class="n">target</span><span class="o">.</span><span class="n">bitness</span> <span class="o">==</span> <span class="n">current_bitness</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">targetbitness</span> <span class="o">==</span> <span class="n">current_bitness</span><span class="p">:</span>
         <span class="n">ctypes_structure_transformer</span> <span class="o">=</span> <span class="n">rctypes</span><span class="o">.</span><span class="n">transform_type_to_remote</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;Parsing {0} PE from {1} Process&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">targetedbitness</span><span class="p">,</span> <span class="n">proc_bitness</span><span class="p">))</span>
@@ -95,8 +98,19 @@
         <span class="k">return</span> <span class="n">ctypes_structure_transformer</span><span class="p">(</span><span class="n">structcls</span><span class="p">)(</span><span class="n">addr</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">ctypes_structure_transformer</span><span class="p">,</span> <span class="n">create_structure_at</span>
 
+<span class="k">def</span> <span class="nf">get_pe_bitness</span><span class="p">(</span><span class="n">baseaddr</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+    <span class="c"># We can force bitness as the filed we access are bitness-independant</span>
+    <span class="n">pe</span> <span class="o">=</span> <span class="n">GetPEFile</span><span class="p">(</span><span class="n">baseaddr</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">force_bitness</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+    <span class="n">machine</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">get_NT_HEADER</span><span class="p">()</span><span class="o">.</span><span class="n">FileHeader</span><span class="o">.</span><span class="n">Machine</span>
+    <span class="k">if</span> <span class="n">machine</span> <span class="o">==</span> <span class="mh">0x14c</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">32</span>
+    <span class="k">elif</span> <span class="n">machine</span> <span class="o">==</span> <span class="mh">0x8664</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">64</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Unknow PE target machine &lt;0x{0:x}&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">machine</span><span class="p">))</span>
 
-<div class="viewcode-block" id="GetPEFile"><a class="viewcode-back" href="../../process.html#windows.pe_parse.GetPEFile">[docs]</a><span class="k">def</span> <span class="nf">GetPEFile</span><span class="p">(</span><span class="n">baseaddr</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+
+<div class="viewcode-block" id="GetPEFile"><a class="viewcode-back" href="../../process.html#windows.pe_parse.GetPEFile">[docs]</a><span class="k">def</span> <span class="nf">GetPEFile</span><span class="p">(</span><span class="n">baseaddr</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">force_bitness</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Returns a :class:`PEFile` to explore a PE loaded at `baseaddr` in process `target`.</span>
 
 <span class="sd">    :rtype: :class:`PEFile`</span>
@@ -106,14 +120,14 @@
 <span class="sd">        If target is ``None`` it refers to the curent process</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">proc_bitness</span> <span class="o">=</span> <span class="n">windows</span><span class="o">.</span><span class="n">current_process</span><span class="o">.</span><span class="n">bitness</span>
-    <span class="k">if</span> <span class="n">target</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">targetedbitness</span> <span class="o">=</span> <span class="n">proc_bitness</span>
+
+    <span class="k">if</span> <span class="n">force_bitness</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">targetedbitness</span> <span class="o">=</span> <span class="n">get_pe_bitness</span><span class="p">(</span><span class="n">baseaddr</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">targetedbitness</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">bitness</span>
+        <span class="n">targetedbitness</span> <span class="o">=</span> <span class="n">force_bitness</span>
 
-    <span class="n">transformers</span> <span class="o">=</span> <span class="n">get_structure_transformer_for_target</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+    <span class="n">transformers</span> <span class="o">=</span> <span class="n">get_structure_transformer_for_target</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">targetedbitness</span><span class="p">)</span>
     <span class="n">ctypes_structure_transformer</span><span class="p">,</span> <span class="n">create_structure_at</span> <span class="o">=</span> <span class="n">transformers</span>
-
 
     <span class="k">if</span> <span class="n">targetedbitness</span> <span class="o">==</span> <span class="mi">32</span><span class="p">:</span>
         <span class="n">IMAGE_ORDINAL_FLAG</span> <span class="o">=</span> <span class="n">IMAGE_ORDINAL_FLAG32</span>
@@ -213,6 +227,7 @@
         <span class="sd">&quot;&quot;&quot;Represent a PE loaded in a process (current or remote)&quot;&quot;&quot;</span>
         <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">baseaddr</span> <span class="o">=</span> <span class="n">baseaddr</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bitness</span> <span class="o">=</span> <span class="n">targetedbitness</span>
 
         <span class="k">def</span> <span class="nf">get_DOS_HEADER</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">create_structure_at</span><span class="p">(</span><span class="n">IMAGE_DOS_HEADER</span><span class="p">,</span> <span class="n">baseaddr</span><span class="p">)</span>
@@ -246,10 +261,15 @@
             <span class="n">export_directory_addr</span> <span class="o">=</span> <span class="n">baseaddr</span> <span class="o">+</span> <span class="n">export_directory_rva</span>
             <span class="k">return</span> <span class="n">create_structure_at</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_IMAGE_EXPORT_DIRECTORY</span><span class="p">,</span> <span class="n">export_directory_addr</span><span class="p">)</span>
 
-        <span class="k">class</span> <span class="nc">PESection</span><span class="p">(</span><span class="n">ctypes_structure_transformer</span><span class="p">(</span><span class="n">IMAGE_SECTION_HEADER</span><span class="p">)):</span>
-            <span class="nd">@utils.fixedpropety</span>
-            <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-                <span class="k">return</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_char_p</span><span class="p">(</span><span class="n">ctypes</span><span class="o">.</span><span class="n">addressof</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Name</span><span class="p">))</span><span class="o">.</span><span class="n">value</span>
+        <span class="k">class</span> <span class="nc">PESection</span><span class="p">((</span><span class="n">IMAGE_SECTION_HEADER</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">target</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="nd">@property</span>
+                <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_char_p</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Name</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nd">@property</span>
+                <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="n">create_structure_at</span><span class="p">(</span><span class="n">ctypes</span><span class="o">.</span><span class="n">c_char_p</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_addr</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
 
             <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
                 <span class="k">return</span> <span class="s">&quot;&lt;PESection </span><span class="se">\&quot;</span><span class="s">{0}</span><span class="se">\&quot;</span><span class="s">&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
@@ -258,8 +278,11 @@
         <span class="k">def</span> <span class="nf">sections</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="n">nt_header</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_NT_HEADER</span><span class="p">()</span>
             <span class="n">nb_section</span> <span class="o">=</span> <span class="n">nt_header</span><span class="o">.</span><span class="n">FileHeader</span><span class="o">.</span><span class="n">NumberOfSections</span>
-            <span class="n">base_section</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">addressof</span><span class="p">(</span><span class="n">nt_header</span><span class="p">)</span> <span class="o">+</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">nt_header</span><span class="p">)</span>
-            <span class="n">sections_array</span> <span class="o">=</span> <span class="n">create_structure_at</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">PESection</span> <span class="o">*</span> <span class="n">nb_section</span><span class="p">,</span> <span class="n">base_section</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">target</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">base_section</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">addressof</span><span class="p">(</span><span class="n">nt_header</span><span class="p">)</span> <span class="o">+</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">nt_header</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">base_section</span> <span class="o">=</span> <span class="n">nt_header</span><span class="o">.</span><span class="n">_base_addr</span> <span class="o">+</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">nt_header</span><span class="p">)</span>
+            <span class="n">sections_array</span> <span class="o">=</span> <span class="n">create_structure_at</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">PESection</span> <span class="o">*</span> <span class="n">nb_section</span><span class="p">),</span> <span class="n">base_section</span><span class="p">)</span>
             <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">sections_array</span><span class="p">)</span>
 
         <span class="nd">@utils.fixedpropety</span>
@@ -278,6 +301,11 @@
                 <span class="k">if</span> <span class="n">rva_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
                     <span class="n">res</span><span class="p">[</span><span class="n">rva_name</span><span class="o">.</span><span class="n">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">rva_addr</span><span class="o">.</span><span class="n">addr</span>
             <span class="k">return</span> <span class="n">res</span>
+
+        <span class="nd">@utils.fixedpropety</span>
+        <span class="k">def</span> <span class="nf">export_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;The Name attribute of the ``EXPORT_DIRECTORY``&quot;&quot;&quot;</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_EXPORT_DIRECTORY</span><span class="p">()</span><span class="o">.</span><span class="n">Name</span><span class="o">.</span><span class="n">str</span>
 
         <span class="c"># TODO: get imports by parsing other modules exports if no INT</span>
         <span class="nd">@utils.fixedpropety</span>
@@ -381,7 +409,6 @@
             <span class="k">if</span> <span class="n">targetedbitness</span> <span class="o">==</span> <span class="mi">32</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">create_structure_at</span><span class="p">(</span><span class="n">IMAGE_NT_HEADERS32</span><span class="p">,</span> <span class="n">baseaddr</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">e_lfanew</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">create_structure_at</span><span class="p">(</span><span class="n">IMAGE_NT_HEADERS64</span><span class="p">,</span> <span class="n">baseaddr</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">e_lfanew</span><span class="p">)</span>
-
     <span class="k">return</span> <span class="n">current_pe</span></div>
 </pre></div>
 

@@ -61,15 +61,17 @@
 <li class="toctree-l2"><a class="reference internal" href="process.html">2.1. Processes and Threads</a></li>
 <li class="toctree-l2"><a class="reference internal" href="process.html#peb-exploration">2.2. PEB Exploration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="process.html#pefile-parsing-loaded-pe">2.3. PEFile - Parsing loaded PE</a></li>
-<li class="toctree-l2"><a class="reference internal" href="registry.html">2.4. Registry</a></li>
-<li class="toctree-l2"><a class="reference internal" href="network.html">2.5. Network</a></li>
-<li class="toctree-l2"><a class="reference internal" href="com.html">2.6. COM - Component Object Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exception.html">2.4. Exception and Context related structures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="registry.html">2.5. Registry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="network.html">2.6. Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="com.html">2.7. COM - Component Object Model</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="native_exec.html">3. <code class="docutils literal"><span class="pre">windows.native_exec</span></code> &#8211; Native Code Execution</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="native_exec.html#module-windows.native_exec.cpuid">3.1. <code class="docutils literal"><span class="pre">windows.native_exec.cpuid</span></code> &#8211; Interface to native CPUID</a></li>
 <li class="toctree-l2"><a class="reference internal" href="native_exec.html#module-windows.native_exec.simple_x86">3.2. <code class="docutils literal"><span class="pre">windows.native_exec.simple_x86</span></code> &#8211; X86 Assembler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="native_exec.html#module-windows.native_exec.simple_x64">3.3. <code class="docutils literal"><span class="pre">windows.native_exec.simple_x64</span></code> &#8211; X64 Assembler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="native_exec.html#module-windows.native_exec.nativeutils">3.4. <code class="docutils literal"><span class="pre">windows.native_exec.nativeutils</span></code> &#8211; Native utility functions</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="winproxy.html">4. <code class="docutils literal"><span class="pre">windows.winproxy</span></code> &#8211; Windows API</a><ul>
@@ -82,29 +84,36 @@
 <li class="toctree-l2"><a class="reference internal" href="utils.html#helper-functions">5.2. Helper functions</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="iat_hook.html">6. IAT hooking</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="iat_hook.html#putting-an-iat-hook">6.1. Putting an IAT hook</a></li>
-<li class="toctree-l2"><a class="reference internal" href="iat_hook.html#hook-protocol">6.2. Hook protocol</a></li>
-<li class="toctree-l2"><a class="reference internal" href="iat_hook.html#module-windows.hooks">6.3. <code class="docutils literal"><span class="pre">windows.hooks</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="debug.html">6. <code class="docutils literal"><span class="pre">windows.debug</span></code> &#8211; Debugging</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="debug.html#debugger">6.1. <code class="docutils literal"><span class="pre">Debugger</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="debug.html#breakpoint">6.2. <code class="docutils literal"><span class="pre">Breakpoint</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="wip.html">7. Early Work In Progress</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="wip.html#wintrust-signature-check">7.1. Wintrust &#8211; Signature check</a></li>
-<li class="toctree-l2"><a class="reference internal" href="wip.html#wmi-wmi-request">7.2. WMI &#8211; WMI request</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iat_hook.html">7. IAT hooking</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="iat_hook.html#putting-an-iat-hook">7.1. Putting an IAT hook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="iat_hook.html#hook-protocol">7.2. Hook protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="iat_hook.html#module-windows.hooks">7.3. <code class="docutils literal"><span class="pre">windows.hooks</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="internals.html">8. Internals</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="internals.html#module-windows.remotectypes">8.1. remotectypes.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="internals.html#module-windows.syswow64">8.2. syswow64.py &#8211; Crossing the heaven gate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wip.html">8. Early Work In Progress</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="wip.html#wintrust-signature-check">8.1. Wintrust &#8211; Signature check</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wip.html#wmi-wmi-request">8.2. WMI &#8211; WMI request</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="sample.html">9. Samples of code</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="sample.html#windows-current-process">9.1. <code class="docutils literal"><span class="pre">windows.current_process</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="sample.html#remote-process-winprocess">9.2. Remote process : <code class="docutils literal"><span class="pre">WinProcess</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="sample.html#peb-exploration">9.3. <code class="docutils literal"><span class="pre">PEB</span></code> exploration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sample.html#iat-hooking">9.4. IAT hooking</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sample.html#network-socket-exploration">9.5. <code class="docutils literal"><span class="pre">Network</span></code> - socket exploration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sample.html#registry">9.6. <code class="docutils literal"><span class="pre">Registry</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals.html">9. Internals</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="internals.html#module-windows.remotectypes">9.1. remotectypes.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="internals.html#module-windows.syswow64">9.2. syswow64.py &#8211; Crossing the heaven gate</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sample.html">10. Samples of code</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sample.html#windows-current-process">10.1. <code class="docutils literal"><span class="pre">windows.current_process</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sample.html#remote-process-winprocess">10.2. Remote process : <code class="docutils literal"><span class="pre">WinProcess</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sample.html#peb-exploration">10.3. <code class="docutils literal"><span class="pre">PEB</span></code> exploration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sample.html#iat-hooking">10.4. IAT hooking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sample.html#network-socket-exploration">10.5. <code class="docutils literal"><span class="pre">Network</span></code> - socket exploration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sample.html#registry">10.6. <code class="docutils literal"><span class="pre">Registry</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sample.html#vectoredexception">10.7. <code class="docutils literal"><span class="pre">VectoredException()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sample.html#debugging">10.8. Debugging</a></li>
 </ul>
 </li>
 </ul>
