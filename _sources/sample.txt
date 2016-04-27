@@ -99,6 +99,49 @@ Output::
     Sections: [<PESection ".text">, <PESection ".rdata">, <PESection ".data">, <PESection ".rsrc">, <PESection ".reloc">]
 
 
+
+.. _sample_system:
+
+
+``windows.system``
+""""""""""""""""""
+
+.. literalinclude:: ..\..\samples\system.py
+
+Output::
+
+    (cmd λ) python system.py
+    Basic system infos:
+        version = (6, 3)
+        bitness = 64
+        computer_name = HAKRIL-PC
+        product_type = VER_NT_WORKSTATION(0x1L)
+        version_name = Windows 8.1
+
+    There is 95 processes
+    There is 1021 threads
+
+    Dumping first logical drive:
+        <LogicalDrive "C:\" (DRIVE_FIXED)>
+            name = C:\
+            type = DRIVE_FIXED(0x3L)
+            path = \Device\HarddiskVolume2
+
+    Dumping first service:
+        <ServiceA "ACPI">
+            name = ACPI
+            description = Microsoft ACPI Driver
+            status = ServiceStatus(type=SERVICE_KERNEL_DRIVER(0x1L), state=SERVICE_RUNNING(0x4L), control_accepted=1L, flags=0L)
+            process = None
+
+    Finding a service in a user process:
+        <ServiceA "Appinfo">
+            name = Appinfo
+            description = Application Information
+            status = ServiceStatus(type=SERVICE_WIN32_SHARE_PROCESS(0x20L), state=SERVICE_RUNNING(0x4L), control_accepted=129L, flags=0L)
+            process = <WinProcess "svchost.exe" pid 944 at 0x29d5290>
+
+
 .. _sample_iat_hook:
 
 IAT hooking
@@ -190,6 +233,31 @@ Output::
     registered owner = <KeyValue(name='RegisteredOwner', value=u'hakril', type=1)>
 
 
+.. _sample_wintrust:
+
+``windows.wintrust``
+""""""""""""""""""""
+
+.. literalinclude:: ..\..\samples\wintrust.py
+
+Output::
+
+    (cmd λ) python .\wintrust.py
+    Checking signature of <C:\windows\system32\ntdll.dll>
+    is_signed: <True>
+    check_signature: <0>
+    full_signature_information:
+        * signed <True>
+        * catalog <C:\Windows\system32\CatRoot\{F750E6C3-38EE-11D1-85E5-00C04FC295EE}\Package_35_for_KB3128650~31bf3856ad364e35~amd64~~6.3.1.2.cat>
+        * catalogsigned <True>
+        * additionalinfo <0>
+    Checking signature of some loaded DLL
+    <c:\python27\python.exe> : False (TRUST_E_NOSIGNATURE(0x800b0100L))
+    <c:\windows\system32\ntdll.dll> : True
+    <c:\windows\system32\kernel32.dll> : True
+    <c:\windows\system32\kernelbase.dll> : True
+    <c:\windows\system32\python27.dll> : False (TRUST_E_NOSIGNATURE(0x800b0100L))
+
 .. _sample_vectoredexception:
 
 :func:`VectoredException`
@@ -261,6 +329,9 @@ Output::
 Debugging
 """""""""
 
+:class:`Debugger`
+'''''''''''''''''
+
 .. literalinclude:: ..\..\samples\debugger.py
 
 Ouput::
@@ -282,3 +353,112 @@ Ouput::
     Loading <C:\Windows\SYSTEM32\WINMM.dll>
     Loading <C:\Windows\system32\ole32.dll>
     Ask to load <ole32.dll>: exiting process
+
+
+.. _sample_local_debugger:
+
+:class:`LocalDebugger`
+''''''''''''''''''''''
+
+In current process
+^^^^^^^^^^^^^^^^^^
+
+.. literalinclude:: ..\..\samples\local_debugger.py
+
+Ouput::
+
+    (cmd λ) python.exe .\samples\local_debugger.py
+    Your main thread is 3864
+    Code addr = 0x46000b
+    GOT AN HXBP <3 at 0x46000b
+    EXCEPTION !!!! Got a EXCEPTION_SINGLE_STEP(0x80000004L) at 0x46000c
+    EXCEPTION !!!! Got a EXCEPTION_SINGLE_STEP(0x80000004L) at 0x46000d
+    EXCEPTION !!!! Got a EXCEPTION_SINGLE_STEP(0x80000004L) at 0x46000e
+    EXCEPTION !!!! Got a EXCEPTION_SINGLE_STEP(0x80000004L) at 0x46000f
+    EXCEPTION !!!! Got a EXCEPTION_SINGLE_STEP(0x80000004L) at 0x460010
+    EXCEPTION !!!! Got a EXCEPTION_SINGLE_STEP(0x80000004L) at 0x460011
+
+
+In remote process
+^^^^^^^^^^^^^^^^^
+
+.. literalinclude:: ..\..\samples\local_debugger_remote_process.py
+
+Ouput::
+
+    (cmd λ) python.exe .\samples\local_debugger_remote_process.py
+    (In another console)
+    I AM LOADING <C:\Windows\system32\uxtheme.dll>
+    I AM LOADING <C:\Windows\system32\uxtheme.dll>
+    I AM LOADING <C:\Windows\system32\uxtheme.dll>
+    I AM LOADING <C:\Windows\system32\uxtheme.dll>
+    I AM LOADING <kernel32.dll>
+    I AM LOADING <C:\Windows\WinSxS\x86_microsoft.windows.gdiplus_6595b64144ccf1df_1.1.9600.17415_none_dad8722c5bcc2d8f\gdiplus.dll>
+    I AM LOADING <comctl32.dll>
+    I AM LOADING <comctl32.dll>
+    I AM LOADING <comctl32.dll>
+    I AM LOADING <comctl32.dll>
+    I AM LOADING <comctl32.dll>
+    I AM LOADING <comctl32>
+    I AM LOADING <C:\Windows\SysWOW64\oleacc.dll>
+    I AM LOADING <OLEAUT32.DLL>
+    I AM LOADING <C:\Windows\system32\ole32.dll>
+    I AM LOADING <C:\Windows\system32\MSCTF.dll>
+    I AM LOADING <C:\Windows\SysWOW64\msxml6.dll>
+    I AM LOADING <C:\Windows\system32\shell32.dll>
+    I AM LOADING <C:\Windows\SYSTEM32\WINMM.dll>
+    I AM LOADING <C:\Windows\system32\ole32.dll>
+
+
+.. _wmi_request:
+
+Make WMI requests
+'''''''''''''''''
+
+.. literalinclude:: ..\..\samples\wmi_request.py
+
+
+Ouput::
+
+    (cmd λ) python .\samples\wmi_request.py
+    WMI requester is <windows.winobject.wmi.WmiRequester object at 0x02B37EF0>
+    Selecting * from 'Win32_Process'
+    They are <92> processes
+    Looking for ourself via pid
+    Some info about our process:
+        * Name -> python.exe
+        * ProcessId -> 7968
+        * OSName -> Microsoft Windows 8.1 Pro|C:\Windows|\Device\Harddisk0\Partition2
+        * UserModeTime -> 2812500
+        * WindowsVersion -> 6.3.9600
+        * CommandLine -> python.exe  .\samples\wmi_request.py
+    <Select Caption,FileSystem,FreeSpace from Win32_LogicalDisk>:
+        * {'Caption': u'C:', 'FreeSpace': u'43991547904', 'FileSystem': u'NTFS'}
+        * {'Caption': u'E:', 'FreeSpace': u'82776027136', 'FileSystem': u'NTFS'}
+        * {'Caption': u'F:', 'FreeSpace': u'5711265792', 'FileSystem': u'FAT32'}
+        * {'Caption': u'G:', 'FreeSpace': None, 'FileSystem': None}
+
+.. _sample_com_firewall:
+
+using COM: ``INetFwPolicy2``
+''''''''''''''''''''''''''''
+
+.. literalinclude:: ..\..\samples\com_inetfwpolicy2.py
+
+Output::
+
+    (cmd λ) python .\samples\com_inetfwpolicy2.py
+    Initialisation of COM
+    Creating INetFwPolicy2 variable
+    <INetFwPolicy2 object at 0x02DC8210> (value = None)
+
+    Generating CLSID
+    <IID "E2B3C97F-6AE1-41AC-817A-F6F92166D7DD">
+
+    Creating COM instance
+    <INetFwPolicy2 object at 0x02DC8210> (value = 0x8984848)
+
+    Checking for enabled profiles
+    * NET_FW_PROFILE2_DOMAIN(0x1L) -> True
+    * NET_FW_PROFILE2_PRIVATE(0x2L) -> True
+    * NET_FW_PROFILE2_PUBLIC(0x4L) -> True

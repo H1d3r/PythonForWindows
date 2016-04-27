@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>6. windows.debug – Debugging &mdash; PythonForWindows 0.1 documentation</title>
+    <title>7. windows.debug – Debugging &mdash; PythonForWindows 0.2 documentation</title>
     
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1',
+        VERSION:     '0.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,9 +23,9 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PythonForWindows 0.1 documentation" href="index.html" />
-    <link rel="next" title="7. IAT hooking" href="iat_hook.html" />
-    <link rel="prev" title="5. windows.utils – Windows Utilities" href="utils.html" /> 
+    <link rel="top" title="PythonForWindows 0.2 documentation" href="index.html" />
+    <link rel="next" title="8. windows.com - Component Object Model" href="com.html" />
+    <link rel="prev" title="6. windows.wintrust – Checking signature" href="wintrust.html" /> 
   </head>
   <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
@@ -38,12 +38,12 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="iat_hook.html" title="7. IAT hooking"
+          <a href="com.html" title="8. windows.com - Component Object Model"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="utils.html" title="5. windows.utils – Windows Utilities"
+          <a href="wintrust.html" title="6. windows.wintrust – Checking signature"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">PythonForWindows 0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PythonForWindows 0.2 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -53,13 +53,13 @@
           <div class="body" role="main">
             
   <div class="section" id="module-windows.debug">
-<span id="windows-debug-debugging"></span><h1>6. <a class="reference internal" href="#module-windows.debug" title="windows.debug"><code class="xref py py-mod docutils literal"><span class="pre">windows.debug</span></code></a> &#8211; Debugging<a class="headerlink" href="#module-windows.debug" title="Permalink to this headline">¶</a></h1>
+<span id="windows-debug-debugging"></span><h1>7. <a class="reference internal" href="#module-windows.debug" title="windows.debug"><code class="xref py py-mod docutils literal"><span class="pre">windows.debug</span></code></a> &#8211; Debugging<a class="headerlink" href="#module-windows.debug" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">See sample <a class="reference internal" href="sample.html#sample-debugger"><span>Debugging</span></a></p>
 </div>
 <div class="section" id="debugger">
-<h2>6.1. <a class="reference internal" href="#windows.debug.Debugger" title="windows.debug.Debugger"><code class="xref py py-class docutils literal"><span class="pre">Debugger</span></code></a><a class="headerlink" href="#debugger" title="Permalink to this headline">¶</a></h2>
+<h2>7.1. <a class="reference internal" href="#windows.debug.Debugger" title="windows.debug.Debugger"><code class="xref py py-class docutils literal"><span class="pre">Debugger</span></code></a><a class="headerlink" href="#debugger" title="Permalink to this headline">¶</a></h2>
 <p>The <a class="reference internal" href="#windows.debug.Debugger" title="windows.debug.Debugger"><code class="xref py py-class docutils literal"><span class="pre">Debugger</span></code></a> is the base class to perform the debugging of a remote process.
 The <a class="reference internal" href="#windows.debug.Debugger" title="windows.debug.Debugger"><code class="xref py py-class docutils literal"><span class="pre">Debugger</span></code></a> have some functions called on given event that can be implemented by subclasses.</p>
 <dl class="class">
@@ -94,62 +94,118 @@ The <a class="reference internal" href="#windows.debug.Debugger" title="windows.
 <dl class="method">
 <dt id="windows.debug.Debugger.on_create_process">
 <code class="descname">on_create_process</code><span class="sig-paren">(</span><em>create_process</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/debug.html#Debugger.on_create_process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.debug.Debugger.on_create_process" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called on create_process event</p>
+<dd><p>Called on create_process event (for param type see <a class="reference external" href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms679286(v=vs.85).aspx">https://msdn.microsoft.com/en-us/library/windows/desktop/ms679286(v=vs.85).aspx</a>)</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="windows.debug.Debugger.on_create_thread">
 <code class="descname">on_create_thread</code><span class="sig-paren">(</span><em>create_thread</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/debug.html#Debugger.on_create_thread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.debug.Debugger.on_create_thread" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called on create_thread event</p>
+<dd><p>Called on create_thread event (for param type see <a class="reference external" href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms679287(v=vs.85).aspx">https://msdn.microsoft.com/en-us/library/windows/desktop/ms679287(v=vs.85).aspx</a>)</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="windows.debug.Debugger.on_exception">
 <code class="descname">on_exception</code><span class="sig-paren">(</span><em>exception</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/debug.html#Debugger.on_exception"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.debug.Debugger.on_exception" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called on exception event other that known breakpoint</p>
+<dd><p>Called on exception event other that known breakpoint. <code class="docutils literal"><span class="pre">exception</span></code> is one of the following type:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="exception.html#windows.winobject.exception.EEXCEPTION_DEBUG_INFO32" title="windows.winobject.exception.EEXCEPTION_DEBUG_INFO32"><code class="xref py py-class docutils literal"><span class="pre">windows.winobject.exception.EEXCEPTION_DEBUG_INFO32</span></code></a></li>
+<li><a class="reference internal" href="exception.html#windows.winobject.exception.EEXCEPTION_DEBUG_INFO64" title="windows.winobject.exception.EEXCEPTION_DEBUG_INFO64"><code class="xref py py-class docutils literal"><span class="pre">windows.winobject.exception.EEXCEPTION_DEBUG_INFO64</span></code></a></li>
+</ul>
+</div></blockquote>
+<p>The default behaviour is to return <code class="docutils literal"><span class="pre">DBG_CONTINUE</span></code> for the known exception code
+and <code class="docutils literal"><span class="pre">DBG_EXCEPTION_NOT_HANDLED</span></code> else</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="windows.debug.Debugger.on_exit_process">
 <code class="descname">on_exit_process</code><span class="sig-paren">(</span><em>exit_process</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/debug.html#Debugger.on_exit_process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.debug.Debugger.on_exit_process" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called on exit_process event</p>
+<dd><p>Called on exit_process event (for param type see <a class="reference external" href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms679334(v=vs.85).aspx">https://msdn.microsoft.com/en-us/library/windows/desktop/ms679334(v=vs.85).aspx</a>)</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="windows.debug.Debugger.on_exit_thread">
 <code class="descname">on_exit_thread</code><span class="sig-paren">(</span><em>exit_thread</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/debug.html#Debugger.on_exit_thread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.debug.Debugger.on_exit_thread" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called on exit_thread event</p>
+<dd><p>Called on exit_thread event (for param type see <a class="reference external" href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms679335(v=vs.85).aspx">https://msdn.microsoft.com/en-us/library/windows/desktop/ms679335(v=vs.85).aspx</a>)</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="windows.debug.Debugger.on_load_dll">
 <code class="descname">on_load_dll</code><span class="sig-paren">(</span><em>load_dll</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/debug.html#Debugger.on_load_dll"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.debug.Debugger.on_load_dll" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called on load_dll event</p>
+<dd><p>Called on load_dll event (for param type see <a class="reference external" href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms680351(v=vs.85).aspx">https://msdn.microsoft.com/en-us/library/windows/desktop/ms680351(v=vs.85).aspx</a>)</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="windows.debug.Debugger.on_output_debug_string">
 <code class="descname">on_output_debug_string</code><span class="sig-paren">(</span><em>debug_string</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/debug.html#Debugger.on_output_debug_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.debug.Debugger.on_output_debug_string" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called on debug_string event</p>
+<dd><p>Called on debug_string event (for param type see <a class="reference external" href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms680545(v=vs.85).aspx">https://msdn.microsoft.com/en-us/library/windows/desktop/ms680545(v=vs.85).aspx</a>)</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="windows.debug.Debugger.on_rip">
 <code class="descname">on_rip</code><span class="sig-paren">(</span><em>rip_info</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/debug.html#Debugger.on_rip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.debug.Debugger.on_rip" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called on rip_info event</p>
+<dd><p>Called on rip_info event (for param type see <a class="reference external" href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms680587(v=vs.85).aspx">https://msdn.microsoft.com/en-us/library/windows/desktop/ms680587(v=vs.85).aspx</a>)</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="windows.debug.Debugger.on_unload_dll">
 <code class="descname">on_unload_dll</code><span class="sig-paren">(</span><em>unload_dll</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/debug.html#Debugger.on_unload_dll"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.debug.Debugger.on_unload_dll" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called on unload_dll event</p>
+<dd><p>Called on unload_dll event (for param type see <a class="reference external" href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms681403(v=vs.85).aspx">https://msdn.microsoft.com/en-us/library/windows/desktop/ms681403(v=vs.85).aspx</a>)</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="localdebugger">
+<h2>7.2. <a class="reference internal" href="#windows.debug.LocalDebugger" title="windows.debug.LocalDebugger"><code class="xref py py-class docutils literal"><span class="pre">LocalDebugger</span></code></a><a class="headerlink" href="#localdebugger" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">See sample <a class="reference internal" href="sample.html#sample-local-debugger"><span>LocalDebugger</span></a></p>
+</div>
+<p>The <a class="reference internal" href="#windows.debug.Debugger" title="windows.debug.Debugger"><code class="xref py py-class docutils literal"><span class="pre">Debugger</span></code></a> is the base class to perform the debugging the current process.
+It is based on <code class="xref py py-func docutils literal"><span class="pre">VectoredException()</span></code> (see <a class="reference internal" href="sample.html#sample-vectoredexception"><span>VectoredException()</span></a>)</p>
+<p>There is not much documentation for now as the code might change soon.</p>
+<dl class="class">
+<dt id="windows.debug.LocalDebugger">
+<em class="property">class </em><code class="descclassname">windows.debug.</code><code class="descname">LocalDebugger</code><a class="reference internal" href="_modules/windows/debug.html#LocalDebugger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.debug.LocalDebugger" title="Permalink to this definition">¶</a></dt>
+<dd><p>A debugger interface around <code class="xref py py-func docutils literal"><span class="pre">AddVectoredExceptionHandler()</span></code></p>
+<dl class="method">
+<dt id="windows.debug.LocalDebugger.add_bp">
+<code class="descname">add_bp</code><span class="sig-paren">(</span><em>bp</em>, <em>targets=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/debug.html#LocalDebugger.add_bp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.debug.LocalDebugger.add_bp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a breakpoint, bp is a &#8220;class:<cite>Breakpoint</cite></p>
+<p>If the <code class="docutils literal"><span class="pre">bp</span></code> type is <code class="docutils literal"><span class="pre">STANDARD_BP</span></code>, target must be None.</p>
+<p>If the <code class="docutils literal"><span class="pre">bp</span></code> type is <code class="docutils literal"><span class="pre">HARDWARE_EXEC_BP</span></code>, target can be None (all threads), or some threads of the process</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="windows.debug.LocalDebugger.get_exception_code">
+<code class="descname">get_exception_code</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/debug.html#LocalDebugger.get_exception_code"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.debug.LocalDebugger.get_exception_code" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return ExceptionCode of current exception</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="windows.debug.LocalDebugger.get_exception_context">
+<code class="descname">get_exception_context</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/debug.html#LocalDebugger.get_exception_context"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.debug.LocalDebugger.get_exception_context" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return context of current exception</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="windows.debug.LocalDebugger.on_exception">
+<code class="descname">on_exception</code><span class="sig-paren">(</span><em>exc</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/debug.html#LocalDebugger.on_exception"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.debug.LocalDebugger.on_exception" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called on exception</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="windows.debug.LocalDebugger.single_step">
+<code class="descname">single_step</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/debug.html#LocalDebugger.single_step"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.debug.LocalDebugger.single_step" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make the current thread to single step</p>
 </dd></dl>
 
 </dd></dl>
 
 </div>
 <div class="section" id="breakpoint">
-<h2>6.2. <a class="reference internal" href="#windows.debug.Breakpoint" title="windows.debug.Breakpoint"><code class="xref py py-class docutils literal"><span class="pre">Breakpoint</span></code></a><a class="headerlink" href="#breakpoint" title="Permalink to this headline">¶</a></h2>
+<h2>7.3. <a class="reference internal" href="#windows.debug.Breakpoint" title="windows.debug.Breakpoint"><code class="xref py py-class docutils literal"><span class="pre">Breakpoint</span></code></a><a class="headerlink" href="#breakpoint" title="Permalink to this headline">¶</a></h2>
 <p>Standard breakpoints types expect an address as argument.</p>
 <p>An address can be:</p>
 <blockquote>
@@ -203,19 +259,20 @@ The <a class="reference internal" href="#windows.debug.Debugger" title="windows.
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">6. <code class="docutils literal"><span class="pre">windows.debug</span></code> &#8211; Debugging</a><ul>
-<li><a class="reference internal" href="#debugger">6.1. <code class="docutils literal"><span class="pre">Debugger</span></code></a></li>
-<li><a class="reference internal" href="#breakpoint">6.2. <code class="docutils literal"><span class="pre">Breakpoint</span></code></a></li>
+<li><a class="reference internal" href="#">7. <code class="docutils literal"><span class="pre">windows.debug</span></code> &#8211; Debugging</a><ul>
+<li><a class="reference internal" href="#debugger">7.1. <code class="docutils literal"><span class="pre">Debugger</span></code></a></li>
+<li><a class="reference internal" href="#localdebugger">7.2. <code class="docutils literal"><span class="pre">LocalDebugger</span></code></a></li>
+<li><a class="reference internal" href="#breakpoint">7.3. <code class="docutils literal"><span class="pre">Breakpoint</span></code></a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="utils.html"
-                        title="previous chapter">5. <code class="docutils literal"><span class="pre">windows.utils</span></code> &#8211; Windows Utilities</a></p>
+  <p class="topless"><a href="wintrust.html"
+                        title="previous chapter">6. <code class="docutils literal"><span class="pre">windows.wintrust</span></code> &#8211; Checking signature</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="iat_hook.html"
-                        title="next chapter">7. IAT hooking</a></p>
+  <p class="topless"><a href="com.html"
+                        title="next chapter">8. <code class="docutils literal"><span class="pre">windows.com</span></code> - Component Object Model</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -250,12 +307,12 @@ The <a class="reference internal" href="#windows.debug.Debugger" title="windows.
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="iat_hook.html" title="7. IAT hooking"
+          <a href="com.html" title="8. windows.com - Component Object Model"
              >next</a> |</li>
         <li class="right" >
-          <a href="utils.html" title="5. windows.utils – Windows Utilities"
+          <a href="wintrust.html" title="6. windows.wintrust – Checking signature"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">PythonForWindows 0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PythonForWindows 0.2 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

@@ -13,4 +13,6 @@ This sections describes them by group of relation.
     exception.rst
     registry.rst
     network.rst
-    com.rst
+    service.rst
+    volume.rst
+    wmi.rst

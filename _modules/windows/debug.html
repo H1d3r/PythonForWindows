@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>windows.debug &mdash; PythonForWindows 0.1 documentation</title>
+    <title>windows.debug &mdash; PythonForWindows 0.2 documentation</title>
     
     <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.1',
+        VERSION:     '0.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="PythonForWindows 0.1 documentation" href="../../index.html" />
+    <link rel="top" title="PythonForWindows 0.2 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
   </head>
   <body role="document">
@@ -36,7 +36,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">PythonForWindows 0.1 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">PythonForWindows 0.2 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -48,20 +48,23 @@
             
   <h1>Source code for windows.debug</h1><div class="highlight"><pre>
 <span class="kn">import</span> <span class="nn">os.path</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
 
 <span class="kn">import</span> <span class="nn">windows</span>
-<span class="kn">import</span> <span class="nn">windows.winproxy</span> <span class="kn">as</span> <span class="nn">winproxy</span>
-
-<span class="kn">from</span> <span class="nn">windows.winobject</span> <span class="kn">import</span> <span class="n">WinProcess</span><span class="p">,</span> <span class="n">WinThread</span>
-<span class="kn">from</span> <span class="nn">windows.dbgprint</span> <span class="kn">import</span> <span class="n">dbgprint</span>
-
+<span class="kn">import</span> <span class="nn">windows.winobject.exception</span> <span class="kn">as</span> <span class="nn">winexception</span>
 <span class="kn">import</span> <span class="nn">windows.native_exec.simple_x86</span> <span class="kn">as</span> <span class="nn">x86</span>
 <span class="kn">import</span> <span class="nn">windows.native_exec.simple_x64</span> <span class="kn">as</span> <span class="nn">x64</span>
 
+<span class="kn">from</span> <span class="nn">windows.winobject.process</span> <span class="kn">import</span> <span class="n">WinProcess</span><span class="p">,</span> <span class="n">WinThread</span>
+<span class="kn">from</span> <span class="nn">windows.dbgprint</span> <span class="kn">import</span> <span class="n">dbgprint</span>
+<span class="kn">from</span> <span class="nn">windows</span> <span class="kn">import</span> <span class="n">winproxy</span>
 <span class="kn">from</span> <span class="nn">windows.generated_def.winstructs</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">.generated_def</span> <span class="kn">import</span> <span class="n">windef</span>
 
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+
+<span class="kn">from</span> <span class="nn">windows.winobject.exception</span> <span class="kn">import</span> <span class="n">VectoredException</span>
+
+
 
 <span class="n">STANDARD_BP</span> <span class="o">=</span> <span class="s">&quot;BP&quot;</span>
 <span class="n">HARDWARE_EXEC_BP</span> <span class="o">=</span> <span class="s">&quot;HXBP&quot;</span>
@@ -176,9 +179,9 @@
         <span class="n">_setup_method</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&quot;_setup_breakpoint_&quot;</span> <span class="o">+</span> <span class="n">bp</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">target</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">bp</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">STANDARD_BP</span><span class="p">:</span> <span class="c">#TODO: better..</span>
-                <span class="n">targets</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">processes</span>
+                <span class="n">targets</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">processes</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">targets</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">threads</span>
+                <span class="n">targets</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">threads</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">targets</span> <span class="o">=</span> <span class="p">[</span><span class="n">target</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">targets</span><span class="p">:</span>
@@ -294,9 +297,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_update_debugger_state</span><span class="p">(</span><span class="n">debug_event</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">windows</span><span class="o">.</span><span class="n">current_process</span><span class="o">.</span><span class="n">bitness</span> <span class="o">==</span> <span class="mi">32</span><span class="p">:</span>
-            <span class="n">exception</span><span class="o">.</span><span class="n">__class__</span> <span class="o">=</span> <span class="n">windows</span><span class="o">.</span><span class="n">exception</span><span class="o">.</span><span class="n">EEXCEPTION_DEBUG_INFO32</span>
+            <span class="n">exception</span><span class="o">.</span><span class="n">__class__</span> <span class="o">=</span> <span class="n">winexception</span><span class="o">.</span><span class="n">EEXCEPTION_DEBUG_INFO32</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">exception</span><span class="o">.</span><span class="n">__class__</span> <span class="o">=</span> <span class="n">windows</span><span class="o">.</span><span class="n">exception</span><span class="o">.</span><span class="n">EEXCEPTION_DEBUG_INFO64</span>
+            <span class="n">exception</span><span class="o">.</span><span class="n">__class__</span> <span class="o">=</span> <span class="n">winexception</span><span class="o">.</span><span class="n">EEXCEPTION_DEBUG_INFO64</span>
 
         <span class="n">excp_code</span> <span class="o">=</span> <span class="n">exception</span><span class="o">.</span><span class="n">ExceptionRecord</span><span class="o">.</span><span class="n">ExceptionCode</span>
         <span class="n">excp_addr</span> <span class="o">=</span> <span class="n">exception</span><span class="o">.</span><span class="n">ExceptionRecord</span><span class="o">.</span><span class="n">ExceptionAddress</span>
@@ -472,42 +475,56 @@
 
     <span class="c"># Public callback</span></div>
 <div class="viewcode-block" id="Debugger.on_exception"><a class="viewcode-back" href="../../debug.html#windows.debug.Debugger.on_exception">[docs]</a>    <span class="k">def</span> <span class="nf">on_exception</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exception</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Called on exception event other that known breakpoint&quot;&quot;&quot;</span>
-        <span class="k">pass</span>
+        <span class="sd">&quot;&quot;&quot;Called on exception event other that known breakpoint. ``exception`` is one of the following type:</span>
+
+<span class="sd">                * :class:`windows.winobject.exception.EEXCEPTION_DEBUG_INFO32`</span>
+<span class="sd">                * :class:`windows.winobject.exception.EEXCEPTION_DEBUG_INFO64`</span>
+
+<span class="sd">           The default behaviour is to return ``DBG_CONTINUE`` for the known exception code</span>
+<span class="sd">           and ``DBG_EXCEPTION_NOT_HANDLED`` else</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">exception</span><span class="o">.</span><span class="n">ExceptionRecord</span><span class="o">.</span><span class="n">ExceptionCode</span> <span class="ow">in</span> <span class="n">winexception</span><span class="o">.</span><span class="n">exception_name_by_value</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">DBG_EXCEPTION_NOT_HANDLED</span>
+        <span class="k">return</span> <span class="n">DBG_CONTINUE</span>
 </div>
 <div class="viewcode-block" id="Debugger.on_create_process"><a class="viewcode-back" href="../../debug.html#windows.debug.Debugger.on_create_process">[docs]</a>    <span class="k">def</span> <span class="nf">on_create_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">create_process</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Called on create_process event&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Called on create_process event (for param type see https://msdn.microsoft.com/en-us/library/windows/desktop/ms679286(v=vs.85).aspx)&quot;&quot;&quot;</span>
         <span class="k">pass</span>
 </div>
 <div class="viewcode-block" id="Debugger.on_exit_process"><a class="viewcode-back" href="../../debug.html#windows.debug.Debugger.on_exit_process">[docs]</a>    <span class="k">def</span> <span class="nf">on_exit_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exit_process</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Called on exit_process event&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Called on exit_process event (for param type see https://msdn.microsoft.com/en-us/library/windows/desktop/ms679334(v=vs.85).aspx)&quot;&quot;&quot;</span>
         <span class="k">pass</span>
 </div>
 <div class="viewcode-block" id="Debugger.on_create_thread"><a class="viewcode-back" href="../../debug.html#windows.debug.Debugger.on_create_thread">[docs]</a>    <span class="k">def</span> <span class="nf">on_create_thread</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">create_thread</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Called on create_thread event&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Called on create_thread event (for param type see https://msdn.microsoft.com/en-us/library/windows/desktop/ms679287(v=vs.85).aspx)&quot;&quot;&quot;</span>
         <span class="k">pass</span>
 </div>
 <div class="viewcode-block" id="Debugger.on_exit_thread"><a class="viewcode-back" href="../../debug.html#windows.debug.Debugger.on_exit_thread">[docs]</a>    <span class="k">def</span> <span class="nf">on_exit_thread</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exit_thread</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Called on exit_thread event&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Called on exit_thread event (for param type see https://msdn.microsoft.com/en-us/library/windows/desktop/ms679335(v=vs.85).aspx)&quot;&quot;&quot;</span>
         <span class="k">pass</span>
 </div>
 <div class="viewcode-block" id="Debugger.on_load_dll"><a class="viewcode-back" href="../../debug.html#windows.debug.Debugger.on_load_dll">[docs]</a>    <span class="k">def</span> <span class="nf">on_load_dll</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">load_dll</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Called on load_dll event&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Called on load_dll event (for param type see https://msdn.microsoft.com/en-us/library/windows/desktop/ms680351(v=vs.85).aspx)&quot;&quot;&quot;</span>
         <span class="k">pass</span>
 </div>
 <div class="viewcode-block" id="Debugger.on_unload_dll"><a class="viewcode-back" href="../../debug.html#windows.debug.Debugger.on_unload_dll">[docs]</a>    <span class="k">def</span> <span class="nf">on_unload_dll</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">unload_dll</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Called on unload_dll event&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Called on unload_dll event (for param type see https://msdn.microsoft.com/en-us/library/windows/desktop/ms681403(v=vs.85).aspx)&quot;&quot;&quot;</span>
         <span class="k">pass</span>
 </div>
 <div class="viewcode-block" id="Debugger.on_output_debug_string"><a class="viewcode-back" href="../../debug.html#windows.debug.Debugger.on_output_debug_string">[docs]</a>    <span class="k">def</span> <span class="nf">on_output_debug_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">debug_string</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Called on debug_string event&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Called on debug_string event (for param type see https://msdn.microsoft.com/en-us/library/windows/desktop/ms680545(v=vs.85).aspx)&quot;&quot;&quot;</span>
         <span class="k">pass</span>
 </div>
 <div class="viewcode-block" id="Debugger.on_rip"><a class="viewcode-back" href="../../debug.html#windows.debug.Debugger.on_rip">[docs]</a>    <span class="k">def</span> <span class="nf">on_rip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rip_info</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Called on rip_info event&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Called on rip_info event (for param type see https://msdn.microsoft.com/en-us/library/windows/desktop/ms680587(v=vs.85).aspx)&quot;&quot;&quot;</span>
         <span class="k">pass</span>
-
 </div></div>
+<span class="k">def</span> <span class="nf">debug</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">dwCreationFlags</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">show_windows</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="n">dwCreationFlags</span> <span class="o">|=</span> <span class="n">DEBUG_PROCESS</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">windows</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">create_process</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">dwCreationFlags</span><span class="o">=</span><span class="n">dwCreationFlags</span><span class="p">,</span> <span class="n">show_windows</span><span class="o">=</span><span class="n">show_windows</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Debugger</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">already_debuggable</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+
 <div class="viewcode-block" id="Breakpoint"><a class="viewcode-back" href="../../debug.html#windows.debug.Breakpoint">[docs]</a><span class="k">class</span> <span class="nc">Breakpoint</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;An standard (Int3) breakpoint (type == ``STANDARD_BP``)&quot;&quot;&quot;</span>
     <span class="nb">type</span> <span class="o">=</span> <span class="n">STANDARD_BP</span> <span class="c"># REAL BP</span>
@@ -520,6 +537,7 @@
 <div class="viewcode-block" id="Breakpoint.trigger"><a class="viewcode-back" href="../../debug.html#windows.debug.Breakpoint.trigger">[docs]</a>    <span class="k">def</span> <span class="nf">trigger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dbg</span><span class="p">,</span> <span class="n">exception</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Called when breakpoint is hit&quot;&quot;&quot;</span>
         <span class="k">pass</span>
+
 </div></div>
 <span class="k">class</span> <span class="nc">ProxyBreakpoint</span><span class="p">(</span><span class="n">Breakpoint</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">addr</span><span class="p">,</span> <span class="nb">type</span><span class="p">):</span>
@@ -530,6 +548,7 @@
     <span class="k">def</span> <span class="nf">trigger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dbg</span><span class="p">,</span> <span class="n">exception</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">(</span><span class="n">dbg</span><span class="p">,</span> <span class="n">exception</span><span class="p">)</span>
 
+
 <div class="viewcode-block" id="HXBreakpoint"><a class="viewcode-back" href="../../debug.html#windows.debug.HXBreakpoint">[docs]</a><span class="k">class</span> <span class="nc">HXBreakpoint</span><span class="p">(</span><span class="n">Breakpoint</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;An hardware-execution breakpoint (type == ``HARDWARE_EXEC_BP``)&quot;&quot;&quot;</span>
     <span class="nb">type</span> <span class="o">=</span> <span class="n">HARDWARE_EXEC_BP</span>
@@ -537,31 +556,37 @@
     <span class="k">def</span> <span class="nf">apply_to_target</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">WinThread</span><span class="p">)</span>
 
-
-<span class="c">## Test a fun little thing</span>
 </div>
-<span class="kn">from</span> <span class="nn">windows.exception</span> <span class="kn">import</span> <span class="n">VectoredException</span>
-<span class="kn">import</span> <span class="nn">ctypes</span>
-
-<span class="k">class</span> <span class="nc">LocalDebugger</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="LocalDebugger"><a class="viewcode-back" href="../../debug.html#windows.debug.LocalDebugger">[docs]</a><span class="k">class</span> <span class="nc">LocalDebugger</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A debugger interface around :func:`AddVectoredExceptionHandler`&quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">breakpoints</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_memory_save</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_reput_breakpoint</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_hxbp_breakpoint</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">callback_vectored</span> <span class="o">=</span> <span class="n">VectoredException</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">callback</span><span class="p">)</span>
-        <span class="n">windows</span><span class="o">.</span><span class="n">winproxy</span><span class="o">.</span><span class="n">AddVectoredExceptionHandler</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">callback_vectored</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">callback_vectored</span> <span class="o">=</span> <span class="n">winexception</span><span class="o">.</span><span class="n">VectoredException</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">callback</span><span class="p">)</span>
+        <span class="n">winproxy</span><span class="o">.</span><span class="n">AddVectoredExceptionHandler</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">callback_vectored</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setup_hxbp_callback_vectored</span> <span class="o">=</span>  <span class="n">winexception</span><span class="o">.</span><span class="n">VectoredException</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">setup_hxbp_callback</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hxbp_info</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="n">windows</span><span class="o">.</span><span class="n">native_exec</span><span class="o">.</span><span class="n">create_function</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\xcc\xc3</span><span class="s">&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">PVOID</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">veh_depth</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_exception</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exceptions_stack</span> <span class="o">=</span> <span class="p">[</span><span class="bp">None</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">get_exception_code</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="LocalDebugger.get_exception_code"><a class="viewcode-back" href="../../debug.html#windows.debug.LocalDebugger.get_exception_code">[docs]</a>    <span class="k">def</span> <span class="nf">get_exception_code</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return ExceptionCode of current exception&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_exception</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">ExceptionRecord</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">ExceptionCode</span>
-
-    <span class="k">def</span> <span class="nf">get_exception_context</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</div>
+<div class="viewcode-block" id="LocalDebugger.get_exception_context"><a class="viewcode-back" href="../../debug.html#windows.debug.LocalDebugger.get_exception_context">[docs]</a>    <span class="k">def</span> <span class="nf">get_exception_context</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return context of current exception&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_exception</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">ContextRecord</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-
-    <span class="k">def</span> <span class="nf">single_step</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</div>
+<div class="viewcode-block" id="LocalDebugger.single_step"><a class="viewcode-back" href="../../debug.html#windows.debug.LocalDebugger.single_step">[docs]</a>    <span class="k">def</span> <span class="nf">single_step</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Make the current thread to single step&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">get_exception_context</span><span class="p">()</span><span class="o">.</span><span class="n">EEFlags</span><span class="o">.</span><span class="n">TF</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="n">windef</span><span class="o">.</span><span class="n">EXCEPTION_CONTINUE_EXECUTION</span>
-
+</div>
     <span class="k">def</span> <span class="nf">_pass_breakpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">addr</span><span class="p">,</span> <span class="n">single_step</span><span class="p">):</span>
         <span class="k">with</span> <span class="n">windows</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">VirtualProtected</span><span class="p">(</span><span class="n">addr</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">PAGE_EXECUTE_READWRITE</span><span class="p">):</span>
             <span class="n">windows</span><span class="o">.</span><span class="n">current_process</span><span class="o">.</span><span class="n">write_memory</span><span class="p">(</span><span class="n">addr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_memory_save</span><span class="p">[</span><span class="n">addr</span><span class="p">])</span>
@@ -569,14 +594,37 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">single_step</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exceptions_stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current_exception</span> <span class="o">=</span> <span class="n">exc</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">veh_depth</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c">#if hasattr(self, &quot;yolo&quot;):</span>
+            <span class="c">#    self.yolo(&quot;TST &lt;{0}&gt;&quot;.format(self.get_exception_code()))</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle_exception</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span>
+        <span class="c">#except Exception as e:</span>
+        <span class="c">#    if hasattr(self, &quot;yolo&quot;):</span>
+        <span class="c">#        self.yolo(repr(e))</span>
+        <span class="c">#    else:</span>
+        <span class="c">#        raise</span>
+        <span class="c">#    return windef.EXCEPTION_CONTINUE_SEARCH</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="c">#if hasattr(self, &quot;yolo&quot;):</span>
+            <span class="c">#    self.yolo(&quot;BYE DBG&quot;)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">exceptions_stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_exception</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">exceptions_stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">veh_depth</span> <span class="o">-=</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">handle_exception</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc</span><span class="p">):</span>
         <span class="n">exp_code</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_exception_code</span><span class="p">()</span>
-        <span class="n">exp_addr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_exception_context</span><span class="p">()</span><span class="o">.</span><span class="n">get_pc</span><span class="p">()</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_exception_context</span><span class="p">()</span>
+        <span class="n">exp_addr</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">pc</span>
 
         <span class="k">if</span> <span class="n">exp_code</span> <span class="o">==</span> <span class="n">EXCEPTION_BREAKPOINT</span> <span class="ow">and</span> <span class="n">exp_addr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">breakpoints</span><span class="p">:</span>
-            <span class="n">continue_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">breakpoints</span><span class="p">[</span><span class="n">exp_addr</span><span class="p">]</span><span class="o">.</span><span class="n">trigger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc</span><span class="p">)</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">breakpoints</span><span class="p">[</span><span class="n">exp_addr</span><span class="p">]</span><span class="o">.</span><span class="n">trigger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc</span><span class="p">)</span>
             <span class="n">single_step</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_exception_context</span><span class="p">()</span><span class="o">.</span><span class="n">EEFlags</span><span class="o">.</span><span class="n">TF</span> <span class="c"># single step activated by breakpoint</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pass_breakpoint</span><span class="p">(</span><span class="n">exp_addr</span><span class="p">,</span> <span class="n">single_step</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">exp_addr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">breakpoints</span><span class="p">:</span> <span class="c"># Breakpoint deleted itself ?</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pass_breakpoint</span><span class="p">(</span><span class="n">exp_addr</span><span class="p">,</span> <span class="n">single_step</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">EXCEPTION_CONTINUE_EXECUTION</span>
 
         <span class="k">if</span> <span class="n">exp_code</span> <span class="o">==</span> <span class="n">EXCEPTION_SINGLE_STEP</span> <span class="ow">and</span> <span class="n">windows</span><span class="o">.</span><span class="n">current_thread</span><span class="o">.</span><span class="n">tid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reput_breakpoint</span><span class="p">:</span>
             <span class="n">bp</span><span class="p">,</span> <span class="n">single_step</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reput_breakpoint</span><span class="p">[</span><span class="n">windows</span><span class="o">.</span><span class="n">current_thread</span><span class="o">.</span><span class="n">tid</span><span class="p">]</span>
@@ -587,20 +635,175 @@
             <span class="k">if</span> <span class="n">single_step</span><span class="p">:</span>
                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_exception</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">windef</span><span class="o">.</span><span class="n">EXCEPTION_CONTINUE_EXECUTION</span>
+        <span class="k">elif</span> <span class="n">exp_code</span> <span class="o">==</span> <span class="n">EXCEPTION_SINGLE_STEP</span> <span class="ow">and</span> <span class="n">exp_addr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hxbp_breakpoint</span><span class="p">[</span><span class="n">windows</span><span class="o">.</span><span class="n">current_thread</span><span class="o">.</span><span class="n">tid</span><span class="p">]:</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hxbp_breakpoint</span><span class="p">[</span><span class="n">windows</span><span class="o">.</span><span class="n">current_thread</span><span class="o">.</span><span class="n">tid</span><span class="p">][</span><span class="n">exp_addr</span><span class="p">]</span><span class="o">.</span><span class="n">trigger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc</span><span class="p">)</span>
+            <span class="n">context</span><span class="o">.</span><span class="n">EEFlags</span><span class="o">.</span><span class="n">RF</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">return</span> <span class="n">EXCEPTION_CONTINUE_EXECUTION</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_exception</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">on_exception</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc</span><span class="p">):</span>
+<div class="viewcode-block" id="LocalDebugger.on_exception"><a class="viewcode-back" href="../../debug.html#windows.debug.LocalDebugger.on_exception">[docs]</a>    <span class="k">def</span> <span class="nf">on_exception</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Called on exception&quot;&quot;&quot;</span>
+        <span class="k">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_exception_code</span><span class="p">())</span>
+        <span class="n">windows</span><span class="o">.</span><span class="n">current_process</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_exception_code</span><span class="p">()</span> <span class="ow">in</span> <span class="n">winexception</span><span class="o">.</span><span class="n">exception_name_by_value</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">windef</span><span class="o">.</span><span class="n">EXCEPTION_CONTINUE_SEARCH</span>
         <span class="k">return</span> <span class="n">windef</span><span class="o">.</span><span class="n">EXCEPTION_CONTINUE_EXECUTION</span>
+</div>
+    <span class="k">def</span> <span class="nf">del_bp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bp</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">bp</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">STANDARD_BP</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">windows</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">VirtualProtected</span><span class="p">(</span><span class="n">bp</span><span class="o">.</span><span class="n">addr</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">PAGE_EXECUTE_READWRITE</span><span class="p">):</span>
+                <span class="n">windows</span><span class="o">.</span><span class="n">current_process</span><span class="o">.</span><span class="n">write_memory</span><span class="p">(</span><span class="n">bp</span><span class="o">.</span><span class="n">addr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_memory_save</span><span class="p">[</span><span class="n">bp</span><span class="o">.</span><span class="n">addr</span><span class="p">])</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_memory_save</span><span class="p">[</span><span class="n">bp</span><span class="o">.</span><span class="n">addr</span><span class="p">]</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">breakpoints</span><span class="p">[</span><span class="n">bp</span><span class="o">.</span><span class="n">addr</span><span class="p">]</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="n">bp</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">HARDWARE_EXEC_BP</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">tid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hxbp_breakpoint</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">bp</span><span class="o">.</span><span class="n">addr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hxbp_breakpoint</span><span class="p">[</span><span class="n">tid</span><span class="p">]</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hxbp_breakpoint</span><span class="p">[</span><span class="n">tid</span><span class="p">][</span><span class="n">bp</span><span class="o">.</span><span class="n">addr</span><span class="p">]</span> <span class="o">==</span> <span class="n">bp</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">tid</span> <span class="o">==</span> <span class="n">windows</span><span class="o">.</span><span class="n">current_thread</span><span class="o">.</span><span class="n">tid</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">remove_hxbp_self_thread</span><span class="p">(</span><span class="n">bp</span><span class="o">.</span><span class="n">addr</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">remove_hxbp_other_thread</span><span class="p">(</span><span class="n">bp</span><span class="o">.</span><span class="n">addr</span><span class="p">)</span>
+                    <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hxbp_breakpoint</span><span class="p">[</span><span class="n">tid</span><span class="p">][</span><span class="n">bp</span><span class="o">.</span><span class="n">addr</span><span class="p">]</span>
+                    <span class="c">#print(&quot;Need to remove {0} in {1}&quot;.format(self._hxbp_breakpoint[tid][bp.addr], tid))</span>
+            <span class="k">return</span>
+            <span class="c">#raise NotImplementedError(&quot;Remove &lt;HARDWARE_EXEC_BP&gt;&quot;)</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;Unknow BP type {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">bp</span><span class="o">.</span><span class="n">type</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="nf">add_bp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bp</span><span class="p">):</span>
+<div class="viewcode-block" id="LocalDebugger.add_bp"><a class="viewcode-back" href="../../debug.html#windows.debug.LocalDebugger.add_bp">[docs]</a>    <span class="k">def</span> <span class="nf">add_bp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bp</span><span class="p">,</span> <span class="n">targets</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add a breakpoint, bp is a &quot;class:`Breakpoint`</span>
+
+<span class="sd">            If the ``bp`` type is ``STANDARD_BP``, target must be None.</span>
+
+<span class="sd">            If the ``bp`` type is ``HARDWARE_EXEC_BP``, target can be None (all threads), or some threads of the process</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">bp</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">HARDWARE_EXEC_BP</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_bp_hxbp</span><span class="p">(</span><span class="n">bp</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">bp</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="n">STANDARD_BP</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;Add non standard-BP in LocalKernelDebugger&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;Unknow BP type {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">bp</span><span class="o">.</span><span class="n">type</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">targets</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;LocalDebugger: STANDARD_BP doest not support targets {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">targets</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">breakpoints</span><span class="p">[</span><span class="n">bp</span><span class="o">.</span><span class="n">addr</span><span class="p">]</span> <span class="o">=</span> <span class="n">bp</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_memory_save</span><span class="p">[</span><span class="n">bp</span><span class="o">.</span><span class="n">addr</span><span class="p">]</span> <span class="o">=</span> <span class="n">windows</span><span class="o">.</span><span class="n">current_process</span><span class="o">.</span><span class="n">read_memory</span><span class="p">(</span><span class="n">bp</span><span class="o">.</span><span class="n">addr</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-
         <span class="k">with</span> <span class="n">windows</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">VirtualProtected</span><span class="p">(</span><span class="n">bp</span><span class="o">.</span><span class="n">addr</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">PAGE_EXECUTE_READWRITE</span><span class="p">):</span>
             <span class="n">windows</span><span class="o">.</span><span class="n">current_process</span><span class="o">.</span><span class="n">write_memory</span><span class="p">(</span><span class="n">bp</span><span class="o">.</span><span class="n">addr</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\xcc</span><span class="s">&quot;</span><span class="p">)</span>
         <span class="k">return</span>
+</div>
+    <span class="k">def</span> <span class="nf">add_bp_hxbp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bp</span><span class="p">,</span> <span class="n">targets</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">bp</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="n">HARDWARE_EXEC_BP</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;Add non standard-BP in LocalDebugger&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">targets</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">targets</span> <span class="o">=</span> <span class="n">windows</span><span class="o">.</span><span class="n">current_process</span><span class="o">.</span><span class="n">threads</span>
+        <span class="k">for</span> <span class="n">thread</span> <span class="ow">in</span> <span class="n">targets</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">thread</span><span class="o">.</span><span class="n">owner</span><span class="o">.</span><span class="n">pid</span> <span class="o">!=</span> <span class="n">windows</span><span class="o">.</span><span class="n">current_process</span><span class="o">.</span><span class="n">pid</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Cannot add HXBP to target in remote process {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">thread</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">thread</span><span class="o">.</span><span class="n">tid</span> <span class="o">==</span> <span class="n">windows</span><span class="o">.</span><span class="n">current_thread</span><span class="o">.</span><span class="n">tid</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">setup_hxbp_self_thread</span><span class="p">(</span><span class="n">bp</span><span class="o">.</span><span class="n">addr</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">setup_hxbp_other_thread</span><span class="p">(</span><span class="n">bp</span><span class="o">.</span><span class="n">addr</span><span class="p">,</span> <span class="n">thread</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_hxbp_breakpoint</span><span class="p">[</span><span class="n">thread</span><span class="o">.</span><span class="n">tid</span><span class="p">][</span><span class="n">bp</span><span class="o">.</span><span class="n">addr</span><span class="p">]</span> <span class="o">=</span> <span class="n">bp</span>
+
+    <span class="k">def</span> <span class="nf">setup_hxbp_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_exception</span> <span class="o">=</span> <span class="n">exc</span>
+        <span class="n">exp_code</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_exception_code</span><span class="p">()</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_exception_context</span><span class="p">()</span>
+        <span class="n">exp_addr</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">pc</span>
+        <span class="n">hxbp_used</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">setup_hxbp_in_context</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">windows</span><span class="o">.</span><span class="n">current_process</span><span class="o">.</span><span class="n">write_memory</span><span class="p">(</span><span class="n">exp_addr</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\x90</span><span class="s">&quot;</span><span class="p">)</span>
+        <span class="c"># Raising in the VEH is a bad idea..</span>
+        <span class="c"># So better give the information to triggerer..</span>
+        <span class="k">if</span> <span class="n">hxbp_used</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_exception_context</span><span class="p">()</span><span class="o">.</span><span class="n">Eax</span> <span class="o">=</span> <span class="n">exp_addr</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_exception_context</span><span class="p">()</span><span class="o">.</span><span class="n">Eax</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="n">windef</span><span class="o">.</span><span class="n">EXCEPTION_CONTINUE_EXECUTION</span>
+
+    <span class="k">def</span> <span class="nf">remove_hxbp_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_exception</span> <span class="o">=</span> <span class="n">exc</span>
+        <span class="n">exp_code</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_exception_code</span><span class="p">()</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_exception_context</span><span class="p">()</span>
+        <span class="n">exp_addr</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">pc</span>
+        <span class="n">hxbp_used</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_hxbp_in_context</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">windows</span><span class="o">.</span><span class="n">current_process</span><span class="o">.</span><span class="n">write_memory</span><span class="p">(</span><span class="n">exp_addr</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\x90</span><span class="s">&quot;</span><span class="p">)</span>
+        <span class="c"># Raising in the VEH is a bad idea..</span>
+        <span class="c"># So better give the information to triggerer..</span>
+        <span class="k">if</span> <span class="n">hxbp_used</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_exception_context</span><span class="p">()</span><span class="o">.</span><span class="n">Eax</span> <span class="o">=</span> <span class="n">exp_addr</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_exception_context</span><span class="p">()</span><span class="o">.</span><span class="n">Eax</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="n">windef</span><span class="o">.</span><span class="n">EXCEPTION_CONTINUE_EXECUTION</span>
+
+    <span class="k">def</span> <span class="nf">setup_hxbp_in_context</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">addr</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+            <span class="n">is_used</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">EDr7</span><span class="p">,</span> <span class="s">&quot;L&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+            <span class="n">empty_drx</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">is_used</span><span class="p">:</span>
+                <span class="n">context</span><span class="o">.</span><span class="n">EDr7</span><span class="o">.</span><span class="n">GE</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="n">context</span><span class="o">.</span><span class="n">EDr7</span><span class="o">.</span><span class="n">LE</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">EDr7</span><span class="p">,</span> <span class="s">&quot;L&quot;</span> <span class="o">+</span> <span class="n">empty_drx</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="s">&quot;Dr&quot;</span> <span class="o">+</span> <span class="n">empty_drx</span><span class="p">,</span> <span class="n">addr</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">i</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">remove_hxbp_in_context</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">addr</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+            <span class="n">target_drx</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">is_used</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">EDr7</span><span class="p">,</span> <span class="s">&quot;L&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+            <span class="n">draddr</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="s">&quot;Dr&quot;</span> <span class="o">+</span> <span class="n">target_drx</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">is_used</span> <span class="ow">and</span> <span class="n">draddr</span> <span class="o">==</span> <span class="n">addr</span><span class="p">:</span>
+                <span class="k">print</span><span class="p">(</span><span class="s">&quot;RM RD&quot;</span> <span class="o">+</span> <span class="n">target_drx</span><span class="p">)</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">EDr7</span><span class="p">,</span> <span class="s">&quot;L&quot;</span> <span class="o">+</span> <span class="n">target_drx</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="s">&quot;Dr&quot;</span> <span class="o">+</span> <span class="n">target_drx</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">i</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">setup_hxbp_self_thread</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">addr</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_exception</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">setup_hxbp_in_context</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_exception_context</span><span class="p">(),</span> <span class="n">addr</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">x</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Could not setup HXBP&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">addr</span>
+        <span class="k">with</span> <span class="n">winexception</span><span class="o">.</span><span class="n">VectoredExceptionHandler</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">setup_hxbp_callback</span><span class="p">):</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">x</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Could not setup HXBP&quot;</span><span class="p">)</span>
+            <span class="n">windows</span><span class="o">.</span><span class="n">current_process</span><span class="o">.</span><span class="n">write_memory</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\xcc</span><span class="s">&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">setup_hxbp_other_thread</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">addr</span><span class="p">,</span> <span class="n">thread</span><span class="p">):</span>
+        <span class="n">thread</span><span class="o">.</span><span class="n">suspend</span><span class="p">()</span>
+        <span class="n">ctx</span> <span class="o">=</span> <span class="n">thread</span><span class="o">.</span><span class="n">context</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">setup_hxbp_in_context</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">addr</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">x</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Could not setup HXBP in {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">thread</span><span class="p">))</span>
+        <span class="n">thread</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span>
+        <span class="n">thread</span><span class="o">.</span><span class="n">resume</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">remove_hxbp_self_thread</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">addr</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_exception</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_hxbp_in_context</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_exception_context</span><span class="p">(),</span> <span class="n">addr</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">x</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Could not setup HXBP&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">addr</span>
+        <span class="k">with</span> <span class="n">winexception</span><span class="o">.</span><span class="n">VectoredExceptionHandler</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_hxbp_callback</span><span class="p">):</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">x</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Could not remove HXBP&quot;</span><span class="p">)</span>
+            <span class="n">windows</span><span class="o">.</span><span class="n">current_process</span><span class="o">.</span><span class="n">write_memory</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\xcc</span><span class="s">&quot;</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;BYE&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">remove_hxbp_other_thread</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">addr</span><span class="p">,</span> <span class="n">thread</span><span class="p">):</span>
+        <span class="n">thread</span><span class="o">.</span><span class="n">suspend</span><span class="p">()</span>
+        <span class="n">ctx</span> <span class="o">=</span> <span class="n">thread</span><span class="o">.</span><span class="n">context</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_hxbp_in_context</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">addr</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">x</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Could not setup HXBP in {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">thread</span><span class="p">))</span>
+        <span class="n">thread</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span>
+        <span class="n">thread</span><span class="o">.</span><span class="n">resume</span><span class="p">()</span></div>
 </pre></div>
 
           </div>
@@ -634,7 +837,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">PythonForWindows 0.1 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">PythonForWindows 0.2 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>windows.pe_parse &mdash; PythonForWindows 0.1 documentation</title>
+    <title>windows.pe_parse &mdash; PythonForWindows 0.2 documentation</title>
     
     <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.1',
+        VERSION:     '0.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="PythonForWindows 0.1 documentation" href="../../index.html" />
+    <link rel="top" title="PythonForWindows 0.2 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
   </head>
   <body role="document">
@@ -36,7 +36,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">PythonForWindows 0.1 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">PythonForWindows 0.2 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -134,6 +134,11 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">IMAGE_ORDINAL_FLAG</span> <span class="o">=</span> <span class="n">IMAGE_ORDINAL_FLAG64</span>
 
+    <span class="k">def</span> <span class="nf">get_string</span><span class="p">(</span><span class="n">addr</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">target</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_char_p</span><span class="p">(</span><span class="n">addr</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+        <span class="k">return</span> <span class="n">target</span><span class="o">.</span><span class="n">read_string</span><span class="p">(</span><span class="n">addr</span><span class="p">)</span>
+
     <span class="k">class</span> <span class="nc">RVA</span><span class="p">(</span><span class="n">DWORD</span><span class="p">):</span>
         <span class="nd">@property</span>
         <span class="k">def</span> <span class="nf">addr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -146,11 +151,11 @@
         <span class="k">if</span> <span class="n">target</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="nd">@property</span>
             <span class="k">def</span> <span class="nf">str</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-                <span class="k">return</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_char_p</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">addr</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+                <span class="k">return</span> <span class="n">get_string</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">addr</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="nd">@property</span>
             <span class="k">def</span> <span class="nf">str</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-                <span class="k">return</span> <span class="n">create_structure_at</span><span class="p">(</span><span class="n">ctypes</span><span class="o">.</span><span class="n">c_char_p</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">addr</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+                <span class="k">return</span> <span class="n">get_string</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">addr</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
 
         <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="k">return</span> <span class="s">&quot;&lt;DWORD {0} (String RVA to &#39;{1}&#39;)&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">str</span><span class="p">)</span>
@@ -239,7 +244,18 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_NT_HEADER</span><span class="p">()</span><span class="o">.</span><span class="n">OptionalHeader</span>
 
         <span class="k">def</span> <span class="nf">get_DataDirectory</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_OptionalHeader</span><span class="p">()</span><span class="o">.</span><span class="n">DataDirectory</span>
+            <span class="c"># This won&#39;t work if we load a PE32 in a 64bit process</span>
+            <span class="c"># PE32 .NET...</span>
+            <span class="c">#return self.get_OptionalHeader().DataDirectory</span>
+            <span class="n">DataDirectory_type</span> <span class="o">=</span> <span class="n">IMAGE_DATA_DIRECTORY</span> <span class="o">*</span> <span class="n">IMAGE_NUMBEROF_DIRECTORY_ENTRIES</span>
+            <span class="n">SizeOfOptionalHeader</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_NT_HEADER</span><span class="p">()</span><span class="o">.</span><span class="n">FileHeader</span><span class="o">.</span><span class="n">SizeOfOptionalHeader</span>
+            <span class="k">if</span> <span class="n">target</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">opt_header_addr</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">addressof</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_NT_HEADER</span><span class="p">()</span><span class="o">.</span><span class="n">OptionalHeader</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">opt_header_addr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_NT_HEADER</span><span class="p">()</span><span class="o">.</span><span class="n">OptionalHeader</span><span class="o">.</span><span class="n">_base_addr</span>
+            <span class="n">DataDirectory_addr</span> <span class="o">=</span> <span class="n">opt_header_addr</span> <span class="o">+</span> <span class="n">SizeOfOptionalHeader</span> <span class="o">-</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">DataDirectory_type</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">create_structure_at</span><span class="p">(</span><span class="n">DataDirectory_type</span><span class="p">,</span> <span class="n">DataDirectory_addr</span><span class="p">)</span>
+
 
         <span class="k">def</span> <span class="nf">get_IMPORT_DESCRIPTORS</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="n">import_datadir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_DataDirectory</span><span class="p">()[</span><span class="n">IMAGE_DIRECTORY_ENTRY_IMPORT</span><span class="p">]</span>
@@ -265,11 +281,19 @@
             <span class="k">if</span> <span class="n">target</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
                 <span class="nd">@property</span>
                 <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-                    <span class="k">return</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_char_p</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Name</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+                    <span class="k">return</span> <span class="n">get_string</span><span class="p">(</span><span class="n">ctypes</span><span class="o">.</span><span class="n">addressof</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Name</span><span class="p">))[:</span><span class="mi">8</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="nd">@property</span>
                 <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-                    <span class="k">return</span> <span class="n">create_structure_at</span><span class="p">(</span><span class="n">ctypes</span><span class="o">.</span><span class="n">c_char_p</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_addr</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+                    <span class="k">return</span> <span class="n">get_string</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_base_addr</span><span class="p">)[:</span><span class="mi">8</span><span class="p">]</span>
+
+            <span class="nd">@property</span>
+            <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">baseaddr</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">VirtualAddress</span>
+
+            <span class="nd">@property</span>
+            <span class="k">def</span> <span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">VirtualSize</span>
 
             <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
                 <span class="k">return</span> <span class="s">&quot;&lt;PESection </span><span class="se">\&quot;</span><span class="s">{0}</span><span class="se">\&quot;</span><span class="s">&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
@@ -278,10 +302,12 @@
         <span class="k">def</span> <span class="nf">sections</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="n">nt_header</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_NT_HEADER</span><span class="p">()</span>
             <span class="n">nb_section</span> <span class="o">=</span> <span class="n">nt_header</span><span class="o">.</span><span class="n">FileHeader</span><span class="o">.</span><span class="n">NumberOfSections</span>
+            <span class="n">SizeOfOptionalHeader</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_NT_HEADER</span><span class="p">()</span><span class="o">.</span><span class="n">FileHeader</span><span class="o">.</span><span class="n">SizeOfOptionalHeader</span>
             <span class="k">if</span> <span class="n">target</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-                <span class="n">base_section</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">addressof</span><span class="p">(</span><span class="n">nt_header</span><span class="p">)</span> <span class="o">+</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">nt_header</span><span class="p">)</span>
+                <span class="n">opt_header_addr</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">addressof</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_NT_HEADER</span><span class="p">()</span><span class="o">.</span><span class="n">OptionalHeader</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">base_section</span> <span class="o">=</span> <span class="n">nt_header</span><span class="o">.</span><span class="n">_base_addr</span> <span class="o">+</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="n">nt_header</span><span class="p">)</span>
+                <span class="n">opt_header_addr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_NT_HEADER</span><span class="p">()</span><span class="o">.</span><span class="n">OptionalHeader</span><span class="o">.</span><span class="n">_base_addr</span>
+            <span class="n">base_section</span> <span class="o">=</span> <span class="n">opt_header_addr</span> <span class="o">+</span> <span class="n">SizeOfOptionalHeader</span>
             <span class="n">sections_array</span> <span class="o">=</span> <span class="n">create_structure_at</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">PESection</span> <span class="o">*</span> <span class="n">nb_section</span><span class="p">),</span> <span class="n">base_section</span><span class="p">)</span>
             <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">sections_array</span><span class="p">)</span>
 
@@ -344,9 +370,9 @@
                         <span class="n">import_by_name</span> <span class="o">=</span> <span class="n">create_structure_at</span><span class="p">(</span><span class="n">IMPORT_BY_NAME</span><span class="p">,</span> <span class="n">baseaddr</span> <span class="o">+</span> <span class="n">int_entry</span><span class="o">.</span><span class="n">AddressOfData</span><span class="p">)</span>
                         <span class="n">name_address</span> <span class="o">=</span> <span class="n">baseaddr</span> <span class="o">+</span> <span class="n">int_entry</span><span class="o">.</span><span class="n">AddressOfData</span> <span class="o">+</span> <span class="nb">type</span><span class="p">(</span><span class="n">import_by_name</span><span class="p">)</span><span class="o">.</span><span class="n">Name</span><span class="o">.</span><span class="n">offset</span>
                         <span class="k">if</span> <span class="n">target</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-                            <span class="n">name</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_char_p</span><span class="p">(</span><span class="n">name_address</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+                            <span class="n">name</span> <span class="o">=</span> <span class="n">get_string</span><span class="p">(</span><span class="n">name_address</span><span class="p">)</span>
                         <span class="k">else</span><span class="p">:</span>
-                            <span class="n">name</span> <span class="o">=</span> <span class="n">create_structure_at</span><span class="p">(</span><span class="n">ctypes</span><span class="o">.</span><span class="n">c_char_p</span><span class="p">,</span> <span class="n">name_address</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+                            <span class="n">name</span> <span class="o">=</span> <span class="n">get_string</span><span class="p">(</span><span class="n">name_address</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
                         <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">import_by_name</span><span class="o">.</span><span class="n">Hint</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
                     <span class="n">int_addr</span> <span class="o">+=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">sizeof</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">int_entry</span><span class="p">))</span>
                     <span class="n">int_entry</span> <span class="o">=</span> <span class="n">create_structure_at</span><span class="p">(</span><span class="n">THUNK_DATA</span><span class="p">,</span> <span class="n">int_addr</span><span class="p">)</span>
@@ -443,7 +469,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">PythonForWindows 0.1 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">PythonForWindows 0.2 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>

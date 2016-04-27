@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>2.7. COM - Component Object Model &mdash; PythonForWindows 0.1 documentation</title>
+    <title>8. windows.com - Component Object Model &mdash; PythonForWindows 0.2 documentation</title>
     
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1',
+        VERSION:     '0.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,10 +23,9 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PythonForWindows 0.1 documentation" href="index.html" />
-    <link rel="up" title="2. The windows objects" href="various.html" />
-    <link rel="next" title="3. windows.native_exec – Native Code Execution" href="native_exec.html" />
-    <link rel="prev" title="2.6. Network" href="network.html" /> 
+    <link rel="top" title="PythonForWindows 0.2 documentation" href="index.html" />
+    <link rel="next" title="9. IAT hooking" href="iat_hook.html" />
+    <link rel="prev" title="7. windows.debug – Debugging" href="debug.html" /> 
   </head>
   <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
@@ -39,13 +38,12 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="native_exec.html" title="3. windows.native_exec – Native Code Execution"
+          <a href="iat_hook.html" title="9. IAT hooking"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="network.html" title="2.6. Network"
+          <a href="debug.html" title="7. windows.debug – Debugging"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">PythonForWindows 0.1 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="various.html" accesskey="U">2. The <code class="docutils literal"><span class="pre">windows</span></code> objects</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PythonForWindows 0.2 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -54,28 +52,45 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="com-component-object-model">
-<h1>2.7. COM - Component Object Model<a class="headerlink" href="#com-component-object-model" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-windows.com">
+<span id="windows-com-component-object-model"></span><h1>8. <a class="reference internal" href="#module-windows.com" title="windows.com"><code class="xref py py-mod docutils literal"><span class="pre">windows.com</span></code></a> - Component Object Model<a class="headerlink" href="#module-windows.com" title="Permalink to this headline">¶</a></h1>
 <p>A module to call <cite>COM</cite> interfaces from <cite>Python</cite> or
 <cite>COM</cite> vtable in python.</p>
-<p>This code is only used in <a class="reference internal" href="wip.html#module-windows.wmi" title="windows.wmi"><code class="xref py py-mod docutils literal"><span class="pre">windows.wmi</span></code></a>.
+<p>This code is only used in <a class="reference internal" href="wmi.html#module-windows.winobject.wmi" title="windows.winobject.wmi"><code class="xref py py-mod docutils literal"><span class="pre">windows.winobject.wmi</span></code></a> and <a class="reference internal" href="network.html#module-windows.winobject.network" title="windows.winobject.network"><code class="xref py py-mod docutils literal"><span class="pre">windows.winobject.network</span></code></a> for the firewall.
 The ability to create <cite>COM</cite> vtable is used in the <a class="reference external" href="https://github.com/sogeti-esec-lab/LKD/">LKD project</a> .</p>
-<p>To call a <cite>COM</cite> interface you need to:</p>
+<div class="section" id="using-a-com-interface">
+<h2>8.1. Using a COM interface<a class="headerlink" href="#using-a-com-interface" title="Permalink to this headline">¶</a></h2>
+<p>It&#8217;s possible to directly call <cite>COM</cite> interface from python. All you need is the definition of the <cite>COM</cite> interface.</p>
+<p>There are three ways to get the definition of the code interface:</p>
 <blockquote>
-<div><ol class="arabic simple">
-<li>Describe the <cite>COM</cite> interface <a class="reference external" href="https://github.com/sogeti-esec-lab/LKD/blob/ba40727d7d257b00f89fc6ca7296c9833b7b75b2/dbginterface/remote.py#L56">CODE1</a></li>
-<li>Use an instance (which is a PVOID) to get the interface <a class="reference external" href="https://github.com/sogeti-esec-lab/LKD/blob/ba40727d7d257b00f89fc6ca7296c9833b7b75b2/dbginterface/remote.py#L313">CODE2</a></li>
-<li>Use the object ! <a class="reference external" href="https://github.com/sogeti-esec-lab/LKD/blob/ba40727d7d257b00f89fc6ca7296c9833b7b75b2/dbginterface/remote.py#L366">CODE3</a></li>
-</ol>
+<div><ul class="simple">
+<li>By using it from <code class="xref py py-mod docutils literal"><span class="pre">windows.generated_def.interfaces</span></code></li>
+<li>By writing it yourself : &lt;<a class="reference external" href="https://github.com/sogeti-esec-lab/LKD/blob/ba40727d7d257b00f89fc6ca7296c9833b7b75b2/dbginterface/remote.py#L56">https://github.com/sogeti-esec-lab/LKD/blob/ba40727d7d257b00f89fc6ca7296c9833b7b75b2/dbginterface/remote.py#L56</a>&gt;`_</li>
+<li>By generating it.</li>
+</ul>
 </div></blockquote>
+<p>To generate a <cite>COM</cite> interface you need its definition from the &#8221;.c&#8221; file.
+Then add thisit to <code class="docutils literal"><span class="pre">PythonForWindows\ctypes_generation\com\MyInterface.txt</span></code>.
+Finally re-generate the interface using <code class="docutils literal"><span class="pre">generate.py</span></code>.</p>
+<p>When you have the <cite>COM</cite> interface defintion you can create an instance of it.
+Then you need to retrieve the interface by using an API returning an object or <code class="xref py py-func docutils literal"><span class="pre">window.com.create_instance()</span></code>.
+You can then use the instance to call whatever method you need.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">see sample <a class="reference internal" href="sample.html#sample-com-firewall"><span>using COM: INetFwPolicy2</span></a></p>
+</div>
+</div>
+<div class="section" id="implementing-a-com-interface">
+<h2>8.2. Implementing a COM interface<a class="headerlink" href="#implementing-a-com-interface" title="Permalink to this headline">¶</a></h2>
 <p>To create <cite>COM</cite> object you need to:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li>Describe your ComVtable <a class="reference external" href="https://github.com/sogeti-esec-lab/LKD/blob/ba40727d7d257b00f89fc6ca7296c9833b7b75b2/simple_com.py#L89">CODE4</a></li>
-<li>Implement the python functions described <a class="reference external" href="https://github.com/sogeti-esec-lab/LKD/blob/ba40727d7d257b00f89fc6ca7296c9833b7b75b2/dbginterface/remote.py#L233">CODE5</a></li>
-<li>Create an instance and pass it to whatever native function expects it <a class="reference external" href="https://github.com/sogeti-esec-lab/LKD/blob/ba40727d7d257b00f89fc6ca7296c9833b7b75b2/dbginterface/remote.py#L438">CODE6</a></li>
+<li>Describe your ComVtable <a class="reference external" href="https://github.com/sogeti-esec-lab/LKD/blob/ba40727d7d257b00f89fc6ca7296c9833b7b75b2/simple_com.py#L89">CODE1</a></li>
+<li>Implement the python functions described <a class="reference external" href="https://github.com/sogeti-esec-lab/LKD/blob/ba40727d7d257b00f89fc6ca7296c9833b7b75b2/dbginterface/remote.py#L233">CODE2</a></li>
+<li>Create an instance and pass it to whatever native function expects it <a class="reference external" href="https://github.com/sogeti-esec-lab/LKD/blob/ba40727d7d257b00f89fc6ca7296c9833b7b75b2/dbginterface/remote.py#L438">CODE3</a></li>
 </ol>
 </div></blockquote>
+</div>
 </div>
 
 
@@ -84,12 +99,21 @@ The ability to create <cite>COM</cite> vtable is used in the <a class="reference
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">8. <code class="docutils literal"><span class="pre">windows.com</span></code> - Component Object Model</a><ul>
+<li><a class="reference internal" href="#using-a-com-interface">8.1. Using a COM interface</a></li>
+<li><a class="reference internal" href="#implementing-a-com-interface">8.2. Implementing a COM interface</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
-  <p class="topless"><a href="network.html"
-                        title="previous chapter">2.6. Network</a></p>
+  <p class="topless"><a href="debug.html"
+                        title="previous chapter">7. <code class="docutils literal"><span class="pre">windows.debug</span></code> &#8211; Debugging</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="native_exec.html"
-                        title="next chapter">3. <code class="docutils literal"><span class="pre">windows.native_exec</span></code> &#8211; Native Code Execution</a></p>
+  <p class="topless"><a href="iat_hook.html"
+                        title="next chapter">9. IAT hooking</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -124,13 +148,12 @@ The ability to create <cite>COM</cite> vtable is used in the <a class="reference
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="native_exec.html" title="3. windows.native_exec – Native Code Execution"
+          <a href="iat_hook.html" title="9. IAT hooking"
              >next</a> |</li>
         <li class="right" >
-          <a href="network.html" title="2.6. Network"
+          <a href="debug.html" title="7. windows.debug – Debugging"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">PythonForWindows 0.1 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="various.html" >2. The <code class="docutils literal"><span class="pre">windows</span></code> objects</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PythonForWindows 0.2 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>4. windows.winproxy – Windows API &mdash; PythonForWindows 0.1 documentation</title>
+    <title>4. windows.winproxy – Windows API &mdash; PythonForWindows 0.2 documentation</title>
     
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1',
+        VERSION:     '0.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PythonForWindows 0.1 documentation" href="index.html" />
+    <link rel="top" title="PythonForWindows 0.2 documentation" href="index.html" />
     <link rel="next" title="5. windows.utils – Windows Utilities" href="utils.html" />
     <link rel="prev" title="3. windows.native_exec – Native Code Execution" href="native_exec.html" /> 
   </head>
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="native_exec.html" title="3. windows.native_exec – Native Code Execution"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">PythonForWindows 0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PythonForWindows 0.2 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -134,24 +134,42 @@ It also heavily relies on <a class="reference external" href="http://docs.python
 <li>DebugBreak()</li>
 <li>DebugBreakProcess(Process)</li>
 <li>DebugSetProcessKillOnExit(KillOnExit)</li>
+<li>EnumWindows(lpEnumFunc, lParam)</li>
 <li>ExitProcess(uExitCode)</li>
 <li>ExitThread(dwExitCode)</li>
 <li>FreeConsole()</li>
+<li>GetComputerNameA(lpBuffer, lpnSize)</li>
+<li>GetComputerNameW(lpBuffer, lpnSize)</li>
 <li>GetCurrentProcess()</li>
 <li>GetCurrentProcessorNumber()</li>
 <li>GetCurrentThread()</li>
 <li>GetCurrentThreadId()</li>
+<li>GetDriveTypeA(lpRootPathName)</li>
+<li>GetDriveTypeW(lpRootPathName)</li>
 <li>GetExitCodeProcess(hProcess, lpExitCode)</li>
 <li>GetExitCodeThread(hThread, lpExitCode)</li>
 <li>GetLastError()</li>
+<li>GetLogicalDriveStringsA(nBufferLength, lpBuffer)</li>
+<li>GetLogicalDriveStringsW(nBufferLength, lpBuffer)</li>
 <li>GetProcAddress(hModule, lpProcName)</li>
 <li>GetProcessId(Process)</li>
 <li>GetSidSubAuthority(pSid, nSubAuthority)</li>
 <li>GetSidSubAuthorityCount(pSid)</li>
 <li>GetStdHandle(nStdHandle)</li>
+<li>GetSystemMetrics(nIndex)</li>
 <li>GetThreadId(Thread)</li>
+<li>GetVersionExA(lpVersionInformation)</li>
+<li>GetVersionExW(lpVersionInformation)</li>
+<li>GetVolumeNameForVolumeMountPointA(lpszVolumeMountPoint, lpszVolumeName, cchBufferLength)</li>
+<li>GetVolumeNameForVolumeMountPointW(lpszVolumeMountPoint, lpszVolumeName, cchBufferLength)</li>
+<li>GetWindowModuleFileNameA(hwnd, pszFileName, cchFileNameMax)</li>
+<li>GetWindowModuleFileNameW(hwnd, pszFileName, cchFileNameMax)</li>
+<li>GetWindowTextA(hWnd, lpString, nMaxCount)</li>
+<li>GetWindowTextW(hWnd, lpString, nMaxCount)</li>
 <li>LoadLibraryA(lpFileName)</li>
 <li>LoadLibraryW(lpFileName)</li>
+<li>QueryDosDeviceA(lpDeviceName, lpTargetPath, ucchMax)</li>
+<li>QueryDosDeviceW(lpDeviceName, lpTargetPath, ucchMax)</li>
 <li>ResumeThread(hThread)</li>
 <li>SetStdHandle(nStdHandle, hHandle)</li>
 <li>SetTcpEntry(pTcpRow)</li>
@@ -163,6 +181,8 @@ It also heavily relies on <a class="reference external" href="http://docs.python
 <li>Wow64EnableWow64FsRedirection(Wow64FsEnableRedirection)</li>
 <li>Wow64GetThreadContext(hThread, lpContext)</li>
 <li>Wow64RevertWow64FsRedirection(OldValue)</li>
+<li>lstrcmpA(lpString1, lpString2)</li>
+<li>lstrcmpW(lpString1, lpString2)</li>
 </ul>
 <p>Functions:</p>
 <ul>
@@ -187,10 +207,57 @@ Errcheck:
 </pre></div>
 </div>
 </li>
+<li><p class="first">AlpcGetMessageAttribute:</p>
+<div class="highlight-python"><div class="highlight"><pre>AlpcGetMessageAttribute(Buffer, AttributeFlag)
+Errcheck:
+   Nothing special
+</pre></div>
+</div>
+</li>
+<li><p class="first">AlpcInitializeMessageAttribute:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">AlpcInitializeMessageAttribute</span><span class="p">(</span><span class="n">AttributeFlags</span><span class="p">,</span> <span class="n">Buffer</span><span class="p">,</span> <span class="n">BufferSize</span><span class="p">,</span> <span class="n">RequiredBufferSize</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">CoCreateInstance:</p>
+<div class="highlight-python"><div class="highlight"><pre>CoCreateInstance(rclsid, pUnkOuter=None, dwClsContext=tagCLSCTX.CLSCTX_INPROC_SERVER(0x1L), riid=NeededParameter, ppv=NeededParameter)
+Errcheck:
+   Nothing special
+</pre></div>
+</div>
+</li>
+<li><p class="first">CoInitializeEx:</p>
+<div class="highlight-python"><div class="highlight"><pre>CoInitializeEx(pvReserved=None, dwCoInit=tagCOINIT.COINIT_MULTITHREADED(0x0L))
+Errcheck:
+   Nothing special
+</pre></div>
+</div>
+</li>
+<li><p class="first">CoInitializeSecurity:</p>
+<div class="highlight-python"><div class="highlight"><pre>CoInitializeSecurity(pSecDesc, cAuthSvc, asAuthSvc, pReserved1, dwAuthnLevel, dwImpLevel, pAuthList, dwCapabilities, pReserved3)
+Errcheck:
+   Nothing special
+</pre></div>
+</div>
+</li>
 <li><p class="first">CreateFileA:</p>
 <div class="highlight-python"><div class="highlight"><pre>CreateFileA(lpFileName, dwDesiredAccess=GENERIC_READ(0x80000000L), dwShareMode=0, lpSecurityAttributes=None, dwCreationDisposition=OPEN_EXISTING(0x3L), dwFlagsAndAttributes=FILE_ATTRIBUTE_NORMAL(0x80L), hTemplateFile=None)
 Errcheck:
    raise Kernel32Error if result is NOT 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">CreateFileMappingA:</p>
+<div class="highlight-python"><div class="highlight"><pre>CreateFileMappingA(hFile, lpFileMappingAttributes=None, flProtect=PAGE_READWRITE(0x4L), dwMaximumSizeHigh=0, dwMaximumSizeLow=NeededParameter, lpName=NeededParameter)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">CreateFileMappingW:</p>
+<div class="highlight-python"><div class="highlight"><pre>CreateFileMappingW(hFile, lpFileMappingAttributes=None, flProtect=PAGE_READWRITE(0x4L), dwMaximumSizeHigh=0, dwMaximumSizeLow=0, lpName=NeededParameter)
+Errcheck:
+   raise Kernel32Error if result is 0
 </pre></div>
 </div>
 </li>
@@ -236,6 +303,48 @@ Errcheck:
 </pre></div>
 </div>
 </li>
+<li><p class="first">CryptCATAdminAcquireContext:</p>
+<div class="highlight-python"><div class="highlight"><pre>CryptCATAdminAcquireContext(phCatAdmin, pgSubsystem, dwFlags)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">CryptCATAdminCalcHashFromFileHandle:</p>
+<div class="highlight-python"><div class="highlight"><pre>CryptCATAdminCalcHashFromFileHandle(hFile, pcbHash, pbHash, dwFlags)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">CryptCATAdminEnumCatalogFromHash:</p>
+<div class="highlight-python"><div class="highlight"><pre>CryptCATAdminEnumCatalogFromHash(hCatAdmin, pbHash, cbHash, dwFlags, phPrevCatInfo)
+Errcheck:
+   Nothing special
+</pre></div>
+</div>
+</li>
+<li><p class="first">CryptCATAdminReleaseCatalogContext:</p>
+<div class="highlight-python"><div class="highlight"><pre>CryptCATAdminReleaseCatalogContext(hCatAdmin, hCatInfo, dwFlags)
+Errcheck:
+   Nothing special
+</pre></div>
+</div>
+</li>
+<li><p class="first">CryptCATAdminReleaseContext:</p>
+<div class="highlight-python"><div class="highlight"><pre>CryptCATAdminReleaseContext(hCatAdmin, dwFlags)
+Errcheck:
+   Nothing special
+</pre></div>
+</div>
+</li>
+<li><p class="first">CryptCATCatalogInfoFromContext:</p>
+<div class="highlight-python"><div class="highlight"><pre>CryptCATCatalogInfoFromContext(hCatInfo, psCatInfo, dwFlags)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
 <li><p class="first">DeviceIoControl:</p>
 <div class="highlight-python"><div class="highlight"><pre>DeviceIoControl(hDevice, dwIoControlCode, lpInBuffer, nInBufferSize=None, lpOutBuffer=NeededParameter, nOutBufferSize=None, lpBytesReturned=None, lpOverlapped=None)
 Errcheck:
@@ -243,22 +352,193 @@ Errcheck:
 </pre></div>
 </div>
 </li>
-<li><p class="first">GetExtendedTcpTable:</p>
-<div class="highlight-python"><div class="highlight"><pre>GetExtendedTcpTable(pTcpTable, pdwSize=None, bOrder=True, ulAf=NeededParameter, TableClass=5, Reserved=0)
-Errcheck:
-   raise IphlpapiError if result is NOT 0
-</pre></div>
-</div>
-</li>
-<li><p class="first">GetMappedFileNameA:</p>
-<div class="highlight-python"><div class="highlight"><pre>GetMappedFileNameA(hProcess, lpv, lpFilename, nSize=None)
+<li><p class="first">DuplicateHandle:</p>
+<div class="highlight-python"><div class="highlight"><pre>DuplicateHandle(hSourceProcessHandle, hSourceHandle, hTargetProcessHandle, lpTargetHandle, dwDesiredAccess=0, bInheritHandle=False, dwOptions=0)
 Errcheck:
    raise Kernel32Error if result is 0
 </pre></div>
 </div>
 </li>
-<li><p class="first">GetMappedFileNameW:</p>
-<div class="highlight-python"><div class="highlight"><pre>GetMappedFileNameW(hProcess, lpv, lpFilename, nSize=None)
+<li><p class="first">EnumServicesStatusExA:</p>
+<div class="highlight-python"><div class="highlight"><pre>EnumServicesStatusExA(hSCManager, InfoLevel, dwServiceType, dwServiceState, lpServices, cbBufSize, pcbBytesNeeded, lpServicesReturned, lpResumeHandle, pszGroupName)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">EnumServicesStatusExW:</p>
+<div class="highlight-python"><div class="highlight"><pre>EnumServicesStatusExW(hSCManager, InfoLevel, dwServiceType, dwServiceState, lpServices, cbBufSize, pcbBytesNeeded, lpServicesReturned, lpResumeHandle, pszGroupName)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">GetExtendedTcpTable:</p>
+<div class="highlight-python"><div class="highlight"><pre>GetExtendedTcpTable(pTcpTable, pdwSize=None, bOrder=True, ulAf=NeededParameter, TableClass=_TCP_TABLE_CLASS.TCP_TABLE_OWNER_PID_ALL(0x5L), Reserved=0)
+Errcheck:
+   raise IphlpapiError if result is NOT 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">GetFileVersionInfoA:</p>
+<div class="highlight-python"><div class="highlight"><pre>GetFileVersionInfoA(lptstrFilename, dwHandle=0, dwLen=None, lpData=NeededParameter)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">GetFileVersionInfoSizeA:</p>
+<div class="highlight-python"><div class="highlight"><pre>GetFileVersionInfoSizeA(lptstrFilename, lpdwHandle=None)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">GetFileVersionInfoSizeW:</p>
+<div class="highlight-python"><div class="highlight"><pre>GetFileVersionInfoSizeW(lptstrFilename, lpdwHandle=None)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">GetFileVersionInfoW:</p>
+<div class="highlight-python"><div class="highlight"><pre>GetFileVersionInfoW(lptstrFilename, dwHandle=0, dwLen=None, lpData=NeededParameter)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">GetIfTable:</p>
+<div class="highlight-python"><div class="highlight"><pre>GetIfTable(pIfTable, pdwSize, bOrder=False)
+Errcheck:
+   raise IphlpapiError if result is NOT 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">GetInterfaceInfo:</p>
+<div class="highlight-python"><div class="highlight"><pre>GetInterfaceInfo(pIfTable, dwOutBufLen=None)
+Errcheck:
+   raise IphlpapiError if result is NOT 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">GetIpAddrTable:</p>
+<div class="highlight-python"><div class="highlight"><pre>GetIpAddrTable(pIpAddrTable, pdwSize, bOrder=False)
+Errcheck:
+   raise IphlpapiError if result is NOT 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">GetMappedFileNameAWrapper:</p>
+<div class="highlight-python"><div class="highlight"><pre>GetMappedFileNameAWrapper(hProcess, lpv, lpFilename, nSize=None)
+Errcheck:
+   raise Kernel32Error if result is 0
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">GetMappedFileNameAWrapper:</p>
+<div class="highlight-python"><div class="highlight"><pre>GetMappedFileNameAWrapper(hProcess, lpv, lpFilename, nSize=None)
+Errcheck:
+   raise Kernel32Error if result is 0
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">GetMappedFileNameWWrapper:</p>
+<div class="highlight-python"><div class="highlight"><pre>GetMappedFileNameWWrapper(hProcess, lpv, lpFilename, nSize=None)
+Errcheck:
+   raise Kernel32Error if result is 0
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">GetMappedFileNameWWrapper:</p>
+<div class="highlight-python"><div class="highlight"><pre>GetMappedFileNameWWrapper(hProcess, lpv, lpFilename, nSize=None)
+Errcheck:
+   raise Kernel32Error if result is 0
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">GetModuleBaseNameAWrapper:</p>
+<div class="highlight-python"><div class="highlight"><pre>GetModuleBaseNameAWrapper(hProcess, hModule, lpBaseName, nSize=None)
+Errcheck:
+   raise Kernel32Error if result is 0
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">GetModuleBaseNameAWrapper:</p>
+<div class="highlight-python"><div class="highlight"><pre>GetModuleBaseNameAWrapper(hProcess, hModule, lpBaseName, nSize=None)
+Errcheck:
+   raise Kernel32Error if result is 0
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">GetModuleBaseNameWWrapper:</p>
+<div class="highlight-python"><div class="highlight"><pre>GetModuleBaseNameWWrapper(hProcess, hModule, lpBaseName, nSize=None)
+Errcheck:
+   raise Kernel32Error if result is 0
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">GetModuleBaseNameWWrapper:</p>
+<div class="highlight-python"><div class="highlight"><pre>GetModuleBaseNameWWrapper(hProcess, hModule, lpBaseName, nSize=None)
+Errcheck:
+   raise Kernel32Error if result is 0
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">GetProcessImageFileNameAWrapper:</p>
+<div class="highlight-python"><div class="highlight"><pre>GetProcessImageFileNameAWrapper(hProcess, lpImageFileName, nSize=None)
+Errcheck:
+   raise Kernel32Error if result is 0
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">GetProcessImageFileNameAWrapper:</p>
+<div class="highlight-python"><div class="highlight"><pre>GetProcessImageFileNameAWrapper(hProcess, lpImageFileName, nSize=None)
+Errcheck:
+   raise Kernel32Error if result is 0
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">GetProcessImageFileNameWWrapper:</p>
+<div class="highlight-python"><div class="highlight"><pre>GetProcessImageFileNameWWrapper(hProcess, lpImageFileName, nSize=None)
+Errcheck:
+   raise Kernel32Error if result is 0
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">GetProcessImageFileNameWWrapper:</p>
+<div class="highlight-python"><div class="highlight"><pre>GetProcessImageFileNameWWrapper(hProcess, lpImageFileName, nSize=None)
+Errcheck:
+   raise Kernel32Error if result is 0
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">GetProcessTimes:</p>
+<div class="highlight-python"><div class="highlight"><pre>GetProcessTimes(hProcess, lpCreationTime, lpExitTime, lpKernelTime, lpUserTime)
 Errcheck:
    raise Kernel32Error if result is 0
 </pre></div>
@@ -278,8 +558,36 @@ Errcheck:
 </pre></div>
 </div>
 </li>
+<li><p class="first">GetVolumeInformationA:</p>
+<div class="highlight-python"><div class="highlight"><pre>GetVolumeInformationA(lpRootPathName, lpVolumeNameBuffer, nVolumeNameSize, lpVolumeSerialNumber, lpMaximumComponentLength, lpFileSystemFlags, lpFileSystemNameBuffer, nFileSystemNameSize)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">GetVolumeInformationW:</p>
+<div class="highlight-python"><div class="highlight"><pre>GetVolumeInformationW(lpRootPathName, lpVolumeNameBuffer=None, nVolumeNameSize=0, lpVolumeSerialNumber=None, lpMaximumComponentLength=None, lpFileSystemFlags=None, lpFileSystemNameBuffer=None, nFileSystemNameSize=0)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
 <li><p class="first">LdrLoadDll:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">LdrLoadDll</span><span class="p">(</span><span class="n">PathToFile</span><span class="p">,</span> <span class="n">Flags</span><span class="p">,</span> <span class="n">ModuleFileName</span><span class="p">,</span> <span class="n">ModuleHandle</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">LookupAccountSidA:</p>
+<div class="highlight-python"><div class="highlight"><pre>LookupAccountSidA(lpSystemName, lpSid, lpName, cchName, lpReferencedDomainName, cchReferencedDomainName, peUse)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">LookupAccountSidW:</p>
+<div class="highlight-python"><div class="highlight"><pre>LookupAccountSidW(lpSystemName, lpSid, lpName, cchName, lpReferencedDomainName, cchReferencedDomainName, peUse)
+Errcheck:
+   raise Kernel32Error if result is 0
 </pre></div>
 </div>
 </li>
@@ -297,6 +605,33 @@ Errcheck:
 </pre></div>
 </div>
 </li>
+<li><p class="first">MapViewOfFile:</p>
+<div class="highlight-python"><div class="highlight"><pre>MapViewOfFile(hFileMappingObject, dwDesiredAccess=FILE_MAP_ALL_ACCESS(0xf001fL), dwFileOffsetHigh=0, dwFileOffsetLow=0, dwNumberOfBytesToMap=NeededParameter)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">NtAlpcAcceptConnectPort:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">NtAlpcAcceptConnectPort</span><span class="p">(</span><span class="n">PortHandle</span><span class="p">,</span> <span class="n">ConnectionPortHandle</span><span class="p">,</span> <span class="n">Flags</span><span class="p">,</span> <span class="n">ObjectAttributes</span><span class="p">,</span> <span class="n">PortAttributes</span><span class="p">,</span> <span class="n">PortContext</span><span class="p">,</span> <span class="n">ConnectionRequest</span><span class="p">,</span> <span class="n">ConnectionMessageAttributes</span><span class="p">,</span> <span class="n">AcceptConnection</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">NtAlpcConnectPort:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">NtAlpcConnectPort</span><span class="p">(</span><span class="n">PortHandle</span><span class="p">,</span> <span class="n">PortName</span><span class="p">,</span> <span class="n">ObjectAttributes</span><span class="p">,</span> <span class="n">PortAttributes</span><span class="p">,</span> <span class="n">Flags</span><span class="p">,</span> <span class="n">RequiredServerSid</span><span class="p">,</span> <span class="n">ConnectionMessage</span><span class="p">,</span> <span class="n">BufferLength</span><span class="p">,</span> <span class="n">OutMessageAttributes</span><span class="p">,</span> <span class="n">InMessageAttributes</span><span class="p">,</span> <span class="n">Timeout</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">NtAlpcCreatePort:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">NtAlpcCreatePort</span><span class="p">(</span><span class="n">PortHandle</span><span class="p">,</span> <span class="n">ObjectAttributes</span><span class="p">,</span> <span class="n">PortAttributes</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">NtAlpcSendWaitReceivePort:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">NtAlpcSendWaitReceivePort</span><span class="p">(</span><span class="n">PortHandle</span><span class="p">,</span> <span class="n">Flags</span><span class="p">,</span> <span class="n">SendMessage</span><span class="p">,</span> <span class="n">SendMessageAttributes</span><span class="p">,</span> <span class="n">ReceiveMessage</span><span class="p">,</span> <span class="n">BufferLength</span><span class="p">,</span> <span class="n">ReceiveMessageAttributes</span><span class="p">,</span> <span class="n">Timeout</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
 <li><p class="first">NtCreateThreadEx:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">NtCreateThreadEx</span><span class="p">(</span><span class="n">ThreadHandle</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">DesiredAccess</span><span class="o">=</span><span class="mi">2097151</span><span class="p">,</span> <span class="n">ObjectAttributes</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ProcessHandle</span><span class="o">=</span><span class="n">NeededParameter</span><span class="p">,</span> <span class="n">lpStartAddress</span><span class="o">=</span><span class="n">NeededParameter</span><span class="p">,</span> <span class="n">lpParameter</span><span class="o">=</span><span class="n">NeededParameter</span><span class="p">,</span> <span class="n">CreateSuspended</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">dwStackSize</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">Unknown1</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">Unknown2</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">Unknown</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
@@ -307,6 +642,31 @@ Errcheck:
 </pre></div>
 </div>
 </li>
+<li><p class="first">NtOpenDirectoryObject:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">NtOpenDirectoryObject</span><span class="p">(</span><span class="n">DirectoryHandle</span><span class="p">,</span> <span class="n">DesiredAccess</span><span class="p">,</span> <span class="n">ObjectAttributes</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">NtOpenEvent:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">NtOpenEvent</span><span class="p">(</span><span class="n">EventHandle</span><span class="p">,</span> <span class="n">DesiredAccess</span><span class="p">,</span> <span class="n">ObjectAttributes</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">NtOpenSymbolicLinkObject:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">NtOpenSymbolicLinkObject</span><span class="p">(</span><span class="n">LinkHandle</span><span class="p">,</span> <span class="n">DesiredAccess</span><span class="p">,</span> <span class="n">ObjectAttributes</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">NtProtectVirtualMemory:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">NtProtectVirtualMemory</span><span class="p">(</span><span class="n">ProcessHandle</span><span class="p">,</span> <span class="n">BaseAddress</span><span class="p">,</span> <span class="n">NumberOfBytesToProtect</span><span class="p">,</span> <span class="n">NewAccessProtection</span><span class="p">,</span> <span class="n">OldAccessProtection</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">NtQueryDirectoryObject:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">NtQueryDirectoryObject</span><span class="p">(</span><span class="n">DirectoryHandle</span><span class="p">,</span> <span class="n">Buffer</span><span class="p">,</span> <span class="n">Length</span><span class="p">,</span> <span class="n">ReturnSingleEntry</span><span class="p">,</span> <span class="n">RestartScan</span><span class="p">,</span> <span class="n">Context</span><span class="p">,</span> <span class="n">ReturnLength</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
 <li><p class="first">NtQueryInformationProcess:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">NtQueryInformationProcess</span><span class="p">(</span><span class="n">ProcessHandle</span><span class="p">,</span> <span class="n">ProcessInformationClass</span><span class="p">,</span> <span class="n">ProcessInformation</span><span class="p">,</span> <span class="n">ProcessInformationLength</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ReturnLength</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
 </pre></div>
@@ -314,6 +674,16 @@ Errcheck:
 </li>
 <li><p class="first">NtQueryInformationThread:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">NtQueryInformationThread</span><span class="p">(</span><span class="n">ThreadHandle</span><span class="p">,</span> <span class="n">ThreadInformationClass</span><span class="p">,</span> <span class="n">ThreadInformation</span><span class="p">,</span> <span class="n">ThreadInformationLength</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ReturnLength</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">NtQueryObject:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">NtQueryObject</span><span class="p">(</span><span class="n">Handle</span><span class="p">,</span> <span class="n">ObjectInformationClass</span><span class="p">,</span> <span class="n">ObjectInformation</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">ObjectInformationLength</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ReturnLength</span><span class="o">=</span><span class="n">NeededParameter</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">NtQuerySymbolicLinkObject:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">NtQuerySymbolicLinkObject</span><span class="p">(</span><span class="n">LinkHandle</span><span class="p">,</span> <span class="n">LinkTarget</span><span class="p">,</span> <span class="n">ReturnedLength</span><span class="p">)</span>
 </pre></div>
 </div>
 </li>
@@ -337,6 +707,25 @@ Errcheck:
 </pre></div>
 </div>
 </li>
+<li><p class="first">NtWow64WriteVirtualMemory64:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">NtWow64WriteVirtualMemory64</span><span class="p">(</span><span class="n">hProcess</span><span class="p">,</span> <span class="n">lpBaseAddress</span><span class="p">,</span> <span class="n">lpBuffer</span><span class="p">,</span> <span class="n">nSize</span><span class="p">,</span> <span class="n">lpNumberOfBytesWritten</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">OpenEventA:</p>
+<div class="highlight-python"><div class="highlight"><pre>OpenEventA(dwDesiredAccess, bInheritHandle, lpName)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">OpenEventW:</p>
+<div class="highlight-python"><div class="highlight"><pre>OpenEventW(dwDesiredAccess, bInheritHandle, lpName)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
 <li><p class="first">OpenProcess:</p>
 <div class="highlight-python"><div class="highlight"><pre>OpenProcess(dwDesiredAccess=PROCESS_ALL_ACCESS(0x1f0fffL), bInheritHandle=0, dwProcessId=NeededParameter)
 Errcheck:
@@ -352,6 +741,20 @@ Errcheck:
 </pre></div>
 </div>
 </li>
+<li><p class="first">OpenSCManagerA:</p>
+<div class="highlight-python"><div class="highlight"><pre>OpenSCManagerA(lpMachineName=None, lpDatabaseName=None, dwDesiredAccess=SC_MANAGER_ALL_ACCESS(0xf003fL))
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">OpenSCManagerW:</p>
+<div class="highlight-python"><div class="highlight"><pre>OpenSCManagerW(lpMachineName=None, lpDatabaseName=None, dwDesiredAccess=SC_MANAGER_ALL_ACCESS(0xf003fL))
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
 <li><p class="first">OpenThread:</p>
 <div class="highlight-python"><div class="highlight"><pre>OpenThread(dwDesiredAccess=THREAD_ALL_ACCESS(0x1f03ffL), bInheritHandle=0, dwThreadId=NeededParameter)
 Errcheck:
@@ -361,17 +764,51 @@ Errcheck:
 </li>
 <li><p class="first">Process32First:</p>
 <div class="highlight-python"><div class="highlight"><pre>Process32First(hSnapshot, lpte)
-Set byref(lpte) if needed
 Errcheck:
-   Nothing special
+   raise Kernel32Error if result is 0
 </pre></div>
 </div>
 </li>
 <li><p class="first">Process32Next:</p>
 <div class="highlight-python"><div class="highlight"><pre>Process32Next(hSnapshot, lpte)
-Set byref(lpte) if needed
 Errcheck:
    Nothing special
+</pre></div>
+</div>
+</li>
+<li><p class="first">QueryWorkingSetWrapper:</p>
+<div class="highlight-python"><div class="highlight"><pre>QueryWorkingSetWrapper(hProcess, pv, cb)
+Errcheck:
+   raise Kernel32Error if result is 0
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">QueryWorkingSetExWrapper:</p>
+<div class="highlight-python"><div class="highlight"><pre>QueryWorkingSetExWrapper(hProcess, pv, cb)
+Errcheck:
+   raise Kernel32Error if result is 0
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">QueryWorkingSetExWrapper:</p>
+<div class="highlight-python"><div class="highlight"><pre>QueryWorkingSetExWrapper(hProcess, pv, cb)
+Errcheck:
+   raise Kernel32Error if result is 0
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">QueryWorkingSetWrapper:</p>
+<div class="highlight-python"><div class="highlight"><pre>QueryWorkingSetWrapper(hProcess, pv, cb)
+Errcheck:
+   raise Kernel32Error if result is 0
+Errcheck:
+   raise Kernel32Error if result is 0
 </pre></div>
 </div>
 </li>
@@ -443,7 +880,7 @@ Errcheck:
 <div class="highlight-python"><div class="highlight"><pre>Thread32First(hSnapshot, lpte)
 Set byref(lpte) if needed
 Errcheck:
-   Nothing special
+   raise Kernel32Error if result is 0
 </pre></div>
 </div>
 </li>
@@ -452,6 +889,20 @@ Errcheck:
 Set byref(lpte) if needed
 Errcheck:
    Nothing special
+</pre></div>
+</div>
+</li>
+<li><p class="first">VerQueryValueA:</p>
+<div class="highlight-python"><div class="highlight"><pre>VerQueryValueA(pBlock, lpSubBlock, lplpBuffer, puLen)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">VerQueryValueW:</p>
+<div class="highlight-python"><div class="highlight"><pre>VerQueryValueW(pBlock, lpSubBlock, lplpBuffer, puLen)
+Errcheck:
+   raise Kernel32Error if result is 0
 </pre></div>
 </div>
 </li>
@@ -485,6 +936,13 @@ Errcheck:
 </li>
 <li><p class="first">VirtualProtect:</p>
 <div class="highlight-python"><div class="highlight"><pre>VirtualProtect(lpAddress, dwSize, flNewProtect, lpflOldProtect=None)
+Errcheck:
+   raise Kernel32Error if result is 0
+</pre></div>
+</div>
+</li>
+<li><p class="first">VirtualProtectEx:</p>
+<div class="highlight-python"><div class="highlight"><pre>VirtualProtectEx(hProcess, lpAddress, dwSize, flNewProtect, lpflOldProtect=None)
 Errcheck:
    raise Kernel32Error if result is 0
 </pre></div>
@@ -597,7 +1055,7 @@ Errcheck:
         <li class="right" >
           <a href="native_exec.html" title="3. windows.native_exec – Native Code Execution"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">PythonForWindows 0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PythonForWindows 0.2 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

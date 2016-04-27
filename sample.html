@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>10. Samples of code &mdash; PythonForWindows 0.1 documentation</title>
+    <title>12. Samples of code &mdash; PythonForWindows 0.2 documentation</title>
     
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1',
+        VERSION:     '0.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,8 +23,8 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PythonForWindows 0.1 documentation" href="index.html" />
-    <link rel="prev" title="9. Internals" href="internals.html" /> 
+    <link rel="top" title="PythonForWindows 0.2 documentation" href="index.html" />
+    <link rel="prev" title="11. Internals" href="internals.html" /> 
   </head>
   <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
@@ -37,9 +37,9 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="internals.html" title="9. Internals"
+          <a href="internals.html" title="11. Internals"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">PythonForWindows 0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PythonForWindows 0.2 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -49,9 +49,9 @@
           <div class="body" role="main">
             
   <div class="section" id="samples-of-code">
-<h1>10. Samples of code<a class="headerlink" href="#samples-of-code" title="Permalink to this headline">¶</a></h1>
+<h1>12. Samples of code<a class="headerlink" href="#samples-of-code" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="windows-current-process">
-<span id="sample-current-process"></span><h2>10.1. <code class="docutils literal"><span class="pre">windows.current_process</span></code><a class="headerlink" href="#windows-current-process" title="Permalink to this headline">¶</a></h2>
+<span id="sample-current-process"></span><h2>12.1. <code class="docutils literal"><span class="pre">windows.current_process</span></code><a class="headerlink" href="#windows-current-process" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">os.path</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span> <span class="o">+</span> <span class="s">&quot;\..\..&quot;</span><span class="p">))</span>
@@ -116,7 +116,7 @@ Reading memory : &lt;&#39;SOME STUFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00&#39
 </div>
 </div>
 <div class="section" id="remote-process-winprocess">
-<span id="sample-remote-process"></span><h2>10.2. Remote process : <code class="xref py py-class docutils literal"><span class="pre">WinProcess</span></code><a class="headerlink" href="#remote-process-winprocess" title="Permalink to this headline">¶</a></h2>
+<span id="sample-remote-process"></span><h2>12.2. Remote process : <code class="xref py py-class docutils literal"><span class="pre">WinProcess</span></code><a class="headerlink" href="#remote-process-winprocess" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">os.path</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span> <span class="o">+</span> <span class="s">&quot;\..\..&quot;</span><span class="p">))</span>
@@ -239,7 +239,7 @@ That&#39;s all ! killing the calc
 </div>
 </div>
 <div class="section" id="peb-exploration">
-<span id="sample-peb-exploration"></span><h2>10.3. <code class="xref py py-class docutils literal"><span class="pre">PEB</span></code> exploration<a class="headerlink" href="#peb-exploration" title="Permalink to this headline">¶</a></h2>
+<span id="sample-peb-exploration"></span><h2>12.3. <code class="xref py py-class docutils literal"><span class="pre">PEB</span></code> exploration<a class="headerlink" href="#peb-exploration" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">os.path</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span> <span class="o">+</span> <span class="s">&quot;\..\..&quot;</span><span class="p">))</span>
@@ -309,8 +309,88 @@ Sections: [&lt;PESection &quot;.text&quot;&gt;, &lt;PESection &quot;.rdata&quot;
 </pre></div>
 </div>
 </div>
+<div class="section" id="windows-system">
+<span id="sample-system"></span><h2>12.4. <code class="docutils literal"><span class="pre">windows.system</span></code><a class="headerlink" href="#windows-system" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os.path</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span> <span class="o">+</span> <span class="s">&quot;\..\..&quot;</span><span class="p">))</span>
+
+<span class="kn">import</span> <span class="nn">windows</span>
+<span class="n">system</span> <span class="o">=</span> <span class="n">windows</span><span class="o">.</span><span class="n">system</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Basic system infos:&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;    version = {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">version</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;    bitness = {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">bitness</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;    computer_name = {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">computer_name</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;    product_type = {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">product_type</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;    version_name = {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">version_name</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;There is {0} processes&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">processes</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;There is {0} threads&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">threads</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Dumping first logical drive:&quot;</span><span class="p">)</span>
+<span class="n">drive</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">logicaldrives</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;    &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">drive</span><span class="p">))</span>
+<span class="k">print</span><span class="p">((</span><span class="s">&quot; &quot;</span> <span class="o">*</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;name = {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">drive</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+<span class="k">print</span><span class="p">((</span><span class="s">&quot; &quot;</span> <span class="o">*</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;type = {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">drive</span><span class="o">.</span><span class="n">type</span><span class="p">))</span>
+<span class="k">print</span><span class="p">((</span><span class="s">&quot; &quot;</span> <span class="o">*</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;path = {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">drive</span><span class="o">.</span><span class="n">path</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Dumping first service:&quot;</span><span class="p">)</span>
+<span class="n">serv</span> <span class="o">=</span> <span class="n">windows</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">services</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;    &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">serv</span><span class="p">))</span>
+<span class="k">print</span><span class="p">((</span><span class="s">&quot; &quot;</span> <span class="o">*</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;name = {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">serv</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+<span class="k">print</span><span class="p">((</span><span class="s">&quot; &quot;</span> <span class="o">*</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;description = {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">serv</span><span class="o">.</span><span class="n">description</span><span class="p">))</span>
+<span class="k">print</span><span class="p">((</span><span class="s">&quot; &quot;</span> <span class="o">*</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;status = {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">serv</span><span class="o">.</span><span class="n">status</span><span class="p">))</span>
+<span class="k">print</span><span class="p">((</span><span class="s">&quot; &quot;</span> <span class="o">*</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;process = {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">serv</span><span class="o">.</span><span class="n">process</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Finding a service in a user process:&quot;</span><span class="p">)</span>
+<span class="n">serv</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">windows</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">services</span> <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">process</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;    &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">serv</span><span class="p">))</span>
+<span class="k">print</span><span class="p">((</span><span class="s">&quot; &quot;</span> <span class="o">*</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;name = {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">serv</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+<span class="k">print</span><span class="p">((</span><span class="s">&quot; &quot;</span> <span class="o">*</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;description = {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">serv</span><span class="o">.</span><span class="n">description</span><span class="p">))</span>
+<span class="k">print</span><span class="p">((</span><span class="s">&quot; &quot;</span> <span class="o">*</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;status = {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">serv</span><span class="o">.</span><span class="n">status</span><span class="p">))</span>
+<span class="k">print</span><span class="p">((</span><span class="s">&quot; &quot;</span> <span class="o">*</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;process = {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">serv</span><span class="o">.</span><span class="n">process</span><span class="p">)))</span>
+</pre></div>
+</div>
+<p>Output:</p>
+<div class="highlight-python"><div class="highlight"><pre>(cmd λ) python system.py
+Basic system infos:
+    version = (6, 3)
+    bitness = 64
+    computer_name = HAKRIL-PC
+    product_type = VER_NT_WORKSTATION(0x1L)
+    version_name = Windows 8.1
+
+There is 95 processes
+There is 1021 threads
+
+Dumping first logical drive:
+    &lt;LogicalDrive &quot;C:\&quot; (DRIVE_FIXED)&gt;
+        name = C:\
+        type = DRIVE_FIXED(0x3L)
+        path = \Device\HarddiskVolume2
+
+Dumping first service:
+    &lt;ServiceA &quot;ACPI&quot;&gt;
+        name = ACPI
+        description = Microsoft ACPI Driver
+        status = ServiceStatus(type=SERVICE_KERNEL_DRIVER(0x1L), state=SERVICE_RUNNING(0x4L), control_accepted=1L, flags=0L)
+        process = None
+
+Finding a service in a user process:
+    &lt;ServiceA &quot;Appinfo&quot;&gt;
+        name = Appinfo
+        description = Application Information
+        status = ServiceStatus(type=SERVICE_WIN32_SHARE_PROCESS(0x20L), state=SERVICE_RUNNING(0x4L), control_accepted=129L, flags=0L)
+        process = &lt;WinProcess &quot;svchost.exe&quot; pid 944 at 0x29d5290&gt;
+</pre></div>
+</div>
+</div>
 <div class="section" id="iat-hooking">
-<span id="sample-iat-hook"></span><h2>10.4. IAT hooking<a class="headerlink" href="#iat-hooking" title="Permalink to this headline">¶</a></h2>
+<span id="sample-iat-hook"></span><h2>12.5. IAT hooking<a class="headerlink" href="#iat-hooking" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">os.path</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span> <span class="o">+</span> <span class="s">&quot;\..\..&quot;</span><span class="p">))</span>
@@ -396,11 +476,10 @@ Result = 0x108
 </div>
 </div>
 <div class="section" id="network-socket-exploration">
-<span id="sample-network-exploration"></span><h2>10.5. <code class="xref py py-class docutils literal"><span class="pre">Network</span></code> - socket exploration<a class="headerlink" href="#network-socket-exploration" title="Permalink to this headline">¶</a></h2>
+<span id="sample-network-exploration"></span><h2>12.6. <code class="xref py py-class docutils literal"><span class="pre">Network</span></code> - socket exploration<a class="headerlink" href="#network-socket-exploration" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">os.path</span>
 <span class="kn">import</span> <span class="nn">socket</span>
-
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span> <span class="o">+</span> <span class="s">&quot;\..\..&quot;</span><span class="p">))</span>
 
 <span class="kn">import</span> <span class="nn">windows</span>
@@ -455,7 +534,7 @@ socket.error: [Errno 10054] An existing connection was forcibly closed by the re
 </div>
 </div>
 <div class="section" id="registry">
-<span id="sample-registry"></span><h2>10.6. <code class="xref py py-class docutils literal"><span class="pre">Registry</span></code><a class="headerlink" href="#registry" title="Permalink to this headline">¶</a></h2>
+<span id="sample-registry"></span><h2>12.7. <code class="xref py py-class docutils literal"><span class="pre">Registry</span></code><a class="headerlink" href="#registry" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">os.path</span>
 <span class="kn">import</span> <span class="nn">pprint</span>
@@ -466,23 +545,23 @@ socket.error: [Errno 10054] An existing connection was forcibly closed by the re
 <span class="n">registry</span> <span class="o">=</span> <span class="n">windows</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">registry</span>
 <span class="k">print</span><span class="p">(</span><span class="s">&quot;Registry is &lt;{0}&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">registry</span><span class="p">))</span>
 
-<span class="n">current_user</span> <span class="o">=</span> <span class="n">registry</span><span class="p">[</span><span class="s">&quot;HKEY_CURRENT_USER&quot;</span><span class="p">]</span>
+<span class="n">current_user</span> <span class="o">=</span> <span class="n">registry</span><span class="p">(</span><span class="s">&quot;HKEY_CURRENT_USER&quot;</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="s">&quot;HKEY_CURRENT_USER is &lt;{0}&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">current_user</span><span class="p">))</span>
 <span class="n">subkeys_name</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">current_user</span><span class="o">.</span><span class="n">subkeys</span><span class="p">]</span>
 <span class="k">print</span><span class="p">(</span><span class="s">&quot;HKEY_CURRENT_USER subkeys names are:&quot;</span><span class="p">)</span>
 <span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">subkeys_name</span><span class="p">)</span>
 
-<span class="k">print</span><span class="p">(</span><span class="s">&quot;Opening &#39;Software&#39; in HKEY_CURRENT_USER: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">current_user</span><span class="p">[</span><span class="s">&quot;Software&quot;</span><span class="p">]))</span>
-<span class="k">print</span><span class="p">(</span><span class="s">&quot;We can also open it in one access: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">registry</span><span class="p">[</span><span class="s">r&quot;HKEY_CURRENT_USER\Sofware&quot;</span><span class="p">]))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Opening &#39;Software&#39; in HKEY_CURRENT_USER: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">current_user</span><span class="p">(</span><span class="s">&quot;Software&quot;</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;We can also open it in one access: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">registry</span><span class="p">(</span><span class="s">r&quot;HKEY_CURRENT_USER\Sofware&quot;</span><span class="p">)))</span>
 <span class="k">print</span><span class="p">(</span><span class="s">&quot;Looking at CurrentVersion&quot;</span><span class="p">)</span>
 
-<span class="n">windows_info</span> <span class="o">=</span> <span class="n">registry</span><span class="p">[</span><span class="s">&quot;HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion&quot;</span><span class="p">]</span>
+<span class="n">windows_info</span> <span class="o">=</span> <span class="n">registry</span><span class="p">(</span><span class="s">&quot;HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion&quot;</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="s">&quot;Key is {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">windows_info</span><span class="p">))</span>
 
 <span class="k">print</span><span class="p">(</span><span class="s">&quot;values are:&quot;</span><span class="p">)</span>
 <span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">windows_info</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
 
-<span class="n">registered_owner</span> <span class="o">=</span> <span class="n">windows_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;RegisteredOwner&quot;</span><span class="p">)</span>
+<span class="n">registered_owner</span> <span class="o">=</span> <span class="n">windows_info</span><span class="p">[</span><span class="s">&quot;RegisteredOwner&quot;</span><span class="p">]</span>
 <span class="k">print</span><span class="p">(</span><span class="s">&quot;registered owner = &lt;{0}&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">registered_owner</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -518,13 +597,68 @@ registered owner = &lt;KeyValue(name=&#39;RegisteredOwner&#39;, value=u&#39;hakr
 </pre></div>
 </div>
 </div>
+<div class="section" id="windows-wintrust">
+<span id="sample-wintrust"></span><h2>12.8. <code class="docutils literal"><span class="pre">windows.wintrust</span></code><a class="headerlink" href="#windows-wintrust" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os.path</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span> <span class="o">+</span> <span class="s">&quot;\..\..&quot;</span><span class="p">))</span>
+
+<span class="kn">import</span> <span class="nn">windows.wintrust</span>
+
+<span class="n">TARGET_FILE</span> <span class="o">=</span> <span class="s">r&quot;C:\windows\system32\ntdll.dll&quot;</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Checking signature of &lt;{0}&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">TARGET_FILE</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot; is_signed: &lt;{0}&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">windows</span><span class="o">.</span><span class="n">wintrust</span><span class="o">.</span><span class="n">is_signed</span><span class="p">(</span><span class="n">TARGET_FILE</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot; check_signature: &lt;{0}&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">windows</span><span class="o">.</span><span class="n">wintrust</span><span class="o">.</span><span class="n">check_signature</span><span class="p">(</span><span class="n">TARGET_FILE</span><span class="p">)))</span>
+
+<span class="n">sign_info</span> <span class="o">=</span> <span class="n">windows</span><span class="o">.</span><span class="n">wintrust</span><span class="o">.</span><span class="n">full_signature_information</span><span class="p">(</span><span class="n">TARGET_FILE</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot; full_signature_information:&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;    * signed &lt;{0}&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sign_info</span><span class="o">.</span><span class="n">signed</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;    * catalog &lt;{0}&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sign_info</span><span class="o">.</span><span class="n">catalog</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;    * catalogsigned &lt;{0}&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sign_info</span><span class="o">.</span><span class="n">catalogsigned</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;    * additionalinfo &lt;{0}&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sign_info</span><span class="o">.</span><span class="n">additionalinfo</span><span class="p">))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Checking signature of some loaded DLL&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">module</span> <span class="ow">in</span> <span class="n">windows</span><span class="o">.</span><span class="n">current_process</span><span class="o">.</span><span class="n">peb</span><span class="o">.</span><span class="n">modules</span><span class="p">[:</span><span class="mi">5</span><span class="p">]:</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">fullname</span>
+    <span class="n">is_signed</span> <span class="o">=</span>  <span class="n">windows</span><span class="o">.</span><span class="n">wintrust</span><span class="o">.</span><span class="n">is_signed</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">is_signed</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;&lt;{0}&gt; : {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">is_signed</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">sign_info</span> <span class="o">=</span> <span class="n">windows</span><span class="o">.</span><span class="n">wintrust</span><span class="o">.</span><span class="n">full_signature_information</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;&lt;{0}&gt; : {1} ({2})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">is_signed</span><span class="p">,</span> <span class="n">sign_info</span><span class="p">[</span><span class="mi">3</span><span class="p">]))</span>
+</pre></div>
+</div>
+<p>Output:</p>
+<div class="highlight-python"><div class="highlight"><pre>(cmd λ) python .\wintrust.py
+Checking signature of &lt;C:\windows\system32\ntdll.dll&gt;
+is_signed: &lt;True&gt;
+check_signature: &lt;0&gt;
+full_signature_information:
+    * signed &lt;True&gt;
+    * catalog &lt;C:\Windows\system32\CatRoot\{F750E6C3-38EE-11D1-85E5-00C04FC295EE}\Package_35_for_KB3128650~31bf3856ad364e35~amd64~~6.3.1.2.cat&gt;
+    * catalogsigned &lt;True&gt;
+    * additionalinfo &lt;0&gt;
+Checking signature of some loaded DLL
+&lt;c:\python27\python.exe&gt; : False (TRUST_E_NOSIGNATURE(0x800b0100L))
+&lt;c:\windows\system32\ntdll.dll&gt; : True
+&lt;c:\windows\system32\kernel32.dll&gt; : True
+&lt;c:\windows\system32\kernelbase.dll&gt; : True
+&lt;c:\windows\system32\python27.dll&gt; : False (TRUST_E_NOSIGNATURE(0x800b0100L))
+</pre></div>
+</div>
+</div>
 <div class="section" id="vectoredexception">
-<span id="sample-vectoredexception"></span><h2>10.7. <code class="xref py py-func docutils literal"><span class="pre">VectoredException()</span></code><a class="headerlink" href="#vectoredexception" title="Permalink to this headline">¶</a></h2>
+<span id="sample-vectoredexception"></span><h2>12.9. <code class="xref py py-func docutils literal"><span class="pre">VectoredException()</span></code><a class="headerlink" href="#vectoredexception" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="in-local-process">
-<h3>10.7.1. In local process<a class="headerlink" href="#in-local-process" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">ctypes</span>
+<h3>12.9.1. In local process<a class="headerlink" href="#in-local-process" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os.path</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span> <span class="o">+</span> <span class="s">&quot;\..\..&quot;</span><span class="p">))</span>
+
+<span class="kn">import</span> <span class="nn">ctypes</span>
 <span class="kn">import</span> <span class="nn">windows</span>
-<span class="kn">from</span> <span class="nn">windows.exception</span> <span class="kn">import</span> <span class="n">VectoredException</span>
+<span class="kn">from</span> <span class="nn">windows.winobject.exception</span> <span class="kn">import</span> <span class="n">VectoredException</span>
 <span class="kn">import</span> <span class="nn">windows.generated_def.windef</span> <span class="kn">as</span> <span class="nn">windef</span>
 <span class="kn">from</span> <span class="nn">windows.generated_def.winstructs</span> <span class="kn">import</span> <span class="o">*</span>
 
@@ -586,8 +720,13 @@ Value 2 read
 </div>
 </div>
 <div class="section" id="in-remote-process">
-<h3>10.7.2. In remote process<a class="headerlink" href="#in-remote-process" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">windows</span>
+<h3>12.9.2. In remote process<a class="headerlink" href="#in-remote-process" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os.path</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span> <span class="o">+</span> <span class="s">&quot;\..\..&quot;</span><span class="p">))</span>
+
+<span class="kn">import</span> <span class="nn">windows</span>
 <span class="kn">import</span> <span class="nn">windows.test</span>
 
 <span class="kn">from</span> <span class="nn">windows.generated_def.winstructs</span> <span class="kn">import</span> <span class="o">*</span>
@@ -596,7 +735,7 @@ Value 2 read
 <span class="s">import windows</span>
 <span class="s">import ctypes</span>
 <span class="s">import windows</span>
-<span class="s">from windows.exception import VectoredException</span>
+<span class="s">from windows.winobject.exception import VectoredException</span>
 <span class="s">import windows.generated_def.windef as windef</span>
 <span class="s">from windows.generated_def.winstructs import *</span>
 
@@ -682,8 +821,15 @@ No more tracing !
 </div>
 </div>
 <div class="section" id="debugging">
-<span id="sample-debugger"></span><h2>10.8. Debugging<a class="headerlink" href="#debugging" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">windows</span>
+<span id="sample-debugger"></span><h2>12.10. Debugging<a class="headerlink" href="#debugging" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="debugger">
+<h3>12.10.1. <code class="xref py py-class docutils literal"><span class="pre">Debugger</span></code><a class="headerlink" href="#debugger" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os.path</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span> <span class="o">+</span> <span class="s">&quot;\..\..&quot;</span><span class="p">))</span>
+
+<span class="kn">import</span> <span class="nn">windows</span>
 <span class="kn">import</span> <span class="nn">windows.test</span>
 <span class="kn">import</span> <span class="nn">windows.debug</span>
 
@@ -746,6 +892,230 @@ Ask to load &lt;ole32.dll&gt;: exiting process
 </pre></div>
 </div>
 </div>
+<div class="section" id="localdebugger">
+<span id="sample-local-debugger"></span><h3>12.10.2. <code class="xref py py-class docutils literal"><span class="pre">LocalDebugger</span></code><a class="headerlink" href="#localdebugger" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="in-current-process">
+<h4>12.10.2.1. In current process<a class="headerlink" href="#in-current-process" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os.path</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span> <span class="o">+</span> <span class="s">&quot;\..\..&quot;</span><span class="p">))</span>
+
+<span class="kn">import</span> <span class="nn">ctypes</span>
+<span class="kn">import</span> <span class="nn">windows</span>
+<span class="kn">import</span> <span class="nn">windows.debug</span>
+<span class="kn">from</span> <span class="nn">windows.generated_def.winstructs</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">ct</span> <span class="o">=</span> <span class="n">windows</span><span class="o">.</span><span class="n">current_thread</span>
+<span class="n">t</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">windows</span><span class="o">.</span><span class="n">current_process</span><span class="o">.</span><span class="n">threads</span> <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">tid</span> <span class="o">==</span> <span class="n">ct</span><span class="o">.</span><span class="n">tid</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+
+
+
+<span class="k">class</span> <span class="nc">YoloDebugger</span><span class="p">(</span><span class="n">windows</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">LocalDebugger</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">single_step_count</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">YoloDebugger</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">single_step_count</span> <span class="o">=</span> <span class="n">single_step_count</span>
+
+    <span class="k">def</span> <span class="nf">on_exception</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc</span><span class="p">):</span>
+        <span class="n">code</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_exception_code</span><span class="p">()</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_exception_context</span><span class="p">()</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;EXCEPTION !!!! Got a {0} at 0x{1:x}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">context</span><span class="o">.</span><span class="n">pc</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">single_step_count</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">single_step_count</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">single_step</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">EXCEPTION_CONTINUE_EXECUTION</span>
+
+
+<span class="k">class</span> <span class="nc">YoloHXBP</span><span class="p">(</span><span class="n">windows</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">HXBreakpoint</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">trigger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dbg</span><span class="p">,</span> <span class="n">exc</span><span class="p">):</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="n">dbg</span><span class="o">.</span><span class="n">get_exception_context</span><span class="p">()</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;GOT AN HXBP &lt;3 at 0x{0:x}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">pc</span><span class="p">))</span>
+        <span class="n">windows</span><span class="o">.</span><span class="n">current_process</span><span class="o">.</span><span class="n">write_memory</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">addr</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\x90\x90</span><span class="s">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dbg</span><span class="o">.</span><span class="n">single_step</span><span class="p">()</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Your main thread is {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">windows</span><span class="o">.</span><span class="n">current_thread</span><span class="o">.</span><span class="n">tid</span><span class="p">))</span>
+
+
+<span class="n">d</span> <span class="o">=</span> <span class="n">YoloDebugger</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="c"># Infinite loop + nop + ret</span>
+
+<span class="n">addr</span> <span class="o">=</span> <span class="n">windows</span><span class="o">.</span><span class="n">native_exec</span><span class="o">.</span><span class="n">native_function</span><span class="o">.</span><span class="n">allocator</span><span class="o">.</span><span class="n">write_code</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\xeb\xfe\x90\x90\x90\x90\xc3</span><span class="s">&quot;</span><span class="p">)</span>
+<span class="n">func_type</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">CFUNCTYPE</span><span class="p">(</span><span class="n">PVOID</span><span class="p">)</span>
+<span class="n">func</span> <span class="o">=</span> <span class="n">func_type</span><span class="p">(</span><span class="n">addr</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Code addr = 0x{0:x}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">addr</span><span class="p">))</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">windows</span><span class="o">.</span><span class="n">current_process</span><span class="o">.</span><span class="n">create_thread</span><span class="p">(</span><span class="n">addr</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="n">d</span><span class="o">.</span><span class="n">add_bp</span><span class="p">(</span><span class="n">YoloHXBP</span><span class="p">(</span><span class="n">addr</span><span class="p">))</span>
+
+<span class="n">t</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Ouput:</p>
+<div class="highlight-python"><div class="highlight"><pre>(cmd λ) python.exe .\samples\local_debugger.py
+Your main thread is 3864
+Code addr = 0x46000b
+GOT AN HXBP &lt;3 at 0x46000b
+EXCEPTION !!!! Got a EXCEPTION_SINGLE_STEP(0x80000004L) at 0x46000c
+EXCEPTION !!!! Got a EXCEPTION_SINGLE_STEP(0x80000004L) at 0x46000d
+EXCEPTION !!!! Got a EXCEPTION_SINGLE_STEP(0x80000004L) at 0x46000e
+EXCEPTION !!!! Got a EXCEPTION_SINGLE_STEP(0x80000004L) at 0x46000f
+EXCEPTION !!!! Got a EXCEPTION_SINGLE_STEP(0x80000004L) at 0x460010
+EXCEPTION !!!! Got a EXCEPTION_SINGLE_STEP(0x80000004L) at 0x460011
+</pre></div>
+</div>
+</div>
+<div class="section" id="id1">
+<h4>12.10.2.2. In remote process<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os.path</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span> <span class="o">+</span> <span class="s">&quot;\..\..&quot;</span><span class="p">))</span>
+
+<span class="kn">import</span> <span class="nn">ctypes</span>
+<span class="kn">import</span> <span class="nn">windows</span>
+<span class="kn">import</span> <span class="nn">windows.test</span>
+
+<span class="kn">from</span> <span class="nn">windows.generated_def.winstructs</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">remote_code</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">import windows</span>
+<span class="s">from windows.generated_def.winstructs import *</span>
+
+<span class="s">windows.utils.create_console()</span>
+
+<span class="s">class YOLOHXBP(windows.debug.HXBreakpoint):</span>
+<span class="s">    def trigger(self, dbg, exc):</span>
+<span class="s">        p = windows.current_process</span>
+<span class="s">        arg_pos = 2</span>
+<span class="s">        context = dbg.get_exception_context()</span>
+<span class="s">        esp = context.Esp</span>
+<span class="s">        unicode_string_addr = p.read_ptr(esp + (arg_pos + 1) * 4)</span>
+<span class="s">        wstring_addr = p.read_ptr(unicode_string_addr + 4)</span>
+<span class="s">        dll_loaded = p.read_wstring(wstring_addr)</span>
+<span class="s">        print(&quot;I AM LOADING &lt;{0}&gt;&quot;.format(dll_loaded))</span>
+
+<span class="s">d = windows.debug.LocalDebugger()</span>
+
+<span class="s">exp = windows.current_process.peb.modules[1].pe.exports</span>
+<span class="s">#windows.utils.FixedInteractiveConsole(locals()).interact()</span>
+<span class="s">ldr = exp[&quot;LdrLoadDll&quot;]</span>
+<span class="s">d.add_bp(YOLOHXBP(ldr))</span>
+
+<span class="s">&quot;&quot;&quot;</span>
+
+<span class="n">c</span> <span class="o">=</span> <span class="n">windows</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">pop_calc_32</span><span class="p">(</span><span class="n">dwCreationFlags</span><span class="o">=</span><span class="n">CREATE_SUSPENDED</span><span class="p">)</span>
+<span class="n">c</span><span class="o">.</span><span class="n">execute_python</span><span class="p">(</span><span class="n">remote_code</span><span class="p">)</span>
+<span class="n">c</span><span class="o">.</span><span class="n">threads</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">resume</span><span class="p">()</span>
+
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">c</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Ouput:</p>
+<div class="highlight-python"><div class="highlight"><pre>(cmd λ) python.exe .\samples\local_debugger_remote_process.py
+(In another console)
+I AM LOADING &lt;C:\Windows\system32\uxtheme.dll&gt;
+I AM LOADING &lt;C:\Windows\system32\uxtheme.dll&gt;
+I AM LOADING &lt;C:\Windows\system32\uxtheme.dll&gt;
+I AM LOADING &lt;C:\Windows\system32\uxtheme.dll&gt;
+I AM LOADING &lt;kernel32.dll&gt;
+I AM LOADING &lt;C:\Windows\WinSxS\x86_microsoft.windows.gdiplus_6595b64144ccf1df_1.1.9600.17415_none_dad8722c5bcc2d8f\gdiplus.dll&gt;
+I AM LOADING &lt;comctl32.dll&gt;
+I AM LOADING &lt;comctl32.dll&gt;
+I AM LOADING &lt;comctl32.dll&gt;
+I AM LOADING &lt;comctl32.dll&gt;
+I AM LOADING &lt;comctl32.dll&gt;
+I AM LOADING &lt;comctl32&gt;
+I AM LOADING &lt;C:\Windows\SysWOW64\oleacc.dll&gt;
+I AM LOADING &lt;OLEAUT32.DLL&gt;
+I AM LOADING &lt;C:\Windows\system32\ole32.dll&gt;
+I AM LOADING &lt;C:\Windows\system32\MSCTF.dll&gt;
+I AM LOADING &lt;C:\Windows\SysWOW64\msxml6.dll&gt;
+I AM LOADING &lt;C:\Windows\system32\shell32.dll&gt;
+I AM LOADING &lt;C:\Windows\SYSTEM32\WINMM.dll&gt;
+I AM LOADING &lt;C:\Windows\system32\ole32.dll&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="make-wmi-requests">
+<span id="wmi-request"></span><h3>12.10.3. Make WMI requests<a class="headerlink" href="#make-wmi-requests" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os.path</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span> <span class="o">+</span> <span class="s">&quot;\..\..&quot;</span><span class="p">))</span>
+
+<span class="kn">import</span> <span class="nn">windows</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;WMI requester is {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">windows</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">wmi</span><span class="p">))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Selecting * from &#39;Win32_Process&#39;&quot;</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">windows</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">wmi</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s">&quot;Win32_Process&quot;</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;They are &lt;{0}&gt; processes&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Looking for ourself via pid&quot;</span><span class="p">)</span>
+<span class="n">us</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">result</span> <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="s">&quot;ProcessId&quot;</span><span class="p">])</span> <span class="o">==</span> <span class="n">windows</span><span class="o">.</span><span class="n">current_process</span><span class="o">.</span><span class="n">pid</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Some info about our process:&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;    * {0} -&gt; {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s">&quot;Name&quot;</span><span class="p">,</span> <span class="n">us</span><span class="p">[</span><span class="s">&quot;Name&quot;</span><span class="p">]))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;    * {0} -&gt; {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s">&quot;ProcessId&quot;</span><span class="p">,</span> <span class="n">us</span><span class="p">[</span><span class="s">&quot;ProcessId&quot;</span><span class="p">]))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;    * {0} -&gt; {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s">&quot;OSName&quot;</span><span class="p">,</span> <span class="n">us</span><span class="p">[</span><span class="s">&quot;OSName&quot;</span><span class="p">]))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;    * {0} -&gt; {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s">&quot;UserModeTime&quot;</span><span class="p">,</span> <span class="n">us</span><span class="p">[</span><span class="s">&quot;UserModeTime&quot;</span><span class="p">]))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;    * {0} -&gt; {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s">&quot;WindowsVersion&quot;</span><span class="p">,</span> <span class="n">us</span><span class="p">[</span><span class="s">&quot;WindowsVersion&quot;</span><span class="p">]))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;    * {0} -&gt; {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s">&quot;CommandLine&quot;</span><span class="p">,</span> <span class="n">us</span><span class="p">[</span><span class="s">&quot;CommandLine&quot;</span><span class="p">]))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;&lt;Select Caption,FileSystem,FreeSpace from Win32_LogicalDisk&gt;:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">vol</span> <span class="ow">in</span> <span class="n">windows</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">wmi</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s">&quot;Win32_LogicalDisk&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s">&quot;Caption&quot;</span><span class="p">,</span> <span class="s">&quot;FileSystem&quot;</span><span class="p">,</span> <span class="s">&quot;FreeSpace&quot;</span><span class="p">]):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;    * &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">vol</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Ouput:</p>
+<div class="highlight-python"><div class="highlight"><pre>(cmd λ) python .\samples\wmi_request.py
+WMI requester is &lt;windows.winobject.wmi.WmiRequester object at 0x02B37EF0&gt;
+Selecting * from &#39;Win32_Process&#39;
+They are &lt;92&gt; processes
+Looking for ourself via pid
+Some info about our process:
+    * Name -&gt; python.exe
+    * ProcessId -&gt; 7968
+    * OSName -&gt; Microsoft Windows 8.1 Pro|C:\Windows|\Device\Harddisk0\Partition2
+    * UserModeTime -&gt; 2812500
+    * WindowsVersion -&gt; 6.3.9600
+    * CommandLine -&gt; python.exe  .\samples\wmi_request.py
+&lt;Select Caption,FileSystem,FreeSpace from Win32_LogicalDisk&gt;:
+    * {&#39;Caption&#39;: u&#39;C:&#39;, &#39;FreeSpace&#39;: u&#39;43991547904&#39;, &#39;FileSystem&#39;: u&#39;NTFS&#39;}
+    * {&#39;Caption&#39;: u&#39;E:&#39;, &#39;FreeSpace&#39;: u&#39;82776027136&#39;, &#39;FileSystem&#39;: u&#39;NTFS&#39;}
+    * {&#39;Caption&#39;: u&#39;F:&#39;, &#39;FreeSpace&#39;: u&#39;5711265792&#39;, &#39;FileSystem&#39;: u&#39;FAT32&#39;}
+    * {&#39;Caption&#39;: u&#39;G:&#39;, &#39;FreeSpace&#39;: None, &#39;FileSystem&#39;: None}
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-com-inetfwpolicy2">
+<span id="sample-com-firewall"></span><h3>12.10.4. using COM: <code class="docutils literal"><span class="pre">INetFwPolicy2</span></code><a class="headerlink" href="#using-com-inetfwpolicy2" title="Permalink to this headline">¶</a></h3>
+<p>Output:</p>
+<div class="highlight-python"><div class="highlight"><pre>(cmd λ) python .\samples\com_inetfwpolicy2.py
+Initialisation of COM
+Creating INetFwPolicy2 variable
+&lt;INetFwPolicy2 object at 0x02DC8210&gt; (value = None)
+
+Generating CLSID
+&lt;IID &quot;E2B3C97F-6AE1-41AC-817A-F6F92166D7DD&quot;&gt;
+
+Creating COM instance
+&lt;INetFwPolicy2 object at 0x02DC8210&gt; (value = 0x8984848)
+
+Checking for enabled profiles
+* NET_FW_PROFILE2_DOMAIN(0x1L) -&gt; True
+* NET_FW_PROFILE2_PRIVATE(0x2L) -&gt; True
+* NET_FW_PROFILE2_PUBLIC(0x4L) -&gt; True
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 
 
@@ -756,26 +1126,38 @@ Ask to load &lt;ole32.dll&gt;: exiting process
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">10. Samples of code</a><ul>
-<li><a class="reference internal" href="#windows-current-process">10.1. <code class="docutils literal"><span class="pre">windows.current_process</span></code></a></li>
-<li><a class="reference internal" href="#remote-process-winprocess">10.2. Remote process : <code class="docutils literal"><span class="pre">WinProcess</span></code></a></li>
-<li><a class="reference internal" href="#peb-exploration">10.3. <code class="docutils literal"><span class="pre">PEB</span></code> exploration</a></li>
-<li><a class="reference internal" href="#iat-hooking">10.4. IAT hooking</a></li>
-<li><a class="reference internal" href="#network-socket-exploration">10.5. <code class="docutils literal"><span class="pre">Network</span></code> - socket exploration</a></li>
-<li><a class="reference internal" href="#registry">10.6. <code class="docutils literal"><span class="pre">Registry</span></code></a></li>
-<li><a class="reference internal" href="#vectoredexception">10.7. <code class="docutils literal"><span class="pre">VectoredException()</span></code></a><ul>
-<li><a class="reference internal" href="#in-local-process">10.7.1. In local process</a></li>
-<li><a class="reference internal" href="#in-remote-process">10.7.2. In remote process</a></li>
+<li><a class="reference internal" href="#">12. Samples of code</a><ul>
+<li><a class="reference internal" href="#windows-current-process">12.1. <code class="docutils literal"><span class="pre">windows.current_process</span></code></a></li>
+<li><a class="reference internal" href="#remote-process-winprocess">12.2. Remote process : <code class="docutils literal"><span class="pre">WinProcess</span></code></a></li>
+<li><a class="reference internal" href="#peb-exploration">12.3. <code class="docutils literal"><span class="pre">PEB</span></code> exploration</a></li>
+<li><a class="reference internal" href="#windows-system">12.4. <code class="docutils literal"><span class="pre">windows.system</span></code></a></li>
+<li><a class="reference internal" href="#iat-hooking">12.5. IAT hooking</a></li>
+<li><a class="reference internal" href="#network-socket-exploration">12.6. <code class="docutils literal"><span class="pre">Network</span></code> - socket exploration</a></li>
+<li><a class="reference internal" href="#registry">12.7. <code class="docutils literal"><span class="pre">Registry</span></code></a></li>
+<li><a class="reference internal" href="#windows-wintrust">12.8. <code class="docutils literal"><span class="pre">windows.wintrust</span></code></a></li>
+<li><a class="reference internal" href="#vectoredexception">12.9. <code class="docutils literal"><span class="pre">VectoredException()</span></code></a><ul>
+<li><a class="reference internal" href="#in-local-process">12.9.1. In local process</a></li>
+<li><a class="reference internal" href="#in-remote-process">12.9.2. In remote process</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#debugging">10.8. Debugging</a></li>
+<li><a class="reference internal" href="#debugging">12.10. Debugging</a><ul>
+<li><a class="reference internal" href="#debugger">12.10.1. <code class="docutils literal"><span class="pre">Debugger</span></code></a></li>
+<li><a class="reference internal" href="#localdebugger">12.10.2. <code class="docutils literal"><span class="pre">LocalDebugger</span></code></a><ul>
+<li><a class="reference internal" href="#in-current-process">12.10.2.1. In current process</a></li>
+<li><a class="reference internal" href="#id1">12.10.2.2. In remote process</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#make-wmi-requests">12.10.3. Make WMI requests</a></li>
+<li><a class="reference internal" href="#using-com-inetfwpolicy2">12.10.4. using COM: <code class="docutils literal"><span class="pre">INetFwPolicy2</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="internals.html"
-                        title="previous chapter">9. Internals</a></p>
+                        title="previous chapter">11. Internals</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -810,9 +1192,9 @@ Ask to load &lt;ole32.dll&gt;: exiting process
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="internals.html" title="9. Internals"
+          <a href="internals.html" title="11. Internals"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">PythonForWindows 0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PythonForWindows 0.2 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

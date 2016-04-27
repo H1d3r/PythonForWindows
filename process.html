@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>2.1. Processes and Threads &mdash; PythonForWindows 0.1 documentation</title>
+    <title>2.1. Processes and Threads &mdash; PythonForWindows 0.2 documentation</title>
     
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1',
+        VERSION:     '0.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PythonForWindows 0.1 documentation" href="index.html" />
+    <link rel="top" title="PythonForWindows 0.2 documentation" href="index.html" />
     <link rel="up" title="2. The windows objects" href="various.html" />
     <link rel="next" title="2.4. Exception and Context related structures" href="exception.html" />
     <link rel="prev" title="2. The windows objects" href="various.html" /> 
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="various.html" title="2. The windows objects"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">PythonForWindows 0.1 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">PythonForWindows 0.2 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="various.html" accesskey="U">2. The <code class="docutils literal"><span class="pre">windows</span></code> objects</a> &raquo;</li> 
       </ul>
     </div>  
@@ -54,8 +54,8 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="module-windows.winobject">
-<span id="processes-and-threads"></span><h1>2.1. Processes and Threads<a class="headerlink" href="#module-windows.winobject" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-windows.winobject.process">
+<span id="processes-and-threads"></span><h1>2.1. Processes and Threads<a class="headerlink" href="#module-windows.winobject.process" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="currentprocess">
 <h2>2.1.1. CurrentProcess<a class="headerlink" href="#currentprocess" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
@@ -63,13 +63,13 @@
 <p class="last">See sample <a class="reference internal" href="sample.html#sample-current-process"><span>windows.current_process</span></a></p>
 </div>
 <dl class="class">
-<dt id="windows.winobject.CurrentProcess">
-<em class="property">class </em><code class="descclassname">windows.winobject.</code><code class="descname">CurrentProcess</code><a class="reference internal" href="_modules/windows/winobject.html#CurrentProcess"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.CurrentProcess" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">windows.winobject.Process</span></code></p>
+<dt id="windows.winobject.process.CurrentProcess">
+<em class="property">class </em><code class="descclassname">windows.winobject.process.</code><code class="descname">CurrentProcess</code><a class="reference internal" href="_modules/windows/winobject/process.html#CurrentProcess"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.process.CurrentProcess" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">windows.winobject.process.Process</span></code></p>
 <p>The current process</p>
 <dl class="method">
-<dt id="windows.winobject.CurrentProcess.allocated_memory">
-<code class="descname">allocated_memory</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.CurrentProcess.allocated_memory" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.CurrentProcess.allocated_memory">
+<code class="descname">allocated_memory</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.process.CurrentProcess.allocated_memory" title="Permalink to this definition">¶</a></dt>
 <dd><p>ContextManager to allocate memory and free it</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -82,8 +82,8 @@
 </dd></dl>
 
 <dl class="attribute">
-<dt id="windows.winobject.CurrentProcess.bitness">
-<code class="descname">bitness</code><a class="headerlink" href="#windows.winobject.CurrentProcess.bitness" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.CurrentProcess.bitness">
+<code class="descname">bitness</code><a class="headerlink" href="#windows.winobject.process.CurrentProcess.bitness" title="Permalink to this definition">¶</a></dt>
 <dd><p>The bitness of the process</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -96,22 +96,22 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.CurrentProcess.create_thread">
-<code class="descname">create_thread</code><span class="sig-paren">(</span><em>lpStartAddress</em>, <em>lpParameter</em>, <em>dwCreationFlags=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject.html#CurrentProcess.create_thread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.CurrentProcess.create_thread" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.CurrentProcess.create_thread">
+<code class="descname">create_thread</code><span class="sig-paren">(</span><em>lpStartAddress</em>, <em>lpParameter</em>, <em>dwCreationFlags=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject/process.html#CurrentProcess.create_thread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.process.CurrentProcess.create_thread" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new thread</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#windows.winobject.WinThread" title="windows.winobject.WinThread"><code class="xref py py-class docutils literal"><span class="pre">WinThread</span></code></a> or <a class="reference internal" href="#windows.winobject.DeadThread" title="windows.winobject.DeadThread"><code class="xref py py-class docutils literal"><span class="pre">DeadThread</span></code></a></td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#windows.winobject.process.WinThread" title="windows.winobject.process.WinThread"><code class="xref py py-class docutils literal"><span class="pre">WinThread</span></code></a> or <a class="reference internal" href="#windows.winobject.process.DeadThread" title="windows.winobject.process.DeadThread"><code class="xref py py-class docutils literal"><span class="pre">DeadThread</span></code></a></td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.CurrentProcess.execute">
-<code class="descname">execute</code><span class="sig-paren">(</span><em>code</em>, <em>parameter=0</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.CurrentProcess.execute" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.CurrentProcess.execute">
+<code class="descname">execute</code><span class="sig-paren">(</span><em>code</em>, <em>parameter=0</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.process.CurrentProcess.execute" title="Permalink to this definition">¶</a></dt>
 <dd><p>Execute some native code in the context of the process</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -119,21 +119,21 @@
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The thread executing the code</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#windows.winobject.WinThread" title="windows.winobject.WinThread"><code class="xref py py-class docutils literal"><span class="pre">WinThread</span></code></a> or <a class="reference internal" href="#windows.winobject.DeadThread" title="windows.winobject.DeadThread"><code class="xref py py-class docutils literal"><span class="pre">DeadThread</span></code></a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#windows.winobject.process.WinThread" title="windows.winobject.process.WinThread"><code class="xref py py-class docutils literal"><span class="pre">WinThread</span></code></a> or <a class="reference internal" href="#windows.winobject.process.DeadThread" title="windows.winobject.process.DeadThread"><code class="xref py py-class docutils literal"><span class="pre">DeadThread</span></code></a></td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.CurrentProcess.exit">
-<code class="descname">exit</code><span class="sig-paren">(</span><em>code=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject.html#CurrentProcess.exit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.CurrentProcess.exit" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.CurrentProcess.exit">
+<code class="descname">exit</code><span class="sig-paren">(</span><em>code=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject/process.html#CurrentProcess.exit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.process.CurrentProcess.exit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Exit the process</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="windows.winobject.CurrentProcess.exit_code">
-<code class="descname">exit_code</code><a class="headerlink" href="#windows.winobject.CurrentProcess.exit_code" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.CurrentProcess.exit_code">
+<code class="descname">exit_code</code><a class="headerlink" href="#windows.winobject.process.CurrentProcess.exit_code" title="Permalink to this definition">¶</a></dt>
 <dd><p>The exit code of the process : <code class="docutils literal"><span class="pre">STILL_ACTIVE</span></code> means the process is not dead</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -145,9 +145,23 @@
 </table>
 </dd></dl>
 
+<dl class="method">
+<dt id="windows.winobject.process.CurrentProcess.get_mapped_filename">
+<code class="descname">get_mapped_filename</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.process.CurrentProcess.get_mapped_filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>The filename mapped at address <code class="docutils literal"><span class="pre">addr</span></code> or <code class="docutils literal"><span class="pre">None</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> or <code class="docutils literal"><span class="pre">None</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="attribute">
-<dt id="windows.winobject.CurrentProcess.handle">
-<code class="descname">handle</code><a class="headerlink" href="#windows.winobject.CurrentProcess.handle" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.CurrentProcess.handle">
+<code class="descname">handle</code><a class="headerlink" href="#windows.winobject.process.CurrentProcess.handle" title="Permalink to this definition">¶</a></dt>
 <dd><p>An handle on the object</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -165,8 +179,8 @@
 </dd></dl>
 
 <dl class="attribute">
-<dt id="windows.winobject.CurrentProcess.is_exit">
-<code class="descname">is_exit</code><a class="headerlink" href="#windows.winobject.CurrentProcess.is_exit" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.CurrentProcess.is_exit">
+<code class="descname">is_exit</code><a class="headerlink" href="#windows.winobject.process.CurrentProcess.is_exit" title="Permalink to this definition">¶</a></dt>
 <dd><p><code class="docutils literal"><span class="pre">True</span></code> if the process is terminated</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -179,8 +193,8 @@
 </dd></dl>
 
 <dl class="attribute">
-<dt id="windows.winobject.CurrentProcess.is_wow_64">
-<code class="descname">is_wow_64</code><a class="headerlink" href="#windows.winobject.CurrentProcess.is_wow_64" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.CurrentProcess.is_wow_64">
+<code class="descname">is_wow_64</code><a class="headerlink" href="#windows.winobject.process.CurrentProcess.is_wow_64" title="Permalink to this definition">¶</a></dt>
 <dd><p><code class="docutils literal"><span class="pre">True</span></code> if the process is a SysWow64 process (32bit process on 64bits system).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -193,22 +207,8 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.CurrentProcess.mapped_filename">
-<code class="descname">mapped_filename</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.CurrentProcess.mapped_filename" title="Permalink to this definition">¶</a></dt>
-<dd><p>The filename mapped at address <code class="docutils literal"><span class="pre">addr</span></code> or <code class="docutils literal"><span class="pre">None</span></code></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> or <code class="docutils literal"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="windows.winobject.CurrentProcess.memory_state">
-<code class="descname">memory_state</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.CurrentProcess.memory_state" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.CurrentProcess.memory_state">
+<code class="descname">memory_state</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.process.CurrentProcess.memory_state" title="Permalink to this definition">¶</a></dt>
 <dd><p>Yield the memory information for the whole address space of the process</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -221,36 +221,36 @@
 </dd></dl>
 
 <dl class="attribute">
-<dt id="windows.winobject.CurrentProcess.peb">
-<code class="descname">peb</code><a class="headerlink" href="#windows.winobject.CurrentProcess.peb" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.CurrentProcess.peb">
+<code class="descname">peb</code><a class="headerlink" href="#windows.winobject.process.CurrentProcess.peb" title="Permalink to this definition">¶</a></dt>
 <dd><p>The Process Environment Block of the current process</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#windows.winobject.PEB" title="windows.winobject.PEB"><code class="xref py py-class docutils literal"><span class="pre">PEB</span></code></a></td>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#windows.winobject.process.PEB" title="windows.winobject.process.PEB"><code class="xref py py-class docutils literal"><span class="pre">PEB</span></code></a></td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="windows.winobject.CurrentProcess.peb_syswow">
-<code class="descname">peb_syswow</code><a class="headerlink" href="#windows.winobject.CurrentProcess.peb_syswow" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.CurrentProcess.peb_syswow">
+<code class="descname">peb_syswow</code><a class="headerlink" href="#windows.winobject.process.CurrentProcess.peb_syswow" title="Permalink to this definition">¶</a></dt>
 <dd><p>The 64bits PEB of a SysWow64 process</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#windows.winobject.PEB" title="windows.winobject.PEB"><code class="xref py py-class docutils literal"><span class="pre">PEB</span></code></a></td>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#windows.winobject.process.PEB" title="windows.winobject.process.PEB"><code class="xref py py-class docutils literal"><span class="pre">PEB</span></code></a></td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="windows.winobject.CurrentProcess.pid">
-<code class="descname">pid</code><a class="headerlink" href="#windows.winobject.CurrentProcess.pid" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.CurrentProcess.pid">
+<code class="descname">pid</code><a class="headerlink" href="#windows.winobject.process.CurrentProcess.pid" title="Permalink to this definition">¶</a></dt>
 <dd><p>Process ID</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -263,8 +263,8 @@
 </dd></dl>
 
 <dl class="attribute">
-<dt id="windows.winobject.CurrentProcess.ppid">
-<code class="descname">ppid</code><a class="headerlink" href="#windows.winobject.CurrentProcess.ppid" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.CurrentProcess.ppid">
+<code class="descname">ppid</code><a class="headerlink" href="#windows.winobject.process.CurrentProcess.ppid" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parent Process ID</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -277,8 +277,8 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.CurrentProcess.query_memory">
-<code class="descname">query_memory</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.CurrentProcess.query_memory" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.CurrentProcess.query_memory">
+<code class="descname">query_memory</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.process.CurrentProcess.query_memory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Query the memory informations about page at <code class="docutils literal"><span class="pre">addr</span></code></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -291,20 +291,20 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.CurrentProcess.read_byte">
-<code class="descname">read_byte</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.CurrentProcess.read_byte" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.CurrentProcess.read_byte">
+<code class="descname">read_byte</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.process.CurrentProcess.read_byte" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read a <code class="docutils literal"><span class="pre">CHAR</span></code> at <code class="docutils literal"><span class="pre">addr</span></code></p>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.CurrentProcess.read_dword">
-<code class="descname">read_dword</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.CurrentProcess.read_dword" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.CurrentProcess.read_dword">
+<code class="descname">read_dword</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.process.CurrentProcess.read_dword" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read a <code class="docutils literal"><span class="pre">DWORD</span></code> at <code class="docutils literal"><span class="pre">addr</span></code></p>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.CurrentProcess.read_memory">
-<code class="descname">read_memory</code><span class="sig-paren">(</span><em>addr</em>, <em>size</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject.html#CurrentProcess.read_memory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.CurrentProcess.read_memory" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.CurrentProcess.read_memory">
+<code class="descname">read_memory</code><span class="sig-paren">(</span><em>addr</em>, <em>size</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject/process.html#CurrentProcess.read_memory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.process.CurrentProcess.read_memory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read <code class="docutils literal"><span class="pre">size</span></code> from <code class="docutils literal"><span class="pre">addr</span></code></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -319,60 +319,80 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.CurrentProcess.read_ptr">
-<code class="descname">read_ptr</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.CurrentProcess.read_ptr" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.CurrentProcess.read_ptr">
+<code class="descname">read_ptr</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.process.CurrentProcess.read_ptr" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read a <code class="docutils literal"><span class="pre">PTR</span></code> at <code class="docutils literal"><span class="pre">addr</span></code></p>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.CurrentProcess.read_qword">
-<code class="descname">read_qword</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.CurrentProcess.read_qword" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.CurrentProcess.read_qword">
+<code class="descname">read_qword</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.process.CurrentProcess.read_qword" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read a <code class="docutils literal"><span class="pre">ULONG64</span></code> at <code class="docutils literal"><span class="pre">addr</span></code></p>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.CurrentProcess.read_string">
-<code class="descname">read_string</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.CurrentProcess.read_string" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.CurrentProcess.read_short">
+<code class="descname">read_short</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.process.CurrentProcess.read_short" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read a <code class="docutils literal"><span class="pre">SHORT</span></code> at <code class="docutils literal"><span class="pre">addr</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="windows.winobject.process.CurrentProcess.read_string">
+<code class="descname">read_string</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.process.CurrentProcess.read_string" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read an ascii string at <code class="docutils literal"><span class="pre">addr</span></code></p>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.CurrentProcess.read_wstring">
-<code class="descname">read_wstring</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.CurrentProcess.read_wstring" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.CurrentProcess.read_wstring">
+<code class="descname">read_wstring</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.process.CurrentProcess.read_wstring" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read a windows UTF16 string at <code class="docutils literal"><span class="pre">addr</span></code></p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="windows.winobject.CurrentProcess.threads">
-<code class="descname">threads</code><a class="headerlink" href="#windows.winobject.CurrentProcess.threads" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.CurrentProcess.threads">
+<code class="descname">threads</code><a class="headerlink" href="#windows.winobject.process.CurrentProcess.threads" title="Permalink to this definition">¶</a></dt>
 <dd><p>The threads of the process</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">[<a class="reference internal" href="#windows.winobject.WinThread" title="windows.winobject.WinThread"><code class="xref py py-class docutils literal"><span class="pre">WinThread</span></code></a>] &#8211; A list of Thread</td>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">[<a class="reference internal" href="#windows.winobject.process.WinThread" title="windows.winobject.process.WinThread"><code class="xref py py-class docutils literal"><span class="pre">WinThread</span></code></a>] &#8211; A list of Thread</td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="windows.winobject.CurrentProcess.token">
-<code class="descname">token</code><a class="headerlink" href="#windows.winobject.CurrentProcess.token" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.CurrentProcess.time_info">
+<code class="descname">time_info</code><a class="headerlink" href="#windows.winobject.process.CurrentProcess.time_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>The time information of the process (creation, kernel/user time, exit time</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">:class:<a href="#id1"><span class="problematic" id="id2">`</span></a>TimeInfo</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="windows.winobject.process.CurrentProcess.token">
+<code class="descname">token</code><a class="headerlink" href="#windows.winobject.process.CurrentProcess.token" title="Permalink to this definition">¶</a></dt>
 <dd><p>The token of the process</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#windows.winobject.Token" title="windows.winobject.Token"><code class="xref py py-class docutils literal"><span class="pre">Token</span></code></a></td>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#windows.winobject.process.Token" title="windows.winobject.process.Token"><code class="xref py py-class docutils literal"><span class="pre">Token</span></code></a></td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.CurrentProcess.virtual_alloc">
-<code class="descname">virtual_alloc</code><span class="sig-paren">(</span><em>size</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject.html#CurrentProcess.virtual_alloc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.CurrentProcess.virtual_alloc" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.CurrentProcess.virtual_alloc">
+<code class="descname">virtual_alloc</code><span class="sig-paren">(</span><em>size</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject/process.html#CurrentProcess.virtual_alloc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.process.CurrentProcess.virtual_alloc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Allocate memory in the process</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -387,44 +407,50 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.CurrentProcess.virtual_free">
-<code class="descname">virtual_free</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject.html#CurrentProcess.virtual_free"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.CurrentProcess.virtual_free" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.CurrentProcess.virtual_free">
+<code class="descname">virtual_free</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject/process.html#CurrentProcess.virtual_free"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.process.CurrentProcess.virtual_free" title="Permalink to this definition">¶</a></dt>
 <dd><p>Free memory in the process by virtual_alloc</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.CurrentProcess.wait">
-<code class="descname">wait</code><span class="sig-paren">(</span><em>timeout=INFINITE(0xffffffffL)</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject.html#CurrentProcess.wait"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.CurrentProcess.wait" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.CurrentProcess.virtual_protected">
+<code class="descname">virtual_protected</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.process.CurrentProcess.virtual_protected" title="Permalink to this definition">¶</a></dt>
+<dd><p>A context manager for local virtual_protect (old Protection are restored at exit)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="windows.winobject.process.CurrentProcess.wait">
+<code class="descname">wait</code><span class="sig-paren">(</span><em>timeout=INFINITE(0xffffffffL)</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject/process.html#CurrentProcess.wait"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.process.CurrentProcess.wait" title="Permalink to this definition">¶</a></dt>
 <dd><p>Raise <code class="xref py py-class docutils literal"><span class="pre">ValueError</span></code> to prevent deadlock :D</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.CurrentProcess.write_byte">
-<code class="descname">write_byte</code><span class="sig-paren">(</span><em>addr</em>, <em>byte</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.CurrentProcess.write_byte" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.CurrentProcess.write_byte">
+<code class="descname">write_byte</code><span class="sig-paren">(</span><em>addr</em>, <em>byte</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.process.CurrentProcess.write_byte" title="Permalink to this definition">¶</a></dt>
 <dd><p>write a byte at <code class="docutils literal"><span class="pre">addr</span></code></p>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.CurrentProcess.write_dword">
-<code class="descname">write_dword</code><span class="sig-paren">(</span><em>addr</em>, <em>dword</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.CurrentProcess.write_dword" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.CurrentProcess.write_dword">
+<code class="descname">write_dword</code><span class="sig-paren">(</span><em>addr</em>, <em>dword</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.process.CurrentProcess.write_dword" title="Permalink to this definition">¶</a></dt>
 <dd><p>write a dword at <code class="docutils literal"><span class="pre">addr</span></code></p>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.CurrentProcess.write_memory">
-<code class="descname">write_memory</code><span class="sig-paren">(</span><em>addr</em>, <em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject.html#CurrentProcess.write_memory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.CurrentProcess.write_memory" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.CurrentProcess.write_memory">
+<code class="descname">write_memory</code><span class="sig-paren">(</span><em>addr</em>, <em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject/process.html#CurrentProcess.write_memory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.process.CurrentProcess.write_memory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Write data at addr</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.CurrentProcess.write_qword">
-<code class="descname">write_qword</code><span class="sig-paren">(</span><em>addr</em>, <em>qword</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.CurrentProcess.write_qword" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.CurrentProcess.write_qword">
+<code class="descname">write_qword</code><span class="sig-paren">(</span><em>addr</em>, <em>qword</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.process.CurrentProcess.write_qword" title="Permalink to this definition">¶</a></dt>
 <dd><p>write a qword at <code class="docutils literal"><span class="pre">addr</span></code></p>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.CurrentProcess.write_word">
-<code class="descname">write_word</code><span class="sig-paren">(</span><em>addr</em>, <em>word</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.CurrentProcess.write_word" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.CurrentProcess.write_short">
+<code class="descname">write_short</code><span class="sig-paren">(</span><em>addr</em>, <em>word</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.process.CurrentProcess.write_short" title="Permalink to this definition">¶</a></dt>
 <dd><p>write a word at <code class="docutils literal"><span class="pre">addr</span></code></p>
 </dd></dl>
 
@@ -434,19 +460,19 @@
 <div class="section" id="currentthread">
 <h2>2.1.2. CurrentThread<a class="headerlink" href="#currentthread" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="windows.winobject.CurrentThread">
-<em class="property">class </em><code class="descclassname">windows.winobject.</code><code class="descname">CurrentThread</code><a class="reference internal" href="_modules/windows/winobject.html#CurrentThread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.CurrentThread" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">windows.winobject.AutoHandle</span></code></p>
+<dt id="windows.winobject.process.CurrentThread">
+<em class="property">class </em><code class="descclassname">windows.winobject.process.</code><code class="descname">CurrentThread</code><a class="reference internal" href="_modules/windows/winobject/process.html#CurrentThread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.process.CurrentThread" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">windows.winobject.process.AutoHandle</span></code></p>
 <p>The current thread</p>
 <dl class="method">
-<dt id="windows.winobject.CurrentThread.exit">
-<code class="descname">exit</code><span class="sig-paren">(</span><em>code=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject.html#CurrentThread.exit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.CurrentThread.exit" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.CurrentThread.exit">
+<code class="descname">exit</code><span class="sig-paren">(</span><em>code=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject/process.html#CurrentThread.exit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.process.CurrentThread.exit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Exit the thread</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="windows.winobject.CurrentThread.handle">
-<code class="descname">handle</code><a class="headerlink" href="#windows.winobject.CurrentThread.handle" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.CurrentThread.handle">
+<code class="descname">handle</code><a class="headerlink" href="#windows.winobject.process.CurrentThread.handle" title="Permalink to this definition">¶</a></dt>
 <dd><p>An handle on the object</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -464,22 +490,22 @@
 </dd></dl>
 
 <dl class="attribute">
-<dt id="windows.winobject.CurrentThread.owner">
-<code class="descname">owner</code><a class="headerlink" href="#windows.winobject.CurrentThread.owner" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.CurrentThread.owner">
+<code class="descname">owner</code><a class="headerlink" href="#windows.winobject.process.CurrentThread.owner" title="Permalink to this definition">¶</a></dt>
 <dd><p>The current process</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#windows.winobject.CurrentProcess" title="windows.winobject.CurrentProcess"><code class="xref py py-class docutils literal"><span class="pre">CurrentProcess</span></code></a></td>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#windows.winobject.process.CurrentProcess" title="windows.winobject.process.CurrentProcess"><code class="xref py py-class docutils literal"><span class="pre">CurrentProcess</span></code></a></td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="windows.winobject.CurrentThread.tid">
-<code class="descname">tid</code><a class="headerlink" href="#windows.winobject.CurrentThread.tid" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.CurrentThread.tid">
+<code class="descname">tid</code><a class="headerlink" href="#windows.winobject.process.CurrentThread.tid" title="Permalink to this definition">¶</a></dt>
 <dd><p>Thread ID</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -492,8 +518,8 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.CurrentThread.wait">
-<code class="descname">wait</code><span class="sig-paren">(</span><em>timeout=INFINITE(0xffffffffL)</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject.html#CurrentThread.wait"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.CurrentThread.wait" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.CurrentThread.wait">
+<code class="descname">wait</code><span class="sig-paren">(</span><em>timeout=INFINITE(0xffffffffL)</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject/process.html#CurrentThread.wait"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.process.CurrentThread.wait" title="Permalink to this definition">¶</a></dt>
 <dd><p>Raise <code class="xref py py-class docutils literal"><span class="pre">ValueError</span></code> to prevent deadlock :D</p>
 </dd></dl>
 
@@ -507,13 +533,13 @@
 <p class="last">See sample <a class="reference internal" href="sample.html#sample-remote-process"><span>Remote process : WinProcess</span></a></p>
 </div>
 <dl class="class">
-<dt id="windows.winobject.WinProcess">
-<em class="property">class </em><code class="descclassname">windows.winobject.</code><code class="descname">WinProcess</code><a class="reference internal" href="_modules/windows/winobject.html#WinProcess"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.WinProcess" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">windows.generated_def.winstructs.tagPROCESSENTRY32</span></code>, <code class="xref py py-class docutils literal"><span class="pre">windows.winobject.Process</span></code></p>
+<dt id="windows.winobject.process.WinProcess">
+<em class="property">class </em><code class="descclassname">windows.winobject.process.</code><code class="descname">WinProcess</code><span class="sig-paren">(</span><em>pid=None</em>, <em>handle=None</em>, <em>name=None</em>, <em>ppid=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject/process.html#WinProcess"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.process.WinProcess" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">windows.winobject.process.Process</span></code></p>
 <p>A Process on the system</p>
 <dl class="method">
-<dt id="windows.winobject.WinProcess.allocated_memory">
-<code class="descname">allocated_memory</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.WinProcess.allocated_memory" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinProcess.allocated_memory">
+<code class="descname">allocated_memory</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.process.WinProcess.allocated_memory" title="Permalink to this definition">¶</a></dt>
 <dd><p>ContextManager to allocate memory and free it</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -526,8 +552,8 @@
 </dd></dl>
 
 <dl class="attribute">
-<dt id="windows.winobject.WinProcess.bitness">
-<code class="descname">bitness</code><a class="headerlink" href="#windows.winobject.WinProcess.bitness" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinProcess.bitness">
+<code class="descname">bitness</code><a class="headerlink" href="#windows.winobject.process.WinProcess.bitness" title="Permalink to this definition">¶</a></dt>
 <dd><p>The bitness of the process</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -540,22 +566,22 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.WinProcess.create_thread">
-<code class="descname">create_thread</code><span class="sig-paren">(</span><em>addr</em>, <em>param</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject.html#WinProcess.create_thread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.WinProcess.create_thread" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinProcess.create_thread">
+<code class="descname">create_thread</code><span class="sig-paren">(</span><em>addr</em>, <em>param</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject/process.html#WinProcess.create_thread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.process.WinProcess.create_thread" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a remote thread</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#windows.winobject.WinThread" title="windows.winobject.WinThread"><code class="xref py py-class docutils literal"><span class="pre">WinThread</span></code></a> or <a class="reference internal" href="#windows.winobject.DeadThread" title="windows.winobject.DeadThread"><code class="xref py py-class docutils literal"><span class="pre">DeadThread</span></code></a></td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#windows.winobject.process.WinThread" title="windows.winobject.process.WinThread"><code class="xref py py-class docutils literal"><span class="pre">WinThread</span></code></a> or <a class="reference internal" href="#windows.winobject.process.DeadThread" title="windows.winobject.process.DeadThread"><code class="xref py py-class docutils literal"><span class="pre">DeadThread</span></code></a></td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.WinProcess.execute">
-<code class="descname">execute</code><span class="sig-paren">(</span><em>code</em>, <em>parameter=0</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.WinProcess.execute" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinProcess.execute">
+<code class="descname">execute</code><span class="sig-paren">(</span><em>code</em>, <em>parameter=0</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.process.WinProcess.execute" title="Permalink to this definition">¶</a></dt>
 <dd><p>Execute some native code in the context of the process</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -563,36 +589,36 @@
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The thread executing the code</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#windows.winobject.WinThread" title="windows.winobject.WinThread"><code class="xref py py-class docutils literal"><span class="pre">WinThread</span></code></a> or <a class="reference internal" href="#windows.winobject.DeadThread" title="windows.winobject.DeadThread"><code class="xref py py-class docutils literal"><span class="pre">DeadThread</span></code></a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#windows.winobject.process.WinThread" title="windows.winobject.process.WinThread"><code class="xref py py-class docutils literal"><span class="pre">WinThread</span></code></a> or <a class="reference internal" href="#windows.winobject.process.DeadThread" title="windows.winobject.process.DeadThread"><code class="xref py py-class docutils literal"><span class="pre">DeadThread</span></code></a></td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.WinProcess.execute_python">
-<code class="descname">execute_python</code><span class="sig-paren">(</span><em>pycode</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject.html#WinProcess.execute_python"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.WinProcess.execute_python" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinProcess.execute_python">
+<code class="descname">execute_python</code><span class="sig-paren">(</span><em>pycode</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject/process.html#WinProcess.execute_python"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.process.WinProcess.execute_python" title="Permalink to this definition">¶</a></dt>
 <dd><p>Execute Python code into the remote process.</p>
 <p>This function waits for the remote process to end and
 raises an exception if the remote thread raised one</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.WinProcess.execute_python_unsafe">
-<code class="descname">execute_python_unsafe</code><span class="sig-paren">(</span><em>pycode</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject.html#WinProcess.execute_python_unsafe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.WinProcess.execute_python_unsafe" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinProcess.execute_python_unsafe">
+<code class="descname">execute_python_unsafe</code><span class="sig-paren">(</span><em>pycode</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject/process.html#WinProcess.execute_python_unsafe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.process.WinProcess.execute_python_unsafe" title="Permalink to this definition">¶</a></dt>
 <dd><p>Execute Python code into the remote process.</p>
 <p>Unsafe means that no information are returned about the execution of the thread</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.WinProcess.exit">
-<code class="descname">exit</code><span class="sig-paren">(</span><em>code=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject.html#WinProcess.exit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.WinProcess.exit" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinProcess.exit">
+<code class="descname">exit</code><span class="sig-paren">(</span><em>code=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject/process.html#WinProcess.exit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.process.WinProcess.exit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Exit the process</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="windows.winobject.WinProcess.exit_code">
-<code class="descname">exit_code</code><a class="headerlink" href="#windows.winobject.WinProcess.exit_code" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinProcess.exit_code">
+<code class="descname">exit_code</code><a class="headerlink" href="#windows.winobject.process.WinProcess.exit_code" title="Permalink to this definition">¶</a></dt>
 <dd><p>The exit code of the process : <code class="docutils literal"><span class="pre">STILL_ACTIVE</span></code> means the process is not dead</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -604,9 +630,23 @@ raises an exception if the remote thread raised one</p>
 </table>
 </dd></dl>
 
+<dl class="method">
+<dt id="windows.winobject.process.WinProcess.get_mapped_filename">
+<code class="descname">get_mapped_filename</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.process.WinProcess.get_mapped_filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>The filename mapped at address <code class="docutils literal"><span class="pre">addr</span></code> or <code class="docutils literal"><span class="pre">None</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> or <code class="docutils literal"><span class="pre">None</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="attribute">
-<dt id="windows.winobject.WinProcess.handle">
-<code class="descname">handle</code><a class="headerlink" href="#windows.winobject.WinProcess.handle" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinProcess.handle">
+<code class="descname">handle</code><a class="headerlink" href="#windows.winobject.process.WinProcess.handle" title="Permalink to this definition">¶</a></dt>
 <dd><p>An handle on the object</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -624,8 +664,8 @@ raises an exception if the remote thread raised one</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="windows.winobject.WinProcess.is_exit">
-<code class="descname">is_exit</code><a class="headerlink" href="#windows.winobject.WinProcess.is_exit" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinProcess.is_exit">
+<code class="descname">is_exit</code><a class="headerlink" href="#windows.winobject.process.WinProcess.is_exit" title="Permalink to this definition">¶</a></dt>
 <dd><p><code class="docutils literal"><span class="pre">True</span></code> if the process is terminated</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -638,8 +678,8 @@ raises an exception if the remote thread raised one</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="windows.winobject.WinProcess.is_wow_64">
-<code class="descname">is_wow_64</code><a class="headerlink" href="#windows.winobject.WinProcess.is_wow_64" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinProcess.is_wow_64">
+<code class="descname">is_wow_64</code><a class="headerlink" href="#windows.winobject.process.WinProcess.is_wow_64" title="Permalink to this definition">¶</a></dt>
 <dd><p><code class="docutils literal"><span class="pre">True</span></code> if the process is a SysWow64 process (32bit process on 64bits system).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -652,28 +692,14 @@ raises an exception if the remote thread raised one</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.WinProcess.load_library">
-<code class="descname">load_library</code><span class="sig-paren">(</span><em>dll_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject.html#WinProcess.load_library"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.WinProcess.load_library" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinProcess.load_library">
+<code class="descname">load_library</code><span class="sig-paren">(</span><em>dll_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject/process.html#WinProcess.load_library"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.process.WinProcess.load_library" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load the library in remote process</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.WinProcess.mapped_filename">
-<code class="descname">mapped_filename</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.WinProcess.mapped_filename" title="Permalink to this definition">¶</a></dt>
-<dd><p>The filename mapped at address <code class="docutils literal"><span class="pre">addr</span></code> or <code class="docutils literal"><span class="pre">None</span></code></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> or <code class="docutils literal"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="windows.winobject.WinProcess.memory_state">
-<code class="descname">memory_state</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.WinProcess.memory_state" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinProcess.memory_state">
+<code class="descname">memory_state</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.process.WinProcess.memory_state" title="Permalink to this definition">¶</a></dt>
 <dd><p>Yield the memory information for the whole address space of the process</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -686,8 +712,8 @@ raises an exception if the remote thread raised one</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="windows.winobject.WinProcess.name">
-<code class="descname">name</code><a class="headerlink" href="#windows.winobject.WinProcess.name" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinProcess.name">
+<code class="descname">name</code><a class="headerlink" href="#windows.winobject.process.WinProcess.name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Name of the process</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -700,22 +726,22 @@ raises an exception if the remote thread raised one</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="windows.winobject.WinProcess.peb">
-<code class="descname">peb</code><a class="headerlink" href="#windows.winobject.WinProcess.peb" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinProcess.peb">
+<code class="descname">peb</code><a class="headerlink" href="#windows.winobject.process.WinProcess.peb" title="Permalink to this definition">¶</a></dt>
 <dd><p>The PEB of the process (see <code class="xref py py-mod docutils literal"><span class="pre">remotectypes</span></code>)</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#windows.winobject.PEB" title="windows.winobject.PEB"><code class="xref py py-class docutils literal"><span class="pre">PEB</span></code></a></td>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#windows.winobject.process.PEB" title="windows.winobject.process.PEB"><code class="xref py py-class docutils literal"><span class="pre">PEB</span></code></a></td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="windows.winobject.WinProcess.peb_addr">
-<code class="descname">peb_addr</code><a class="headerlink" href="#windows.winobject.WinProcess.peb_addr" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinProcess.peb_addr">
+<code class="descname">peb_addr</code><a class="headerlink" href="#windows.winobject.process.WinProcess.peb_addr" title="Permalink to this definition">¶</a></dt>
 <dd><p>The address of the PEB</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -728,22 +754,22 @@ raises an exception if the remote thread raised one</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="windows.winobject.WinProcess.peb_syswow">
-<code class="descname">peb_syswow</code><a class="headerlink" href="#windows.winobject.WinProcess.peb_syswow" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinProcess.peb_syswow">
+<code class="descname">peb_syswow</code><a class="headerlink" href="#windows.winobject.process.WinProcess.peb_syswow" title="Permalink to this definition">¶</a></dt>
 <dd><p>The 64bits PEB of a SysWow64 process</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#windows.winobject.PEB" title="windows.winobject.PEB"><code class="xref py py-class docutils literal"><span class="pre">PEB</span></code></a></td>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#windows.winobject.process.PEB" title="windows.winobject.process.PEB"><code class="xref py py-class docutils literal"><span class="pre">PEB</span></code></a></td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="windows.winobject.WinProcess.pid">
-<code class="descname">pid</code><a class="headerlink" href="#windows.winobject.WinProcess.pid" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinProcess.pid">
+<code class="descname">pid</code><a class="headerlink" href="#windows.winobject.process.WinProcess.pid" title="Permalink to this definition">¶</a></dt>
 <dd><p>Process ID</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -756,8 +782,8 @@ raises an exception if the remote thread raised one</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="windows.winobject.WinProcess.ppid">
-<code class="descname">ppid</code><a class="headerlink" href="#windows.winobject.WinProcess.ppid" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinProcess.ppid">
+<code class="descname">ppid</code><a class="headerlink" href="#windows.winobject.process.WinProcess.ppid" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parent Process ID</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -770,8 +796,8 @@ raises an exception if the remote thread raised one</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.WinProcess.query_memory">
-<code class="descname">query_memory</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.WinProcess.query_memory" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinProcess.query_memory">
+<code class="descname">query_memory</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.process.WinProcess.query_memory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Query the memory informations about page at <code class="docutils literal"><span class="pre">addr</span></code></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -784,20 +810,20 @@ raises an exception if the remote thread raised one</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.WinProcess.read_byte">
-<code class="descname">read_byte</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.WinProcess.read_byte" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinProcess.read_byte">
+<code class="descname">read_byte</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.process.WinProcess.read_byte" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read a <code class="docutils literal"><span class="pre">CHAR</span></code> at <code class="docutils literal"><span class="pre">addr</span></code></p>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.WinProcess.read_dword">
-<code class="descname">read_dword</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.WinProcess.read_dword" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinProcess.read_dword">
+<code class="descname">read_dword</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.process.WinProcess.read_dword" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read a <code class="docutils literal"><span class="pre">DWORD</span></code> at <code class="docutils literal"><span class="pre">addr</span></code></p>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.WinProcess.read_memory">
-<code class="descname">read_memory</code><span class="sig-paren">(</span><em>addr</em>, <em>size</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject.html#WinProcess.read_memory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.WinProcess.read_memory" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinProcess.read_memory">
+<code class="descname">read_memory</code><span class="sig-paren">(</span><em>addr</em>, <em>size</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject/process.html#WinProcess.read_memory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.process.WinProcess.read_memory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read <code class="docutils literal"><span class="pre">size</span></code> from <code class="docutils literal"><span class="pre">addr</span></code></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -812,8 +838,8 @@ raises an exception if the remote thread raised one</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.WinProcess.read_memory_into">
-<code class="descname">read_memory_into</code><span class="sig-paren">(</span><em>addr</em>, <em>struct</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject.html#WinProcess.read_memory_into"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.WinProcess.read_memory_into" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinProcess.read_memory_into">
+<code class="descname">read_memory_into</code><span class="sig-paren">(</span><em>addr</em>, <em>struct</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject/process.html#WinProcess.read_memory_into"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.process.WinProcess.read_memory_into" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read a <a class="reference external" href="http://docs.python.org/library/ctypes.html#module-ctypes" title="(in Python v2.7)"><code class="xref py py-mod docutils literal"><span class="pre">ctypes</span></code></a> struct from <cite>addr</cite></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -826,60 +852,80 @@ raises an exception if the remote thread raised one</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.WinProcess.read_ptr">
-<code class="descname">read_ptr</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.WinProcess.read_ptr" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinProcess.read_ptr">
+<code class="descname">read_ptr</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.process.WinProcess.read_ptr" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read a <code class="docutils literal"><span class="pre">PTR</span></code> at <code class="docutils literal"><span class="pre">addr</span></code></p>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.WinProcess.read_qword">
-<code class="descname">read_qword</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.WinProcess.read_qword" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinProcess.read_qword">
+<code class="descname">read_qword</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.process.WinProcess.read_qword" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read a <code class="docutils literal"><span class="pre">ULONG64</span></code> at <code class="docutils literal"><span class="pre">addr</span></code></p>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.WinProcess.read_string">
-<code class="descname">read_string</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.WinProcess.read_string" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinProcess.read_short">
+<code class="descname">read_short</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.process.WinProcess.read_short" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read a <code class="docutils literal"><span class="pre">SHORT</span></code> at <code class="docutils literal"><span class="pre">addr</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="windows.winobject.process.WinProcess.read_string">
+<code class="descname">read_string</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.process.WinProcess.read_string" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read an ascii string at <code class="docutils literal"><span class="pre">addr</span></code></p>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.WinProcess.read_wstring">
-<code class="descname">read_wstring</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.WinProcess.read_wstring" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinProcess.read_wstring">
+<code class="descname">read_wstring</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.process.WinProcess.read_wstring" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read a windows UTF16 string at <code class="docutils literal"><span class="pre">addr</span></code></p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="windows.winobject.WinProcess.threads">
-<code class="descname">threads</code><a class="headerlink" href="#windows.winobject.WinProcess.threads" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinProcess.threads">
+<code class="descname">threads</code><a class="headerlink" href="#windows.winobject.process.WinProcess.threads" title="Permalink to this definition">¶</a></dt>
 <dd><p>The threads of the process</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">[<a class="reference internal" href="#windows.winobject.WinThread" title="windows.winobject.WinThread"><code class="xref py py-class docutils literal"><span class="pre">WinThread</span></code></a>] &#8211; A list of Thread</td>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">[<a class="reference internal" href="#windows.winobject.process.WinThread" title="windows.winobject.process.WinThread"><code class="xref py py-class docutils literal"><span class="pre">WinThread</span></code></a>] &#8211; A list of Thread</td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="windows.winobject.WinProcess.token">
-<code class="descname">token</code><a class="headerlink" href="#windows.winobject.WinProcess.token" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinProcess.time_info">
+<code class="descname">time_info</code><a class="headerlink" href="#windows.winobject.process.WinProcess.time_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>The time information of the process (creation, kernel/user time, exit time</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">:class:<a href="#id3"><span class="problematic" id="id4">`</span></a>TimeInfo</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="windows.winobject.process.WinProcess.token">
+<code class="descname">token</code><a class="headerlink" href="#windows.winobject.process.WinProcess.token" title="Permalink to this definition">¶</a></dt>
 <dd><p>The token of the process</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#windows.winobject.Token" title="windows.winobject.Token"><code class="xref py py-class docutils literal"><span class="pre">Token</span></code></a></td>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#windows.winobject.process.Token" title="windows.winobject.process.Token"><code class="xref py py-class docutils literal"><span class="pre">Token</span></code></a></td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.WinProcess.virtual_alloc">
-<code class="descname">virtual_alloc</code><span class="sig-paren">(</span><em>size</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject.html#WinProcess.virtual_alloc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.WinProcess.virtual_alloc" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinProcess.virtual_alloc">
+<code class="descname">virtual_alloc</code><span class="sig-paren">(</span><em>size</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject/process.html#WinProcess.virtual_alloc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.process.WinProcess.virtual_alloc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Allocate memory in the process</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -894,44 +940,50 @@ raises an exception if the remote thread raised one</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.WinProcess.virtual_free">
-<code class="descname">virtual_free</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject.html#WinProcess.virtual_free"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.WinProcess.virtual_free" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinProcess.virtual_free">
+<code class="descname">virtual_free</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject/process.html#WinProcess.virtual_free"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.process.WinProcess.virtual_free" title="Permalink to this definition">¶</a></dt>
 <dd><p>Free memory in the process by virtual_alloc</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.WinProcess.wait">
-<code class="descname">wait</code><span class="sig-paren">(</span><em>timeout=INFINITE(0xffffffffL)</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.WinProcess.wait" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinProcess.virtual_protected">
+<code class="descname">virtual_protected</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.process.WinProcess.virtual_protected" title="Permalink to this definition">¶</a></dt>
+<dd><p>A context manager for local virtual_protect (old Protection are restored at exit)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="windows.winobject.process.WinProcess.wait">
+<code class="descname">wait</code><span class="sig-paren">(</span><em>timeout=INFINITE(0xffffffffL)</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.process.WinProcess.wait" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wait for the object</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.WinProcess.write_byte">
-<code class="descname">write_byte</code><span class="sig-paren">(</span><em>addr</em>, <em>byte</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.WinProcess.write_byte" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinProcess.write_byte">
+<code class="descname">write_byte</code><span class="sig-paren">(</span><em>addr</em>, <em>byte</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.process.WinProcess.write_byte" title="Permalink to this definition">¶</a></dt>
 <dd><p>write a byte at <code class="docutils literal"><span class="pre">addr</span></code></p>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.WinProcess.write_dword">
-<code class="descname">write_dword</code><span class="sig-paren">(</span><em>addr</em>, <em>dword</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.WinProcess.write_dword" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinProcess.write_dword">
+<code class="descname">write_dword</code><span class="sig-paren">(</span><em>addr</em>, <em>dword</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.process.WinProcess.write_dword" title="Permalink to this definition">¶</a></dt>
 <dd><p>write a dword at <code class="docutils literal"><span class="pre">addr</span></code></p>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.WinProcess.write_memory">
-<code class="descname">write_memory</code><span class="sig-paren">(</span><em>addr</em>, <em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject.html#WinProcess.write_memory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.WinProcess.write_memory" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinProcess.write_memory">
+<code class="descname">write_memory</code><span class="sig-paren">(</span><em>addr</em>, <em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject/process.html#WinProcess.write_memory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.process.WinProcess.write_memory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Write <cite>data</cite> at <cite>addr</cite></p>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.WinProcess.write_qword">
-<code class="descname">write_qword</code><span class="sig-paren">(</span><em>addr</em>, <em>qword</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.WinProcess.write_qword" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinProcess.write_qword">
+<code class="descname">write_qword</code><span class="sig-paren">(</span><em>addr</em>, <em>qword</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.process.WinProcess.write_qword" title="Permalink to this definition">¶</a></dt>
 <dd><p>write a qword at <code class="docutils literal"><span class="pre">addr</span></code></p>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.WinProcess.write_word">
-<code class="descname">write_word</code><span class="sig-paren">(</span><em>addr</em>, <em>word</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.WinProcess.write_word" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinProcess.write_short">
+<code class="descname">write_short</code><span class="sig-paren">(</span><em>addr</em>, <em>word</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.process.WinProcess.write_short" title="Permalink to this definition">¶</a></dt>
 <dd><p>write a word at <code class="docutils literal"><span class="pre">addr</span></code></p>
 </dd></dl>
 
@@ -941,33 +993,33 @@ raises an exception if the remote thread raised one</p>
 <div class="section" id="winthread">
 <h2>2.1.4. WinThread<a class="headerlink" href="#winthread" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="windows.winobject.WinThread">
-<em class="property">class </em><code class="descclassname">windows.winobject.</code><code class="descname">WinThread</code><a class="reference internal" href="_modules/windows/winobject.html#WinThread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.WinThread" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">windows.generated_def.winstructs.tagTHREADENTRY32</span></code>, <code class="xref py py-class docutils literal"><span class="pre">windows.winobject.AutoHandle</span></code></p>
+<dt id="windows.winobject.process.WinThread">
+<em class="property">class </em><code class="descclassname">windows.winobject.process.</code><code class="descname">WinThread</code><a class="reference internal" href="_modules/windows/winobject/process.html#WinThread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.process.WinThread" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">windows.generated_def.winstructs.tagTHREADENTRY32</span></code>, <code class="xref py py-class docutils literal"><span class="pre">windows.winobject.process.AutoHandle</span></code></p>
 <p>Represent a thread</p>
 <dl class="attribute">
-<dt id="windows.winobject.WinThread.context">
-<code class="descname">context</code><a class="headerlink" href="#windows.winobject.WinThread.context" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinThread.context">
+<code class="descname">context</code><a class="headerlink" href="#windows.winobject.process.WinThread.context" title="Permalink to this definition">¶</a></dt>
 <dd><p>The context of the thread, type depend of the target process.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="exception.html#windows.exception.ECONTEXT32" title="windows.exception.ECONTEXT32"><code class="xref py py-class docutils literal"><span class="pre">windows.exception.ECONTEXT32</span></code></a> or  <a class="reference internal" href="exception.html#windows.exception.ECONTEXT64" title="windows.exception.ECONTEXT64"><code class="xref py py-class docutils literal"><span class="pre">windows.exception.ECONTEXT64</span></code></a> or <a class="reference internal" href="exception.html#windows.exception.ECONTEXTWOW64" title="windows.exception.ECONTEXTWOW64"><code class="xref py py-class docutils literal"><span class="pre">windows.exception.ECONTEXTWOW64</span></code></a></td>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">windows.exception.ECONTEXT32</span></code> or  <code class="xref py py-class docutils literal"><span class="pre">windows.exception.ECONTEXT64</span></code> or <code class="xref py py-class docutils literal"><span class="pre">windows.exception.ECONTEXTWOW64</span></code></td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.WinThread.exit">
-<code class="descname">exit</code><span class="sig-paren">(</span><em>code=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject.html#WinThread.exit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.WinThread.exit" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinThread.exit">
+<code class="descname">exit</code><span class="sig-paren">(</span><em>code=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject/process.html#WinThread.exit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.process.WinThread.exit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Exit the thread</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="windows.winobject.WinThread.exit_code">
-<code class="descname">exit_code</code><a class="headerlink" href="#windows.winobject.WinThread.exit_code" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinThread.exit_code">
+<code class="descname">exit_code</code><a class="headerlink" href="#windows.winobject.process.WinThread.exit_code" title="Permalink to this definition">¶</a></dt>
 <dd><p>The exit code of the thread : <code class="docutils literal"><span class="pre">STILL_ACTIVE</span></code> means the process is not dead</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -980,8 +1032,8 @@ raises an exception if the remote thread raised one</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="windows.winobject.WinThread.handle">
-<code class="descname">handle</code><a class="headerlink" href="#windows.winobject.WinThread.handle" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinThread.handle">
+<code class="descname">handle</code><a class="headerlink" href="#windows.winobject.process.WinThread.handle" title="Permalink to this definition">¶</a></dt>
 <dd><p>An handle on the object</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -999,9 +1051,9 @@ raises an exception if the remote thread raised one</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="windows.winobject.WinThread.is_exit">
-<code class="descname">is_exit</code><a class="headerlink" href="#windows.winobject.WinThread.is_exit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Is <code class="docutils literal"><span class="pre">True</span></code> if the thread is terminated</p>
+<dt id="windows.winobject.process.WinThread.is_exit">
+<code class="descname">is_exit</code><a class="headerlink" href="#windows.winobject.process.WinThread.is_exit" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="docutils literal"><span class="pre">True</span></code> if the thread is terminated</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1013,34 +1065,34 @@ raises an exception if the remote thread raised one</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="windows.winobject.WinThread.owner">
-<code class="descname">owner</code><a class="headerlink" href="#windows.winobject.WinThread.owner" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinThread.owner">
+<code class="descname">owner</code><a class="headerlink" href="#windows.winobject.process.WinThread.owner" title="Permalink to this definition">¶</a></dt>
 <dd><p>The Process owning the thread</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#windows.winobject.WinProcess" title="windows.winobject.WinProcess"><code class="xref py py-class docutils literal"><span class="pre">WinProcess</span></code></a></td>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#windows.winobject.process.WinProcess" title="windows.winobject.process.WinProcess"><code class="xref py py-class docutils literal"><span class="pre">WinProcess</span></code></a></td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.WinThread.resume">
-<code class="descname">resume</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject.html#WinThread.resume"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.WinThread.resume" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinThread.resume">
+<code class="descname">resume</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject/process.html#WinThread.resume"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.process.WinThread.resume" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resume the thread</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.WinThread.set_context">
-<code class="descname">set_context</code><span class="sig-paren">(</span><em>context</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject.html#WinThread.set_context"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.WinThread.set_context" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinThread.set_context">
+<code class="descname">set_context</code><span class="sig-paren">(</span><em>context</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject/process.html#WinThread.set_context"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.process.WinThread.set_context" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the thread context to <code class="docutils literal"><span class="pre">context</span></code></p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="windows.winobject.WinThread.start_address">
-<code class="descname">start_address</code><a class="headerlink" href="#windows.winobject.WinThread.start_address" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinThread.start_address">
+<code class="descname">start_address</code><a class="headerlink" href="#windows.winobject.process.WinThread.start_address" title="Permalink to this definition">¶</a></dt>
 <dd><p>The start address of the thread</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1053,14 +1105,28 @@ raises an exception if the remote thread raised one</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.WinThread.suspend">
-<code class="descname">suspend</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject.html#WinThread.suspend"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.WinThread.suspend" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinThread.suspend">
+<code class="descname">suspend</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject/process.html#WinThread.suspend"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.process.WinThread.suspend" title="Permalink to this definition">¶</a></dt>
 <dd><p>Suspend the thread</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="windows.winobject.WinThread.tid">
-<code class="descname">tid</code><a class="headerlink" href="#windows.winobject.WinThread.tid" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinThread.teb_base">
+<code class="descname">teb_base</code><a class="headerlink" href="#windows.winobject.process.WinThread.teb_base" title="Permalink to this definition">¶</a></dt>
+<dd><p>The address of the thread&#8217;s TEB</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">int</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="windows.winobject.process.WinThread.tid">
+<code class="descname">tid</code><a class="headerlink" href="#windows.winobject.process.WinThread.tid" title="Permalink to this definition">¶</a></dt>
 <dd><p>Thread ID</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1073,21 +1139,21 @@ raises an exception if the remote thread raised one</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.WinThread.wait">
-<code class="descname">wait</code><span class="sig-paren">(</span><em>timeout=INFINITE(0xffffffffL)</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.WinThread.wait" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinThread.wait">
+<code class="descname">wait</code><span class="sig-paren">(</span><em>timeout=INFINITE(0xffffffffL)</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.process.WinThread.wait" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wait for the object</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="class">
-<dt id="windows.winobject.DeadThread">
-<em class="property">class </em><code class="descclassname">windows.winobject.</code><code class="descname">DeadThread</code><span class="sig-paren">(</span><em>handle</em>, <em>tid=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject.html#DeadThread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.DeadThread" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">windows.winobject.AutoHandle</span></code></p>
-<p>An already dead thread</p>
+<dt id="windows.winobject.process.DeadThread">
+<em class="property">class </em><code class="descclassname">windows.winobject.process.</code><code class="descname">DeadThread</code><span class="sig-paren">(</span><em>handle</em>, <em>tid=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject/process.html#DeadThread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.process.DeadThread" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">windows.winobject.process.AutoHandle</span></code></p>
+<p>An already dead thread (returned only by API returning a new thread if thread die before being returned)</p>
 <dl class="attribute">
-<dt id="windows.winobject.DeadThread.exit_code">
-<code class="descname">exit_code</code><a class="headerlink" href="#windows.winobject.DeadThread.exit_code" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.DeadThread.exit_code">
+<code class="descname">exit_code</code><a class="headerlink" href="#windows.winobject.process.DeadThread.exit_code" title="Permalink to this definition">¶</a></dt>
 <dd><p>The exit code of the thread : <code class="docutils literal"><span class="pre">STILL_ACTIVE</span></code> means the process is not dead</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1100,8 +1166,8 @@ raises an exception if the remote thread raised one</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="windows.winobject.DeadThread.handle">
-<code class="descname">handle</code><a class="headerlink" href="#windows.winobject.DeadThread.handle" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.DeadThread.handle">
+<code class="descname">handle</code><a class="headerlink" href="#windows.winobject.process.DeadThread.handle" title="Permalink to this definition">¶</a></dt>
 <dd><p>An handle on the object</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1119,8 +1185,8 @@ raises an exception if the remote thread raised one</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="windows.winobject.DeadThread.is_exit">
-<code class="descname">is_exit</code><a class="headerlink" href="#windows.winobject.DeadThread.is_exit" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.DeadThread.is_exit">
+<code class="descname">is_exit</code><a class="headerlink" href="#windows.winobject.process.DeadThread.is_exit" title="Permalink to this definition">¶</a></dt>
 <dd><p><code class="docutils literal"><span class="pre">True</span></code> if the thread is terminated</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1133,8 +1199,8 @@ raises an exception if the remote thread raised one</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="windows.winobject.DeadThread.wait">
-<code class="descname">wait</code><span class="sig-paren">(</span><em>timeout=INFINITE(0xffffffffL)</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.DeadThread.wait" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.DeadThread.wait">
+<code class="descname">wait</code><span class="sig-paren">(</span><em>timeout=INFINITE(0xffffffffL)</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.process.DeadThread.wait" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wait for the object</p>
 </dd></dl>
 
@@ -1144,12 +1210,18 @@ raises an exception if the remote thread raised one</p>
 <div class="section" id="token">
 <h2>2.1.5. Token<a class="headerlink" href="#token" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="windows.winobject.Token">
-<em class="property">class </em><code class="descclassname">windows.winobject.</code><code class="descname">Token</code><span class="sig-paren">(</span><em>handle</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject.html#Token"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.Token" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.Token">
+<em class="property">class </em><code class="descclassname">windows.winobject.process.</code><code class="descname">Token</code><span class="sig-paren">(</span><em>handle</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/windows/winobject/process.html#Token"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.process.Token" title="Permalink to this definition">¶</a></dt>
 <dd><p>The token of a process</p>
 <dl class="attribute">
-<dt id="windows.winobject.Token.handle">
-<code class="descname">handle</code><a class="headerlink" href="#windows.winobject.Token.handle" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.Token.computername">
+<code class="descname">computername</code><a class="headerlink" href="#windows.winobject.process.Token.computername" title="Permalink to this definition">¶</a></dt>
+<dd><p>The computername of the token</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="windows.winobject.process.Token.handle">
+<code class="descname">handle</code><a class="headerlink" href="#windows.winobject.process.Token.handle" title="Permalink to this definition">¶</a></dt>
 <dd><p>An handle on the object</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1167,8 +1239,8 @@ raises an exception if the remote thread raised one</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="windows.winobject.Token.integrity">
-<code class="descname">integrity</code><a class="headerlink" href="#windows.winobject.Token.integrity" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.Token.integrity">
+<code class="descname">integrity</code><a class="headerlink" href="#windows.winobject.process.Token.integrity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the integrity level of a process</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1181,14 +1253,20 @@ raises an exception if the remote thread raised one</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="windows.winobject.Token.is_elevated">
-<code class="descname">is_elevated</code><a class="headerlink" href="#windows.winobject.Token.is_elevated" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.Token.is_elevated">
+<code class="descname">is_elevated</code><a class="headerlink" href="#windows.winobject.process.Token.is_elevated" title="Permalink to this definition">¶</a></dt>
 <dd><p><code class="docutils literal"><span class="pre">True</span></code> if process is Admin</p>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="windows.winobject.process.Token.username">
+<code class="descname">username</code><a class="headerlink" href="#windows.winobject.process.Token.username" title="Permalink to this definition">¶</a></dt>
+<dd><p>The username of the token</p>
+</dd></dl>
+
 <dl class="method">
-<dt id="windows.winobject.Token.wait">
-<code class="descname">wait</code><span class="sig-paren">(</span><em>timeout=INFINITE(0xffffffffL)</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.Token.wait" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.Token.wait">
+<code class="descname">wait</code><span class="sig-paren">(</span><em>timeout=INFINITE(0xffffffffL)</em><span class="sig-paren">)</span><a class="headerlink" href="#windows.winobject.process.Token.wait" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wait for the object</p>
 </dd></dl>
 
@@ -1199,7 +1277,7 @@ raises an exception if the remote thread raised one</p>
 <div class="section" id="peb-exploration">
 <h1>2.2. PEB Exploration<a class="headerlink" href="#peb-exploration" title="Permalink to this headline">¶</a></h1>
 <p>The <code class="xref py py-mod docutils literal"><span class="pre">windows</span></code> module is able to parse the PEB of the current process or remote process.
-The <a class="reference internal" href="#windows.winobject.PEB" title="windows.winobject.PEB"><code class="xref py py-class docutils literal"><span class="pre">PEB</span></code></a> is accessible via <code class="docutils literal"><span class="pre">process.peb</span></code> and is of type <a class="reference internal" href="#windows.winobject.PEB" title="windows.winobject.PEB"><code class="xref py py-class docutils literal"><span class="pre">PEB</span></code></a>.</p>
+The <a class="reference internal" href="#windows.winobject.process.PEB" title="windows.winobject.process.PEB"><code class="xref py py-class docutils literal"><span class="pre">PEB</span></code></a> is accessible via <code class="docutils literal"><span class="pre">process.peb</span></code> and is of type <a class="reference internal" href="#windows.winobject.process.PEB" title="windows.winobject.process.PEB"><code class="xref py py-class docutils literal"><span class="pre">PEB</span></code></a>.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">See sample <a class="reference internal" href="sample.html#sample-peb-exploration"><span>PEB exploration</span></a></p>
@@ -1207,46 +1285,46 @@ The <a class="reference internal" href="#windows.winobject.PEB" title="windows.w
 <div class="section" id="peb">
 <h2>2.2.1. PEB<a class="headerlink" href="#peb" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="windows.winobject.PEB">
-<em class="property">class </em><code class="descclassname">windows.winobject.</code><code class="descname">PEB</code><a class="reference internal" href="_modules/windows/winobject.html#PEB"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.PEB" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.PEB">
+<em class="property">class </em><code class="descclassname">windows.winobject.process.</code><code class="descname">PEB</code><a class="reference internal" href="_modules/windows/winobject/process.html#PEB"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.process.PEB" title="Permalink to this definition">¶</a></dt>
 <dd><p>The PEB (Process Environment Block) of the current process</p>
 <dl class="attribute">
-<dt id="windows.winobject.PEB.commandline">
-<code class="descname">commandline</code><a class="headerlink" href="#windows.winobject.PEB.commandline" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.PEB.commandline">
+<code class="descname">commandline</code><a class="headerlink" href="#windows.winobject.process.PEB.commandline" title="Permalink to this definition">¶</a></dt>
 <dd><p>The CommandLine of the PEB</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#windows.winobject.WinUnicodeString" title="windows.winobject.WinUnicodeString"><code class="xref py py-class docutils literal"><span class="pre">WinUnicodeString</span></code></a></td>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#windows.winobject.process.WinUnicodeString" title="windows.winobject.process.WinUnicodeString"><code class="xref py py-class docutils literal"><span class="pre">WinUnicodeString</span></code></a></td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="windows.winobject.PEB.imagepath">
-<code class="descname">imagepath</code><a class="headerlink" href="#windows.winobject.PEB.imagepath" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.PEB.imagepath">
+<code class="descname">imagepath</code><a class="headerlink" href="#windows.winobject.process.PEB.imagepath" title="Permalink to this definition">¶</a></dt>
 <dd><p>The ImagePathName of the PEB</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#windows.winobject.WinUnicodeString" title="windows.winobject.WinUnicodeString"><code class="xref py py-class docutils literal"><span class="pre">WinUnicodeString</span></code></a></td>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#windows.winobject.process.WinUnicodeString" title="windows.winobject.process.WinUnicodeString"><code class="xref py py-class docutils literal"><span class="pre">WinUnicodeString</span></code></a></td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="windows.winobject.PEB.modules">
-<code class="descname">modules</code><a class="headerlink" href="#windows.winobject.PEB.modules" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.PEB.modules">
+<code class="descname">modules</code><a class="headerlink" href="#windows.winobject.process.PEB.modules" title="Permalink to this definition">¶</a></dt>
 <dd><p>The loaded modules present in the PEB</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">[<a class="reference internal" href="#windows.winobject.LoadedModule" title="windows.winobject.LoadedModule"><code class="xref py py-class docutils literal"><span class="pre">LoadedModule</span></code></a>] &#8211; List of loaded modules</td>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">[<a class="reference internal" href="#windows.winobject.process.LoadedModule" title="windows.winobject.process.LoadedModule"><code class="xref py py-class docutils literal"><span class="pre">LoadedModule</span></code></a>] &#8211; List of loaded modules</td>
 </tr>
 </tbody>
 </table>
@@ -1255,13 +1333,27 @@ The <a class="reference internal" href="#windows.winobject.PEB" title="windows.w
 </dd></dl>
 
 <dl class="class">
-<dt id="windows.winobject.WinUnicodeString">
-<em class="property">class </em><code class="descclassname">windows.winobject.</code><code class="descname">WinUnicodeString</code><a class="reference internal" href="_modules/windows/winobject.html#WinUnicodeString"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.WinUnicodeString" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinUnicodeString">
+<em class="property">class </em><code class="descclassname">windows.winobject.process.</code><code class="descname">WinUnicodeString</code><a class="reference internal" href="_modules/windows/winobject/process.html#WinUnicodeString"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.process.WinUnicodeString" title="Permalink to this definition">¶</a></dt>
 <dd><p>LSA_UNICODE_STRING with a nice <cite>__repr__</cite></p>
 <dl class="attribute">
-<dt id="windows.winobject.WinUnicodeString.fields">
-<code class="descname">fields</code><em class="property"> = ['Length', 'MaximumLength', 'Buffer']</em><a class="headerlink" href="#windows.winobject.WinUnicodeString.fields" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.WinUnicodeString.fields">
+<code class="descname">fields</code><em class="property"> = ['Length', 'MaximumLength', 'Buffer']</em><a class="headerlink" href="#windows.winobject.process.WinUnicodeString.fields" title="Permalink to this definition">¶</a></dt>
 <dd><p>The fields of the structure</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="windows.winobject.process.WinUnicodeString.str">
+<code class="descname">str</code><a class="headerlink" href="#windows.winobject.process.WinUnicodeString.str" title="Permalink to this definition">¶</a></dt>
+<dd><p>The python string of the LSA_UNICODE_STRING object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-class docutils literal"><span class="pre">unicode</span></code></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -1270,12 +1362,11 @@ The <a class="reference internal" href="#windows.winobject.PEB" title="windows.w
 <div class="section" id="loadedmodule">
 <h2>2.2.2. LoadedModule<a class="headerlink" href="#loadedmodule" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="windows.winobject.LoadedModule">
-<em class="property">class </em><code class="descclassname">windows.winobject.</code><code class="descname">LoadedModule</code><a class="reference internal" href="_modules/windows/winobject.html#LoadedModule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.LoadedModule" title="Permalink to this definition">¶</a></dt>
-<dd><p>An entry in the PEB Ldr list</p>
-<dl class="attribute">
-<dt id="windows.winobject.LoadedModule.baseaddr">
-<code class="descname">baseaddr</code><a class="headerlink" href="#windows.winobject.LoadedModule.baseaddr" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.LoadedModule">
+<em class="property">class </em><code class="descclassname">windows.winobject.process.</code><code class="descname">LoadedModule</code><a class="reference internal" href="_modules/windows/winobject/process.html#LoadedModule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#windows.winobject.process.LoadedModule" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="windows.winobject.process.LoadedModule.baseaddr">
+<code class="descname">baseaddr</code><a class="headerlink" href="#windows.winobject.process.LoadedModule.baseaddr" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base address of the module</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1288,8 +1379,8 @@ The <a class="reference internal" href="#windows.winobject.PEB" title="windows.w
 </dd></dl>
 
 <dl class="attribute">
-<dt id="windows.winobject.LoadedModule.fullname">
-<code class="descname">fullname</code><a class="headerlink" href="#windows.winobject.LoadedModule.fullname" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.LoadedModule.fullname">
+<code class="descname">fullname</code><a class="headerlink" href="#windows.winobject.process.LoadedModule.fullname" title="Permalink to this definition">¶</a></dt>
 <dd><p>Full name of the module (path)</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1302,8 +1393,8 @@ The <a class="reference internal" href="#windows.winobject.PEB" title="windows.w
 </dd></dl>
 
 <dl class="attribute">
-<dt id="windows.winobject.LoadedModule.name">
-<code class="descname">name</code><a class="headerlink" href="#windows.winobject.LoadedModule.name" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.LoadedModule.name">
+<code class="descname">name</code><a class="headerlink" href="#windows.winobject.process.LoadedModule.name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Name of the module</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1316,8 +1407,8 @@ The <a class="reference internal" href="#windows.winobject.PEB" title="windows.w
 </dd></dl>
 
 <dl class="attribute">
-<dt id="windows.winobject.LoadedModule.pe">
-<code class="descname">pe</code><a class="headerlink" href="#windows.winobject.LoadedModule.pe" title="Permalink to this definition">¶</a></dt>
+<dt id="windows.winobject.process.LoadedModule.pe">
+<code class="descname">pe</code><a class="headerlink" href="#windows.winobject.process.LoadedModule.pe" title="Permalink to this definition">¶</a></dt>
 <dd><p>A PE representation of the module</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1557,7 +1648,7 @@ Can be used to get resolved value and setup hook</p>
         <li class="right" >
           <a href="various.html" title="2. The windows objects"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">PythonForWindows 0.1 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">PythonForWindows 0.2 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="various.html" >2. The <code class="docutils literal"><span class="pre">windows</span></code> objects</a> &raquo;</li> 
       </ul>
     </div>
